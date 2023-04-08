@@ -49,12 +49,7 @@ const titles2 = [calendar, clock, "&#x1013b4;", scales, waterAmount, thermometer
         margin-top: 0vw;
         text-align: left;
       }
-      #grinder2 {
-        margin-top: -7.5vw;
-      }
-      #grinder1 {
-        margin-top: 2vw;
-      }
+          
       thead {
         font-weight: medium;
         font-size: 5.5vw;
@@ -136,7 +131,6 @@ const titles2 = [calendar, clock, "&#x1013b4;", scales, waterAmount, thermometer
           
 /* The popup form - hidden by default */
 .open-button, button {
-  font-family: iconMode;
   font-size: 6.5vw;
   width: 150px;
   height: 100px;
@@ -576,7 +570,7 @@ initialTable();
         } else {
           body.classList.remove('dark-theme');
         }
-      });
+      }
 
 const formPopup = document.getElementById("myForm")
 const formContainer = formPopup.querySelector(".form-container");
@@ -650,9 +644,8 @@ const ratingPopup = document.createElement('div');
 ratingPopup.setAttribute('id', 'rating-popup');
 ratingPopup.style.display = 'none';
 ratingPopup.style.justifyContent = 'center';
-//ratingPopup.style.fontFamily = 'SF Pro Display';
 ratingPopup.style.fontWeight = 'light';
-ratingPopup.style.position = 'absolute';
+ratingPopup.style.position = 'fixed';
 ratingPopup.style.top = '0';
 ratingPopup.style.left = '0';
 ratingPopup.style.width = '100vw';
