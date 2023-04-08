@@ -1,0 +1,764 @@
+/*
+let calendar = "&#x100249;"
+let clock = "&#x10042b;"
+let grindsetting = "&#x1007f2;"
+let scales = "&#x100b6d;"
+let waterAmount = "&#x101384;"
+let thermometer = "&#x1001ec;"
+let recipeList = "&#x10155c;" 
+let starRating = "&#x1002c4;"
+let stopwatch = "&#x10042f;"
+
+const titles2 = [calendar, clock, "&#x1013b4;", scales, waterAmount, thermometer, recipeList, starRating, stopwatch];
+      let bstyle ="1pt solid"
+      let bcol = "#343434"
+      let bcoldark = "#666666"
+      let bcolalph = "40"
+      let rowNumber = 6;
+*/
+<html>
+  <head>
+    <style>
+  #roundedCorners1, #roundedCorners2 {
+    border: none;
+    border-radius: 35px;
+    overflow: scroll;
+    width: 98%;
+    height: 69.5vw;
+    margin-right: 1%;
+    margin-left: 1%;
+    margin-bottom: 2vw;
+  }
+      body {
+        text-align:right;
+      }
+      table {
+        font-family: "SF Pro Text";
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+      .grinders {
+        font-family: "SF Pro Text";
+        font-weight: light;
+        font-size: 7vw;
+        margin-bottom: 1vw;
+        margin-left: 3vw;
+        margin-top: 0vw;
+        text-align: left;
+      }
+      #grinder2 {
+        margin-top: -7.5vw;
+      }
+      #grinder1 {
+        margin-top: 2vw;
+      }
+      thead {
+        font-weight: medium;
+        font-size: 5.5vw;
+        background-color: #00000025;
+  -webkit-backdrop-filter: blur(50px);
+        width: 25vw;
+        top: 0vw;
+        position: sticky;
+      }
+      thead tr {
+        height: 14vw;
+      }
+      tbody {
+        font-weight: light;
+        font-size: 4vw;
+      }
+      td {
+          padding: 6pt;
+          padding-top: 16pt;
+          padding-bottom: 16pt;
+          height: 8vw;
+          width: 25vw;
+          border: none;
+      }
+      
+      tbody tr:nth-child(even) {
+        background-color: #00000020;
+      }
+      tbody tr:nth-child(odd) {
+        background-color: #00000004;
+      }
+      tbody td:nth-child(-n+2) {
+        font-size: 3.3vw;
+      }
+      .dark-theme {
+        background-color: #282828;
+        color: #bbbbbb;
+      }
+      .dark-theme caption {
+        color: #999999;
+      }
+      .dark-theme td {
+          border: solid 1pt #bbbbbb60;
+      }
+      .dark-theme tbody tr:nth-child(even) {
+          background-color: #3d3d3d;
+      }
+      .dark-theme tbody tr:nth-child(odd) {
+        background-color: #22222250;
+      }
+      .dark-theme thead {
+          border: solid 1pt #bbbbbb60;
+          background-color: #3d3d3d;
+      }
+      .dark-theme button,
+      .dark-theme #logDetails,
+      .dark-theme #idTime,
+      .dark-theme #resetButton,
+      .dark-theme #selectList {
+        background-color: #3d3d3d;
+        color: #bbbbbb;
+      }
+      .dark-theme .form-container {
+         background-color: #ffffff20;
+      }
+      .dark-theme #logDetails:focus,
+      .dark-theme #idTime:focus,
+      .dark-theme #selectList:focus {
+        -webkit-backdrop-filter: blur(35px);
+        background-color: #11111160;
+        outline: none;
+      }
+      .dark-theme #title {
+        color: #ffffffbb;
+      }
+      .dark-theme #inputIcon {
+        color: #ffffffcc;
+      }
+
+* {box-sizing: border-box;}
+/* The popup form - hidden by default */
+.open-button, button {
+  font-family: iconMode;
+  font-size: 6.5vw;
+  width: 150px;
+  height: 100px;
+  color: black;
+  background-color: #d6d6d680;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 12px 12px 12px;
+  text-align: center;
+  margin-right: 2vw;
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  padding: 0;
+  border: none;
+  border-radius: 40px;
+  z-index: 10;
+  background-color: #ffffff20;
+  -webkit-backdrop-filter: blur(25px);
+  width: 100vw;
+  height:100vh;
+}
+
+/* Add styles to the form container */
+.form-container {
+ width: 90vw;
+ left: 5vw;
+ top: 10vw;
+ position: fixed;
+ background-color: #70707070;
+ -webkit-backdrop-filter: blur(30px);
+ border-radius: 50px;
+ padding: 4vw;
+}
+
+.fade-bg-in {
+  animation: fade-in 0.45s ease;
+}
+.fade-bg-out {
+  animation: fade-out 0.25s ease;
+}
+
+.slide-out-blurred-top {
+animation: slide-out-blurred-top 0.25s cubic-bezier(0.755, 0.050, 0.855, 0.060) both;
+}
+
+.slide-in-blurred-top {
+animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+@-webkit-keyframes slide-in-blurred-top {
+  0% {
+    -webkit-transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
+            transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+            transform: translateY(0) scaleY(1) scaleX(1);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-blurred-top {
+  0% {
+    -webkit-transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
+            transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+            transform: translateY(0) scaleY(1) scaleX(1);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes slide-out-blurred-top {
+  0% {
+    -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+            transform: translateY(0) scaleY(1) scaleX(1);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateY(-1000px) scaleY(2) scaleX(0.2);
+            transform: translateY(-1000px) scaleY(2) scaleX(0.2);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-blurred-top {
+  0% {
+    -webkit-transform: translateY(0) scaleY(1) scaleX(1);
+            transform: translateY(0) scaleY(1) scaleX(1);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateY(-1000px) scaleY(2) scaleX(0.2);
+            transform: translateY(-1000px) scaleY(2) scaleX(0.2);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#title {
+  font-size: 70pt;
+  font-weight: bold;
+}
+/* input fields()*/ 
+#logDetails,
+#idTime,
+#selectList {
+  width: 70vw;
+  height: 12vw;
+  border: none;
+  border-radius: 25px;
+  background-color: #ffffff50;
+  font-size: 32pt;
+  color: black;
+  margin-left: auto;
+}
+#selectList {
+  appearance: none;
+}
+/* When the inputs get focus, do something */
+#logDetails:focus,
+#idTime:focus,
+#selectList:focus {
+  -webkit-backdrop-filter: blur(35px);
+  background-color: #ffffff85;
+  outline: none;
+}
+#resetButton, .btn {
+  height: 12vw;
+  width: 20vw;
+  text-align: center;
+  font-size: 40pt;
+  color: black;
+  background-color: #ffffff40;
+ -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  border: none;
+}
+#inputIcon {
+  font-size: 7vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+::placeholder {
+    color: black;
+    opacity: 0.55;
+      }
+#firstRow, #secondRow, #thirdRow {
+      vertical-align: middle;
+      justify-content: space-evenly;
+      display: flex;
+      padding:0;
+      margin-bottom: 3vw;
+}
+#buttonRow, #headRow {
+  justify-content: space-between;
+  display: flex;
+}
+#headRow {
+  height: 15vw;
+  margin-left: 0vw;
+}
+#closeButton {
+  margin-left: 3vw;
+  margin-right: 0vw;
+}
+#resetButton {
+  margin-left: auto;
+}
+</style>
+</head>
+<body>
+      <div id="grinder1Title" class="grinders">Grinder 1</div>
+<div id="roundedCorners1">
+<table id="grinder1">
+  <thead>
+    <tr>
+            <td>Date</td>
+            <td>Time</td> 
+            <td>Set.</td>
+            <td>gr.</td> 
+            <td>ml.</td>
+            <td>°C</td> 
+            <td>Rp</td>
+            <td>Rt</td> 
+            <td>Draw</td>
+    </tr>
+  </thead>
+</table>
+</div>
+
+<button id="toggleB1" onclick="toggleTable1();toggleSlice1()">&#x100068;</button>
+<button class="open-button" onclick="openForm()">&#x1003c7;</button>
+
+<div class="grinders" id="grinder2">Grinder 2</div>
+<div id="roundedCorners2">
+<table id="grinder2">
+  <thead>
+    <tr>
+            <td>Date</td>
+            <td>Time</td> 
+            <td>Set.</td>
+            <td>gr.</td> 
+            <td>ml.</td>
+            <td>°C</td> 
+            <td>Rp</td>
+            <td>Rt</td> 
+            <td>Draw</td>
+    </tr>
+  </thead>
+</table>
+</div>
+
+<button id="toggleB2" onclick="toggleTable2();toggleSlice2()">&#x100068;</button>
+ 
+<div class="form-popup" id="myForm">
+  <form action="/action_page.php" class="form-container" autocomplete="off" novalidate>
+
+<div id="headRow">
+<div id=title>Brew Logger</div>
+</div>
+
+<div id="firstRow">
+  <div id="inputIcon">&#x1007f2;</div>
+  <input type="text" autocorrect="off" autocapitalize="off" placeholder="Enter measurements" name="log" id="logDetails"><br>
+</div>
+
+<div id="secondRow">
+ <div id="inputIcon">&#x10155c;</div>
+<select name="recipe" id="selectList" required>
+  <optgroup label="Inverted">
+    <option value="TWi">Wendelboe inverted</option>
+    <option value="JHi">Hoffmann inverted</option>
+    <option value="OXi">Onyx inverted</option>
+  </optgroup>
+  <optgroup label="Aeropress">
+    <option value="JH">James Hoffmann</option>
+    <option value="TW">Tim Wendelboe</option>
+    <option value="OX">Onyx Coffee</option>
+  </optgroup>
+  <optgroup label="V60">
+    <option value="TK">Tetsu Kasuya 4:6</option>
+    <option value="OX">Onyx Coffee</option>
+    <option value="JH">James Hoffmann</option>
+  </optgroup>
+  <optgroup label="Moka Pot">
+    <option value="MK">James Hoffmann</option>
+  </optgroup>
+  </select><br>
+</div>
+
+<div id="thirdRow">
+<div id="inputIcon">&#x10042f;</div>
+<input type="number" placeholder="Enter time" name="time" id="idTime"><br>
+</div>
+    
+<div id=buttonRow>
+    <input type=reset value="&#x100060;" id="resetButton"></input>
+    <button type="button" class="btn cancel" onclick="closeForm();closeFormEval()" id="closeButton">Close</button>
+</div>
+</form>
+</div>
+</body>
+<script>
+const rowNumber = 8;
+let useSlice1 = false;
+let useSlice2 = false;
+  const rows1 = ${JSON.stringify(linesM)};
+  const rows2 = ${JSON.stringify(linesC)};
+  const table1 = document.getElementById("grinder1");
+  const tbody1 = table1.createTBody();
+  const table2 = document.getElementById("grinder2");
+  const tbody2 = table2.createTBody();
+
+function initialTable() {
+  rows1.slice(0, rowNumber).forEach((row1, rowIndex) => {
+    const cells = row1.trim().split(";");
+    const tr = tbody2.insertRow();
+    
+    cells.forEach((cell, cellIndex) => {
+      const td = tr.insertCell();
+      td.textContent = cell;
+      if (cellIndex === 7) {
+        td.classList.add('rating-cell');
+      }
+      td.setAttribute('data-row', rowIndex);
+      td.setAttribute('data-col', cellIndex);
+    });
+  });
+      
+  rows2.slice(0, rowNumber).forEach((row2, rowIndex) => {
+    const cells = row2.trim().split(";");
+    const tr = tbody2.insertRow();
+    
+    cells.forEach((cell, cellIndex) => {
+      const td = tr.insertCell();
+      td.textContent = cell;
+      if (cellIndex === 7) {
+        td.classList.add('rating-cell');
+      }
+      td.setAttribute('data-row', rowIndex);
+      td.setAttribute('data-col', cellIndex);
+    });
+  });
+}
+
+
+function toggleTable1() {
+  if (useSlice1) {
+ 		while (tbody1.rows.length > rowNumber) {
+      tbody1.deleteRow(tbody1.rows.length - 1);
+    }
+  } else {
+    rows1.slice(rowNumber,).forEach((row) => {
+      const cells = row.trim().split(";");
+      const tr = tbody1.insertRow();
+      
+  cells.forEach((cell, index) => {
+    const td = tr.insertCell();
+    td.textContent = cell;
+    if (index === 7) {
+      td.classList.add('rating-cell');
+     }
+    });
+   });
+  }
+  const button = document.getElementById('toggleB1');
+  if (button.textContent=== '\u{100066}') {
+    button.textContent = '\u{100068}';
+  } else {
+    button.textContent = '\u{100066}';
+  }
+}
+
+function toggleTable2() {
+  if (useSlice2) {
+ 		while (tbody2.rows.length > rowNumber) {
+      tbody2.deleteRow(tbody2.rows.length - 1);
+    }
+  } else {
+    rows2.slice(rowNumber,).forEach((row) => {
+      const cells = row.trim().split(";");
+      const tr = tbody2.insertRow();
+      
+  cells.forEach((cell, index) => {
+    const td = tr.insertCell();
+    td.textContent = cell;
+    if (index === 7) {
+      td.classList.add('rating-cell');
+     }
+    });
+   });
+  }
+  const button = document.getElementById('toggleB2');
+  if (button.textContent=== '\u{100066}') {
+    button.textContent = '\u{100068}';
+  } else {
+    button.textContent = '\u{100066}';
+  }
+}
+
+function toggleSlice1() {
+  useSlice1 = !useSlice1;
+}
+function toggleSlice2() {
+  useSlice2 = !useSlice2;
+}
+
+initialTable();
+    
+      const body = document.querySelector('body');
+
+      // Check if the system's color scheme is light or dark
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        body.classList.add('dark-theme');
+      } else {
+        body.classList.remove('dark-theme');
+      }
+
+      // Add a listener to toggle the theme when the system's color scheme changes
+      window.matchMedia('(prefers-color-scheme: dark)').addListener((event) => {
+        if (event.matches) {
+          body.classList.add('dark-theme');
+        } else {
+          body.classList.remove('dark-theme');
+        }
+      });
+
+const formPopup = document.getElementById("myForm")
+const formContainer = formPopup.querySelector(".form-container");
+
+
+function openForm() {
+formContainer.classList.add("slide-in-blurred-top");
+formPopup.classList.add("fade-bg-in")
+  formPopup.style.display = "block";
+
+setTimeout(function() {
+formContainer.classList.remove("slide-in-blurred-top");
+formPopup.classList.remove("fade-bg-in");
+  }, 300);
+}
+
+
+function closeForm() {
+  formContainer.classList.add("slide-out-blurred-top");
+formPopup.classList.add("fade-bg-out");
+
+setTimeout(function() {
+formPopup.style.display = "none";
+formContainer.classList.remove("slide-out-blurred-top");
+formPopup.classList.remove("fade-bg-out");
+  }, 250);
+}
+ 
+function closeFormEval() {
+  const currentDate = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' });
+  const currentTime = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  const logInput = document.getElementById("logDetails").value
+  const logCells = logInput.replaceAll("-",";").split(";");
+log("logInput: " + logInput)
+  const selectList = document.getElementById("selectList").value;
+  const idTime = document.getElementById("idTime").value.replace(".", ":");
+  let tr;
+  let rows;
+  if (logInput.length>0) {
+  if (logInput.includes(".")){
+       tr = tbody1.insertRow(0);
+       rows = tbody1.rows;
+  } else {
+       tr = tbody2.insertRow(0); 
+       rows = tbody2.rows;
+  }
+    const cells = [currentDate, currentTime, logCells[0], logCells[1], logCells[2], logCells[3], selectList, "3", idTime];
+    cells.forEach((cell, cellIndex) => {
+      const td = tr.insertCell();
+      td.textContent = cell;
+      if (cellIndex === 7) {
+        td.classList.add('rating-cell');
+      }
+      td.setAttribute('data-row', 0);
+      td.setAttribute('data-col', cellIndex);
+    });
+    // adjust data-row and data-col for all cells in table body
+    for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+      const cells = rows[rowIndex].cells;
+      for (let cellIndex = 0; cellIndex < cells.length; cellIndex++) {
+        const cell = cells[cellIndex];
+        cell.setAttribute('data-row', rowIndex);
+        cell.setAttribute('data-col', cellIndex);
+      }
+    }
+  }
+}
+
+const ratingOptions = [1, 2, 3, 4, 5, 6];
+const ratingPopup = document.createElement('div');
+ratingPopup.setAttribute('id', 'rating-popup');
+ratingPopup.style.display = 'none';
+ratingPopup.style.justifyContent = 'center';
+//ratingPopup.style.fontFamily = 'SF Pro Display';
+ratingPopup.style.fontWeight = 'light';
+ratingPopup.style.position = 'absolute';
+ratingPopup.style.top = '0';
+ratingPopup.style.left = '0';
+ratingPopup.style.width = '100vw';
+ratingPopup.style.height = '100vh';
+ ratingPopup.style.borderRadius = '30px';
+ ratingPopup.style.padding = '20px';
+ratingPopup.style.backgroundColor = '#f0f0f010';
+ratingPopup.style.webkitBackdropFilter = 'blur(20px)';
+ratingPopup.style.zIndex = '999';
+ratingPopup.classList.add('fade-bg-in');
+
+const ratingContainer = document.createElement('div');
+ratingContainer.setAttribute('id', 'rating-container');
+ratingContainer.style.position = 'fixed';
+ratingContainer.style.top = '30vh';
+ratingContainer.style.backgroundColor = '#00000030';
+ratingContainer.style.borderRadius = '25px';
+ratingContainer.style.webkitBackdropFilter = 'blur(35px)';
+ratingContainer.classList.add('slide-in-blurred-top'); 
+
+const ratingList = document.createElement('ul');
+ratingList.style.display = 'flex';
+ratingList.style.flexWrap = 'wrap';
+ratingList.style.justifyContent = 'space-evenly';
+ratingList.style.alignItems = 'center';
+ratingList.style.marginTop = '26px';
+ratingList.style.marginBottom = '22px';
+ratingList.style.padding = '1vw';
+
+const ratingItemSize = 11; // in vw units
+const ratingItemMargin = 1; // in vw units
+const ratingItemCountPerRow = Math.floor((85 - ratingItemMargin) / (ratingItemSize + ratingItemMargin)); // max count of items per row
+const ratingItemWidth = ((85 - ratingItemMargin) / ratingItemCountPerRow) - ratingItemMargin; // calculate width based on max count and margin
+
+ratingOptions.forEach(option => {
+  const ratingItem = document.createElement('li');
+  ratingItem.style.display = 'flex';
+  ratingItem.style.justifyContent = 'center';
+  ratingItem.style.alignItems = 'center';
+  ratingItem.style.width = ratingItemWidth +'vw';
+  ratingItem.style.height = ratingItemSize +'vw';
+  ratingItem.style.margin = (ratingItemMargin / 2)+'vw';
+  ratingItem.style.borderRadius = '25%';
+  ratingItem.style.backgroundColor = '#ffffff60';
+  ratingItem.style.webkitBackdropFilter = 'blur(25px)';
+  ratingItem.style.fontSize = ratingItemSize-2 +'vw';
+  ratingItem.style.color = 'black';
+  ratingItem.style.cursor = 'pointer';
+  ratingItem.innerText = option;
+  ratingItem.addEventListener('click', function() {
+    const selectedRating = this.innerText;
+    const selectedCell = document.querySelector('.selected-cell');
+    selectedCell.innerText = selectedRating;
+    selectedCell.classList.remove('selected-cell');
+    ratingPopup.classList.replace('fade-bg-in', 'fade-bg-out'); // Replace fade-in class with fade-out class
+    ratingContainer.classList.replace('slide-in-blurred-top', 'slide-out-blurred-top'); // Replace slide-in-blurred-top class with slide-out-blurred-top class
+    setTimeout(() => {
+      ratingPopup.style.display = 'none';
+      ratingPopup.classList.replace('fade-bg-out', 'fade-bg-in'); // Replace fade-out class with fade-in class
+      ratingContainer.classList.replace('slide-out-blurred-top', 'slide-in-blurred-top');
+    }, 250);
+  });
+  ratingList.appendChild(ratingItem);
+});
+
+const cancelButton = document.createElement('li');
+cancelButton.style.display = 'flex';
+cancelButton.style.justifyContent = 'center';
+cancelButton.style.alignItems = 'center';
+cancelButton.style.width = '11vw';
+cancelButton.style.height = '11vw';
+cancelButton.style.margin = '1vw';
+cancelButton.style.borderRadius = '25%';
+cancelButton.style.backgroundColor = '#ffffff60';
+cancelButton.style.webkitBackdropFilter = 'blur(25px)';
+cancelButton.style.fontSize = '6vw';
+cancelButton.style.color = 'black';
+cancelButton.style.cursor = 'pointer';
+cancelButton.innerText = '\u{100060}';
+cancelButton.addEventListener('click', function() {
+    ratingPopup.classList.replace('fade-bg-in', 'fade-bg-out');
+  ratingContainer.classList.replace('slide-in-blurred-top', 'slide-out-blurred-top'); 
+    setTimeout(() => {
+      ratingPopup.style.display = 'none';
+      ratingPopup.classList.replace('fade-bg-out', 'fade-bg-in'); 
+      ratingContainer.classList.replace('slide-out-blurred-top', 'slide-in-blurred-top');
+    }, 250);
+  });
+
+ratingList.appendChild(cancelButton);
+    ratingContainer.appendChild(ratingList);
+    ratingPopup.appendChild(ratingContainer);
+    document.body.appendChild(ratingPopup);
+
+    const ratingCells = document.querySelectorAll('.rating-cell');
+    ratingCells.forEach(cell => {
+      cell.addEventListener('click', function() {
+        const row = this.getAttribute('data-row');
+        const col = this.getAttribute('data-col');
+        const cellRect = this.getBoundingClientRect();
+        ratingPopup.style.top = '0px';
+        ratingPopup.style.left ='0px';
+        ratingPopup.style.display = 'flex';
+        ratingPopup.classList.add('active');
+        this.classList.add('selected-cell');
+      });
+    });
+    </script>
+</html>
+// =====================
