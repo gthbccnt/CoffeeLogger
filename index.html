@@ -1,4 +1,4 @@
-/*
+<!--
 let calendar = "&#x100249;"
 let clock = "&#x10042b;"
 let grindsetting = "&#x1007f2;"
@@ -15,7 +15,7 @@ const titles2 = [calendar, clock, "&#x1013b4;", scales, waterAmount, thermometer
       let bcoldark = "#666666"
       let bcolalph = "40"
       let rowNumber = 6;
-*/
+-->
 <html>
   <head>
     <style>
@@ -761,4 +761,48 @@ ratingList.appendChild(cancelButton);
     });
     </script>
 </html>
-// =====================
+
+<!--
+ let tableCsvM = await view.evaluateJavaScript(`
+  let csvTableM = document.querySelector('#lagom');
+  let csvrowsM = csvTableM.querySelectorAll('tbody tr');
+  let csvM = '';
+  for (let i = 0; i < csvrowsM.length; i++) {
+    let cells = csvrowsM[i].querySelectorAll('td');
+    if (cells.length > 0) {
+      for (let j = 0; j < cells.length; j++) {
+        if (j > 0) {
+          csvM += ';';
+        }
+        csvM += cells[j].textContent.trim();
+      }
+      if (i < csvrowsM.length - 1) { // check if the current row is not the last row
+        csvM += '\\n';
+      }
+    }
+  }
+  csvM;
+`);
+log("lagom: " + tableCsvM)
+// 
+let tableCsvC = await view.evaluateJavaScript(`
+  let csvTableC = document.querySelector('#timemore');
+  let csvrowsC = csvTableC.querySelectorAll('tbody tr');
+  let csvC = '';
+  for (let i = 0; i < csvrowsC.length; i++) {
+    let cells = csvrowsC[i].querySelectorAll('td');
+    if (cells.length > 0) {
+      for (let j = 0; j < cells.length; j++) {
+        if (j > 0) {
+          csvC += ';';
+        }
+        csvC += cells[j].textContent.trim();
+      }
+      if (i < csvrowsC.length - 1) { // check if the current row is not the last row
+        csvC += '\\n';
+      }
+    }
+  }
+  csvC;
+`);
+-->
