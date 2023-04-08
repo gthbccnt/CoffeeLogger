@@ -19,6 +19,10 @@ const titles2 = [calendar, clock, "&#x1013b4;", scales, waterAmount, thermometer
 <html>
   <head>
     <style>
+  * {
+      box-sizing: border-box;
+      font-family: system-ui, iconMode;
+  }
   #roundedCorners1, #roundedCorners2 {
     border: none;
     border-radius: 35px;
@@ -33,13 +37,11 @@ const titles2 = [calendar, clock, "&#x1013b4;", scales, waterAmount, thermometer
         text-align:right;
       }
       table {
-        font-family: "SF Pro Text";
         border-collapse: collapse;
         width: 100%;
         text-align: center;
       }
       .grinders {
-        font-family: "SF Pro Text";
         font-weight: light;
         font-size: 7vw;
         margin-bottom: 1vw;
@@ -131,8 +133,7 @@ const titles2 = [calendar, clock, "&#x1013b4;", scales, waterAmount, thermometer
       .dark-theme #inputIcon {
         color: #ffffffcc;
       }
-
-* {box-sizing: border-box;}
+          
 /* The popup form - hidden by default */
 .open-button, button {
   font-family: iconMode;
@@ -383,7 +384,7 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 <button id="toggleB1" onclick="toggleTable1();toggleSlice1()">&#x100068;</button>
 <button class="open-button" onclick="openForm()">&#x1003c7;</button>
 
-<div class="grinders" id="grinder2">Grinder 2</div>
+<div class="grinders" id="grinder2Title">Grinder 2</div>
 <div id="roundedCorners2">
 <table id="grinder2">
   <thead>
