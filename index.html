@@ -130,14 +130,17 @@ tbody td:nth-child(-n+2) {
 }
           
 /* The popup form - hidden by default */
-.open-button, button {
-  font-size: 3.5vw;
+button {
+  font-size: 4vw;
+  padding:1.5vw;
   color: black;
-  background-color: #d6d6d680;
+  background-color: #ffffff50;
   border: none;
   border-radius: 10px;
   text-align: center;
   margin-right: 2vw;
+     -webkit-backdrop-filter: blur(55px);
+  backdrop-filter: blur(55px);
 }
 
 .form-popup {
@@ -195,7 +198,7 @@ tbody td:nth-child(-n+2) {
   background-color: #ffffff85;
   outline: none;
 }
-#resetButton, .btn {
+#resetButton {
   height: 12vw;
   width: 20vw;
   text-align: center;
@@ -241,15 +244,10 @@ tbody td:nth-child(-n+2) {
 
 #menuButton {
   z-index: 999;
-  font-size: 4vw;
-  padding:1.5vw;
   right: 6vw;
   margin-top: 2vh;
   margin-bottom: 2vh;
-  background-color: #ffffff50;
   box-shadow: 0px 0px 12px -2px #00669960;
-   -webkit-backdrop-filter: blur(55px);
-  backdrop-filter: blur(55px);
 }
 
 #popupBackground {
@@ -280,7 +278,7 @@ tbody td:nth-child(-n+2) {
   left: 10%;
 }
 
-#ifttt-form input, #ifttt-form button {
+#menu-form input, #menu-form button {
   height: 8vh;  
   padding: 10pt;
   border: none;
@@ -290,19 +288,19 @@ tbody td:nth-child(-n+2) {
   font-size: 5vw;
 }
 
-#ifttt-form button {
+#menu-form button {
   padding: 5pt;
   width: 31%;
 }
 
-#ifttt-form input {
+#menu-form input {
   width: 100%;
   margin-bottom: 3.2%;
   text-align: left;
   padding-left: 4vw;
 }
 
-#ifttt-form input:focus {
+#menu-form input:focus {
   background-color: #ffffffaa;
 }
 
@@ -478,7 +476,7 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 </div>
 
 <button id="toggleB1" onclick="toggleTable1();toggleSlice1()">&#x100068;</button>
-<button class="open-button" onclick="openForm()">&#x1003c7;</button>
+<button id="addBrew" onclick="openForm()">&#x1003c7;</button>
 
 <div class="grinders" id="grinder2Title">Grinder 2</div>
 <div id="roundedCorners2">
@@ -544,7 +542,7 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
     
 <div id=buttonRow>
     <input type=reset value="&#x100060;" id="resetButton"></input>
-    <button type="button" class="btn cancel" onclick="closeForm();closeFormEval()" id="closeButton">Close</button>
+    <button type="button" onclick="closeForm();closeFormEval()" id="closeButton">Close</button>
       </div>
     </form>
   </div>
