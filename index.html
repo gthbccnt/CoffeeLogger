@@ -452,9 +452,9 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 <div id="popup">
   <form id="menu-form">
     <div id="popInpContainer">
-      <input type="text" placeholder="First Grinder" name="waterTarget" id="formInput1">
-        <input type="text" placeholder="Second Grinder" name="waterTarget" id="formInput1">
-      <input type="text" placeholder="Enter IFTTT Key" name="iftttKeyInput" id="formInput2">
+      <input type="text" placeholder="First Grinder" name="firstGrinder" id="formInput1">
+        <input type="text" placeholder="Second Grinder" name="secondGrinder" id="formInput2">
+      <input type="text" placeholder="Enter IFTTT Key" name="iftttKeyInput" id="formInput3">
     </div>
     <div id=popBtnContainer>
       <button onclick="clearLocalStorage()" id="csvBtn">Wipe Data</button>
@@ -613,6 +613,14 @@ function loadSelectedFont() {
     style.appendChild(document.createTextNode(css));
     document.head.appendChild(style);
   }
+  const grinderName1 = localStorage.getItem(grinderName1)
+  if (grinderName1) {
+    document.querySelector('#grinder1Title').textContent = grinderName1
+    }
+      const grinderName2 = localStorage.getItem(grinderName2)
+  if (grinderName2) {
+    document.querySelector('#grinder2Title').textContent = grinderName2
+    }
 }
 
 window.addEventListener('load', () => {
@@ -910,11 +918,11 @@ ratingOptions.forEach(option => {
     const selectedCell = document.querySelector('.selected-cell');
     selectedCell.innerText = selectedRating;
     selectedCell.classList.remove('selected-cell');
-    ratingPopup.classList.replace('fade-bg-in', 'fade-bg-out'); // Replace fade-in class with fade-out class
-    ratingContainer.classList.replace('slide-in-blurred-top', 'slide-out-blurred-top'); // Replace slide-in-blurred-top class with slide-out-blurred-top class
+    ratingPopup.classList.replace('fade-bg-in', 'fade-bg-out'); 
+    ratingContainer.classList.replace('slide-in-blurred-top', 'slide-out-blurred-top'); 
     setTimeout(() => {
       ratingPopup.style.display = 'none';
-      ratingPopup.classList.replace('fade-bg-out', 'fade-bg-in'); // Replace fade-out class with fade-in class
+      ratingPopup.classList.replace('fade-bg-out', 'fade-bg-in');
       ratingContainer.classList.replace('slide-out-blurred-top', 'slide-in-blurred-top');
     }, 250);
   });
@@ -987,8 +995,8 @@ ratingList.appendChild(cancelButton);
 const date = new Date().toLocaleDateString('de-DE', {year: '2-digit', month: '2-digit', day: '2-digit'});
 const time = new Date().toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
 
-const tbodyTemp = document.querySelector('tbody');
-const theadTemp = document.querySelector('thead');
+// const tbodyTemp = document.querySelector('tbody');
+// const theadTemp = document.querySelector('thead');
 
 // tbodyTemp.addEventListener('DOMNodeInserted', () => {
 //   setTimeout(() => {
@@ -1010,14 +1018,18 @@ function showPopup() {
   backgroundPopup.style.display= 'block';
   popup.style.display= 'block';
   
-  const form = document.getElementById('ifttt-form');
+  const form = document.getElementById('menu-form');
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const inputWater = document.querySelector('[name="waterTarget"]');
-    if (inputWater.value!==""){
-    localStorage.setItem('waterTarget', inputWater.value);
+    const setGrinder1 = document.querySelector('[name="firstGrinder"]');
+    if (setGrinder1.value!==""){
+    localStorage.setItem('grinderName1',setGrinder1.value);
     }
     
+    const setGrinder2 = document.querySelector('[name="secondGrinder"]');
+    if (setGrinder2.value!==""){
+    localStorage.setItem('grinderName2',setGrinder2.value);
+    }
     const inputKey = document.querySelector('[name="iftttKeyInput"]');
     if (inputKey.value!==""){
     localStorage.setItem('iftttKey', inputKey.value);
@@ -1070,30 +1082,19 @@ function openCsvOrFont() {
 
 function addCsvToTable(csvData) {
   const rows = csvData.split('\n').map(row => row.split(';'));
-  rows.slice(0, 30).forEach((row, rowIndex) => {
+  rows.slice(0).forEach((row, rowIndex) => {
     const tr = tbody.insertRow();
     row.forEach((cell, cellIndex) => {
       const td = tr.insertCell();
       td.textContent = cell;
     });
   });
-let updatedAmount = 0;
-const rowsU = document.querySelectorAll("tbody tr");
-rowsU.forEach((line) => {
-  const cellsU = line.cells;
-  const rowDate = cellsU[0].textContent;
-  const rowTime = Number(cellsU[1].textContent.split(":")[0]);
-  if (rowDate === date && rowTime >= 2) {
-    updatedAmount += Number(cellsU[2].textContent);
-  }
-});
-document.getElementById("currentAmount").textContent = updatedAmount;
  // Store the CSV data in a global variable for later use
   window.csvWaterLog = csvData;
 }
 
 function checkStoredLog() {
-  if (!localStorage.getItem('coffeeLog')) {
+  if (!localStorage.getItem('coffeeLog1')) {
     setTimeout(() => {
       showPopup();
       }, 250);
@@ -1111,7 +1112,6 @@ function clearLocalStorage() {
   localStorage.clear();
   const tbody = document.querySelector('tbody');
   tbody.innerHTML = '';
-  document.querySelector('#currentAmount').textContent = '0'
 }
 
 </script>
