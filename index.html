@@ -619,7 +619,7 @@ window.addEventListener('load', () => {
     loadSelectedFont()
   window.setTimeout(() => {
     const data1 = JSON.parse(localStorage.getItem('coffeeLog1'));
-if (data1 && Array.isArray(data1)) { // check if data1 is not null and is an array
+if (data1) {
   const tableBody1 = document.querySelector('#grinder1 tbody');
   // iterate through the data array from beginning to end
   for (let i = 0; i < data1.length; i++) {
