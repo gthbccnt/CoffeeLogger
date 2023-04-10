@@ -134,7 +134,7 @@ tbody td:nth-child(-n+2) {
           
 /* The popup form - hidden by default */
 button {
-  font-size: 4vw;
+  font-size: 5.5vw;
   padding:1.5vw;
   color: black;
   background-color: #ffffff50;
@@ -211,7 +211,7 @@ button {
   height: 12vw;
   width: 20vw;
   text-align: center;
-  font-size: 4vw;
+  font-size: 5vw;
   color: black;
   background-color: #ffffff40;
  -webkit-backdrop-filter: blur(15px);
@@ -219,7 +219,7 @@ button {
   border: none;
 }
 #inputIcon {
-  font-size: 4vw;
+  font-size: 6vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -613,13 +613,13 @@ function loadSelectedFont() {
     style.appendChild(document.createTextNode(css));
     document.head.appendChild(style);
   }
-  const grinderName1 = localStorage.getItem(grinderName1)
-  if (grinderName1) {
-    document.querySelector('#grinder1Title').textContent = grinderName1
+  const grinderTitle1 = localStorage.getItem('grinderTitle1')
+  if (grinderTitle1) {
+    document.querySelector('#grinder1Title').textContent = grinderTitle1
     }
-      const grinderName2 = localStorage.getItem(grinderName2)
-  if (grinderName2) {
-    document.querySelector('#grinder2Title').textContent = grinderName2
+      const grinderTitle2 = localStorage.getItem('grinderTitle2')
+  if (grinderTitle2) {
+    document.querySelector('#grinder2Title').textContent = grinderTitle2
     }
 }
 
