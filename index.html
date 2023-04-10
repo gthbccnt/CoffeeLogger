@@ -613,42 +613,42 @@ window.addEventListener('load', () => {
     loadSelectedFont()
   window.setTimeout(() => {
     const data1 = JSON.parse(localStorage.getItem('coffeeLog1'));
-    if (data1) {
-      const tableBody1 = document.querySelector('#grinder1 tbody');
-      // iterate through the data array from end to beginning
-      for (let i = data1.length - 1; i >= 0; i--) {
-        const row = data1[i];
-        const tableRow = document.createElement('tr');
-        const dateCell = document.createElement('td');
-        dateCell.textContent = row.date;
-        const timeCell = document.createElement('td');
-        timeCell.textContent = row.time;
-        const setCell = document.createElement('td');
-        setCell.textContent = row.set;
-        const grCell = document.createElement('td');
-        setCell.textContent = row.gr;
-        const mlCell = document.createElement('td');
-        setCell.textContent = row.ml;
-        const degCell = document.createElement('td');
-        setCell.textContent = row.deg;
-        const recCell = document.createElement('td');
-        setCell.textContent = row.rec;
-        const ratCell = document.createElement('td');
-        setCell.textContent = row.rat;
-        const drawCell = document.createElement('td');
-        setCell.textContent = row.draw;
-        tableRow.appendChild(dateCell);
-        tableRow.appendChild(timeCell);
-        tableRow.appendChild(setCell);
-        tableRow.appendChild(grCell);
-        tableRow.appendChild(mlCell);
-        tableRow.appendChild(degCell);
-        tableRow.appendChild(recCell);
-        tableRow.appendChild(ratCell);
-        tableRow.appendChild(drawCell);
-        tableBody1.insertBefore(tableRow, tableBody1.firstChild);
-      }
-    }
+if (data1 && Array.isArray(data1)) { // check if data1 is not null and is an array
+  const tableBody1 = document.querySelector('#grinder1 tbody');
+  // iterate through the data array from beginning to end
+  for (let i = 0; i < data1.length; i++) {
+    const row = data1[i];
+    const tableRow = document.createElement('tr');
+    const dateCell = document.createElement('td');
+    dateCell.textContent = row.date;
+    const timeCell = document.createElement('td');
+    timeCell.textContent = row.time;
+    const setCell = document.createElement('td');
+    setCell.textContent = row.set;
+    const grCell = document.createElement('td');
+    grCell.textContent = row.gr;
+    const mlCell = document.createElement('td');
+    mlCell.textContent = row.ml;
+    const degCell = document.createElement('td');
+    degCell.textContent = row.deg;
+    const recCell = document.createElement('td');
+    recCell.textContent = row.rec;
+    const ratCell = document.createElement('td');
+    ratCell.textContent = row.rat;
+    const drawCell = document.createElement('td');
+    drawCell.textContent = row.draw;
+    tableRow.appendChild(dateCell);
+    tableRow.appendChild(timeCell);
+    tableRow.appendChild(setCell);
+    tableRow.appendChild(grCell);
+    tableRow.appendChild(mlCell);
+    tableRow.appendChild(degCell);
+    tableRow.appendChild(recCell);
+    tableRow.appendChild(ratCell);
+    tableRow.appendChild(drawCell);
+    tableBody1.appendChild(tableRow); // use appendChild instead of insertBefore
+  }
+}
   }, 10);
 });
 
