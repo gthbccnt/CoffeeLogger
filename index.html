@@ -9,7 +9,7 @@
 <html>
   <meta name="apple-mobile-web-app-title" content="WaterLogger">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="rgba(81,142,186)">
+  <meta name="theme-color" content="#D1B888">
   <meta name="viewport" content="width=device-width">
   <link rel="apple-touch-icon" href="icon.png">
   <head>
@@ -20,7 +20,7 @@
 }
 body {
   margin:0;
-  background-color: rgba(81,142,186,.5);
+  background-color: #D1B888;
 /*  background: linear-gradient(0deg, rgba(62,86,131,1) 0%, rgba(81,142,186,1) 100%);*/
   text-align: right;
   touch-action: none;
@@ -43,10 +43,10 @@ body {
 
 .grinders {
   font-weight: light;
-  font-size: 7vw;
+  font-size: 6vw;
   text-align: left;
   margin-bottom: 3vw;
-  margin-left: 2vw;
+  margin-left: 3vw;
 }
 
 table {
@@ -60,7 +60,7 @@ thead tr {
   position: sticky;
   top: 0;
   background-color: #ffffff90;
-  font-size: 3vw;
+  font-size: 5vw;
   border: none;
   -webkit-backdrop-filter: blur(35px);
   backdrop-filter: blur(35px);
@@ -142,8 +142,17 @@ button {
   border-radius: 10px;
   text-align: center;
   margin-right: 2vw;
-     -webkit-backdrop-filter: blur(55px);
+  -webkit-backdrop-filter: blur(55px);
   backdrop-filter: blur(55px);
+}
+input, select{
+  padding-left: 4vw;
+}
+
+::placeholder {
+  color: #00000090; 
+  font-size: 5vw;
+  opacity: 0.55;
 }
 
 #addBrew {
@@ -151,7 +160,8 @@ button {
   bottom: 10vh;
   right: 4vw;
   padding: 3vw;
-  box-shadow: 0px 0px 12px 0px #00000080;
+  box-shadow: 0px 0px 40px 30px #00000010;
+  border-radius: 25px;
   }
 
 .form-popup {
@@ -226,10 +236,7 @@ button {
   justify-content: center;
   align-items: center;
 }
-::placeholder {
-    color: black;
-    opacity: 0.55;
-      }
+
 #firstRow, #secondRow, #thirdRow {
       vertical-align: middle;
       justify-content: space-evenly;
@@ -262,7 +269,7 @@ button {
 }
 
 #popupBackground {
-  background-color: #00000040;
+  background-color: #ffffff10;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(5px);
   display: none;
@@ -291,7 +298,6 @@ button {
 
 #menu-form input, #menu-form button {
   height: 8vh;  
-  padding: 10pt;
   border: none;
   outline: none;
   background-color: #ffffff70;
@@ -315,7 +321,6 @@ button {
   background-color: #ffffffaa;
 }
 
-::placeholder {color: #00000090; font-size: 5vw;}
 
 #popBtnContainer {
   display: flex;
@@ -483,6 +488,8 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
               <td>&#x10042f;</td>
       </tr>
     </thead>
+    <tbody>
+    </tbody>
   </table>
 </div>
 
@@ -505,6 +512,8 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
               <td>&#x10042f;</td>
       </tr>
     </thead>
+      <tbody>
+    </tbody>
   </table>
 </div>
 
@@ -560,35 +569,38 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 
 <script>
 window.addEventListener('beforeunload', () => {
-    saveDataToLocalStorage();
+    saveDataToLocalStorage("#grinder1 tbody tr", "coffeeLog1");
+    saveDataToLocalStorage("#grinder2 tbody tr", "coffeeLog2");
 });
 
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
-    saveDataToLocalStorage();
+    saveDataToLocalStorage("#grinder1 tbody tr", "coffeeLog1");
+    saveDataToLocalStorage("#grinder2 tbody tr", "coffeeLog2");
   }
 });
 
-function saveDataToLocalStorage() {
-const rows = document.querySelectorAll("#grinder1 tbody tr");
-const data1 = [];
-rows.forEach((row) => {
-  const cells = row.querySelectorAll('td');
-  const rowData = {
-    date: cells[0].innerHTML,
-    time: cells[1].innerHTML,
-    setting: cells[2].innerHTML,
-    gr: cells[3].innerHTML,
-    ml: cells[4].innerHTML,
-    degrees: cells[5].innerHTML,
-    recipe: cells[6].innerHTML,
-    rating: cells[7].innerHTML,
-    drawdown: cells[8].innerHTML,
-  };
-  data1.push(rowData);
-});
-localStorage.setItem('coffeeLog1', JSON.stringify(data1));
+function saveDataToLocalStorage(userGrinder, userLog) {
+  const rows = document.querySelectorAll(userGrinder);
+  const data = [];
+  rows.forEach((row) => {
+    const cells = row.querySelectorAll('td');
+    const rowData = {
+      date: cells[0].innerHTML,
+      time: cells[1].innerHTML,
+      setting: cells[2].innerHTML,
+      gr: cells[3].innerHTML,
+      ml: cells[4].innerHTML,
+      degrees: cells[5].innerHTML,
+      recipe: cells[6].innerHTML,
+      rating: cells[7].innerHTML,
+      drawdown: cells[8].innerHTML,
+    };
+    data.push(rowData);
+  });
+  localStorage.setItem(userLog, JSON.stringify(data));
 }
+
 
 function loadSelectedFont() {
   const fontData = localStorage.getItem('selectedFont');
@@ -615,162 +627,138 @@ function loadSelectedFont() {
     style.appendChild(document.createTextNode(css));
     document.head.appendChild(style);
   }
-  const grinderTitle1 = localStorage.getItem('grinderName1')
-  if (grinderTitle1) {
-    document.querySelector('#grinder1Title').textContent = grinderTitle1
-    }
-      const grinderTitle2 = localStorage.getItem('grinderName2')
-  if (grinderTitle2) {
-    document.querySelector('#grinder2Title').textContent = grinderTitle2
-    }
 }
 
 window.addEventListener('load', () => {
-    loadSelectedFont()
+  loadSelectedFont()
+
   window.setTimeout(() => {
-    const data1 = JSON.parse(localStorage.getItem('coffeeLog1'));
-if (data1) {
-  const tableBody1 = document.querySelector('#grinder1 tbody');
-  // iterate through the data array from beginning to end
-  for (let i = 0; i < data1.length; i++) {
-    const row = data1[i];
-    const tableRow = document.createElement('tr');
-    const dateCell = document.createElement('td');
-    dateCell.textContent = row.date;
-    const timeCell = document.createElement('td');
-    timeCell.textContent = row.time;
-    const setCell = document.createElement('td');
-    setCell.textContent = row.set;
-    const grCell = document.createElement('td');
-    grCell.textContent = row.gr;
-    const mlCell = document.createElement('td');
-    mlCell.textContent = row.ml;
-    const degCell = document.createElement('td');
-    degCell.textContent = row.deg;
-    const recCell = document.createElement('td');
-    recCell.textContent = row.rec;
-    const ratCell = document.createElement('td');
-    ratCell.textContent = row.rat;
-    const drawCell = document.createElement('td');
-    drawCell.textContent = row.draw;
-    tableRow.appendChild(dateCell);
-    tableRow.appendChild(timeCell);
-    tableRow.appendChild(setCell);
-    tableRow.appendChild(grCell);
-    tableRow.appendChild(mlCell);
-    tableRow.appendChild(degCell);
-    tableRow.appendChild(recCell);
-    tableRow.appendChild(ratCell);
-    tableRow.appendChild(drawCell);
-    tableBody1.appendChild(tableRow); // use appendChild instead of insertBefore
-  }
-}
+
+    loadLogs('coffeeLog1', '#grinder1 tbody');
+    loadLogs('coffeeLog2', '#grinder2 tbody');
+
+    const grinderTitle1 = localStorage.getItem('grinderName1')
+    if (grinderTitle1) {
+      document.querySelector('#grinder1Title').textContent = grinderTitle1
+      document.querySelector('#formInput1').setAttribute('placeholder', 'Current: ' + grinderTitle1)
+    }
+    const grinderTitle2 = localStorage.getItem('grinderName2')
+    if (grinderTitle2) {
+      document.querySelector('#grinder2Title').textContent = grinderTitle2
+      document.querySelector('#formInput2').setAttribute('placeholder', 'Current: ' + grinderTitle2)
+    }
+    if (!localStorage.getItem('iftttKey')){} else {
+      const popupIftttInput = document.getElementById('formInput2')
+      popupIftttInput.setAttribute('placeholder', 'IFTTT key found')
+    }
   }, 10);
 });
+
+
+function loadLogs(userGrinder, selectedTable) {
+  const data = JSON.parse(localStorage.getItem(userGrinder));
+  const tableBody = document.querySelector(selectedTable);
+  if (data) {
+  // iterate through the data array from beginning to end
+    for (let i = 0; i < data.length; i++) {
+      const row = data[i];
+      const tableRow = document.createElement('tr');
+      const dateCell = document.createElement('td');
+      dateCell.textContent = row.date;
+      const timeCell = document.createElement('td');
+      timeCell.textContent = row.time;
+      const setCell = document.createElement('td');
+      setCell.textContent = row.setting;
+      const grCell = document.createElement('td');
+      grCell.textContent = row.gr;
+      const mlCell = document.createElement('td');
+      mlCell.textContent = row.ml;
+      const degCell = document.createElement('td');
+      degCell.textContent = row.degrees;
+      const recCell = document.createElement('td');
+      recCell.textContent = row.recipe;
+      const ratCell = document.createElement('td');
+      ratCell.textContent = row.rating;
+      const drawCell = document.createElement('td');
+      drawCell.textContent = row.drawdown;
+      tableRow.appendChild(dateCell);
+      tableRow.appendChild(timeCell);
+      tableRow.appendChild(setCell);
+      tableRow.appendChild(grCell);
+      tableRow.appendChild(mlCell);
+      tableRow.appendChild(degCell);
+      tableRow.appendChild(recCell);
+      tableRow.appendChild(ratCell);
+      tableRow.appendChild(drawCell);
+      tableBody.appendChild(tableRow);//, tableBody.firstChild); // use appendChild instead of insertBefore
+    }
+  }
+}
 
 const rowNumber = 8;
 let useSlice1 = false;
 let useSlice2 = false;
-  // const rows1 = ${JSON.stringify(linesM)};
-  // const rows2 = ${JSON.stringify(linesC)};
-  const table1 = document.getElementById("grinder1");
-  const tbody1 = table1.createTBody();
-  const table2 = document.getElementById("grinder2");
-  const tbody2 = table2.createTBody();
 
-function initialTable() {
-  rows1.slice(0, rowNumber).forEach((row1, rowIndex) => {
-    const cells = row1.trim().split(";");
-    const tr = tbody2.insertRow();
-    
-    cells.forEach((cell, cellIndex) => {
-      const td = tr.insertCell();
-      td.textContent = cell;
-      if (cellIndex === 7) {
-        td.classList.add('rating-cell');
-      }
-      td.setAttribute('data-row', rowIndex);
-      td.setAttribute('data-col', cellIndex);
-    });
-  });
+// function toggleTable1() {
+//   if (useSlice1) {
+//     while (tbody1.rows.length > rowNumber) {
+//       tbody1.deleteRow(tbody1.rows.length - 1);
+//     }
+//   } else {
+//     rows1.slice(rowNumber,).forEach((row) => {
+//       const cells = row.trim().split(";");
+//       const tr = tbody1.insertRow();
       
-  rows2.slice(0, rowNumber).forEach((row2, rowIndex) => {
-    const cells = row2.trim().split(";");
-    const tr = tbody2.insertRow();
-    
-    cells.forEach((cell, cellIndex) => {
-      const td = tr.insertCell();
-      td.textContent = cell;
-      if (cellIndex === 7) {
-        td.classList.add('rating-cell');
-      }
-      td.setAttribute('data-row', rowIndex);
-      td.setAttribute('data-col', cellIndex);
-    });
-  });
-}
+//   cells.forEach((cell, index) => {
+//     const td = tr.insertCell();
+//     td.textContent = cell;
+//     if (index === 7) {
+//       td.classList.add('rating-cell');
+//      }
+//     });
+//    });
+//   }
+//   const button = document.getElementById('toggleB1');
+//   if (button.textContent=== '\u{100066}') {
+//     button.textContent = '\u{100068}';
+//   } else {
+//     button.textContent = '\u{100066}';
+//   }
+// }
 
-
-function toggleTable1() {
-  if (useSlice1) {
-    while (tbody1.rows.length > rowNumber) {
-      tbody1.deleteRow(tbody1.rows.length - 1);
-    }
-  } else {
-    rows1.slice(rowNumber,).forEach((row) => {
-      const cells = row.trim().split(";");
-      const tr = tbody1.insertRow();
+// function toggleTable2() {
+//   if (useSlice2) {
+//     while (tbody2.rows.length > rowNumber) {
+//       tbody2.deleteRow(tbody2.rows.length - 1);
+//     }
+//   } else {
+//     rows2.slice(rowNumber,).forEach((row) => {
+//       const cells = row.trim().split(";");
+//       const tr = tbody2.insertRow();
       
-  cells.forEach((cell, index) => {
-    const td = tr.insertCell();
-    td.textContent = cell;
-    if (index === 7) {
-      td.classList.add('rating-cell');
-     }
-    });
-   });
-  }
-  const button = document.getElementById('toggleB1');
-  if (button.textContent=== '\u{100066}') {
-    button.textContent = '\u{100068}';
-  } else {
-    button.textContent = '\u{100066}';
-  }
-}
+//   cells.forEach((cell, index) => {
+//     const td = tr.insertCell();
+//     td.textContent = cell;
+//     if (index === 7) {
+//       td.classList.add('rating-cell');
+//      }
+//     });
+//    });
+//   }
+//   const button = document.getElementById('toggleB2');
+//   if (button.textContent=== '\u{100066}') {
+//     button.textContent = '\u{100068}';
+//   } else {
+//     button.textContent = '\u{100066}';
+//   }
+// }
 
-function toggleTable2() {
-  if (useSlice2) {
-    while (tbody2.rows.length > rowNumber) {
-      tbody2.deleteRow(tbody2.rows.length - 1);
-    }
-  } else {
-    rows2.slice(rowNumber,).forEach((row) => {
-      const cells = row.trim().split(";");
-      const tr = tbody2.insertRow();
-      
-  cells.forEach((cell, index) => {
-    const td = tr.insertCell();
-    td.textContent = cell;
-    if (index === 7) {
-      td.classList.add('rating-cell');
-     }
-    });
-   });
-  }
-  const button = document.getElementById('toggleB2');
-  if (button.textContent=== '\u{100066}') {
-    button.textContent = '\u{100068}';
-  } else {
-    button.textContent = '\u{100066}';
-  }
-}
-
-function toggleSlice1() {
-  useSlice1 = !useSlice1;
-}
-function toggleSlice2() {
-  useSlice2 = !useSlice2;
-}
+// function toggleSlice1() {
+//   useSlice1 = !useSlice1;
+// }
+// function toggleSlice2() {
+//   useSlice2 = !useSlice2;
+// }
 
 //initialTable();
     
@@ -792,34 +780,35 @@ function toggleSlice2() {
 //   }
 // }
 
+// ===== Add brew form
+
 const formPopup = document.getElementById("myForm")
 const formContainer = formPopup.querySelector(".form-container");
 
-
 function openForm() {
-formContainer.classList.add("slide-in-blurred-top");
-formPopup.classList.add("fade-bg-in")
+  formContainer.classList.add("slide-in-blurred-top");
+  formPopup.classList.add("fade-bg-in")
   formPopup.style.display = "block";
-
-setTimeout(function() {
-formContainer.classList.remove("slide-in-blurred-top");
-formPopup.classList.remove("fade-bg-in");
+  setTimeout(function() {
+    formContainer.classList.remove("slide-in-blurred-top");
+    formPopup.classList.remove("fade-bg-in");
   }, 300);
 }
 
 
 function closeForm() {
   formContainer.classList.add("slide-out-blurred-top");
-formPopup.classList.add("fade-bg-out");
-
-setTimeout(function() {
-formPopup.style.display = "none";
-formContainer.classList.remove("slide-out-blurred-top");
-formPopup.classList.remove("fade-bg-out");
+  formPopup.classList.add("fade-bg-out");
+  setTimeout(function() {
+    formPopup.style.display = "none";
+    formContainer.classList.remove("slide-out-blurred-top");
+    formPopup.classList.remove("fade-bg-out");
   }, 250);
 }
- 
+
 function closeFormEval() {
+  const tbody1 = document.querySelector("#grinder1 tbody");
+  const tbody2 = document.querySelector("#grinder2 tbody");
   const currentDate = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' });
   const currentTime = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
   const logInput = document.getElementById("logDetails").value
@@ -858,6 +847,8 @@ console.log("logInput: " + logInput)
     }
   }
 }
+
+// ====== END brew form
 
 const ratingOptions = [1, 2, 3, 4, 5, 6];
 const ratingPopup = document.createElement('div');
@@ -994,20 +985,6 @@ ratingList.appendChild(cancelButton);
 //   }
 // });
 
-const date = new Date().toLocaleDateString('de-DE', {year: '2-digit', month: '2-digit', day: '2-digit'});
-const time = new Date().toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'});
-
-// const tbodyTemp = document.querySelector('tbody');
-// const theadTemp = document.querySelector('thead');
-
-// tbodyTemp.addEventListener('DOMNodeInserted', () => {
-//   setTimeout(() => {
-//     if (tbodyTemp.querySelectorAll('tr').length > 0) {
-//       theadTemp.classList.remove('tableHead');
-//       theadTemp.classList.add('tableHeadData');
-//     }
-//   }, 50);
-// });
 // ========= popup =====
 function showPopup() {
   const backgroundPopup = document.body.querySelector('#popupBackground')
@@ -1119,48 +1096,3 @@ function clearLocalStorage() {
 </script>
 </body>
 </html>
-
-<!--
- let tableCsvM = await view.evaluateJavaScript(`
-  let csvTableM = document.querySelector('#lagom');
-  let csvrowsM = csvTableM.querySelectorAll('tbody tr');
-  let csvM = '';
-  for (let i = 0; i < csvrowsM.length; i++) {
-    let cells = csvrowsM[i].querySelectorAll('td');
-    if (cells.length > 0) {
-      for (let j = 0; j < cells.length; j++) {
-        if (j > 0) {
-          csvM += ';';
-        }
-        csvM += cells[j].textContent.trim();
-      }
-      if (i < csvrowsM.length - 1) { // check if the current row is not the last row
-        csvM += '\\n';
-      }
-    }
-  }
-  csvM;
-`);
-log("lagom: " + tableCsvM)
-// 
-let tableCsvC = await view.evaluateJavaScript(`
-  let csvTableC = document.querySelector('#timemore');
-  let csvrowsC = csvTableC.querySelectorAll('tbody tr');
-  let csvC = '';
-  for (let i = 0; i < csvrowsC.length; i++) {
-    let cells = csvrowsC[i].querySelectorAll('td');
-    if (cells.length > 0) {
-      for (let j = 0; j < cells.length; j++) {
-        if (j > 0) {
-          csvC += ';';
-        }
-        csvC += cells[j].textContent.trim();
-      }
-      if (i < csvrowsC.length - 1) { // check if the current row is not the last row
-        csvC += '\\n';
-      }
-    }
-  }
-  csvC;
-`);
--->
