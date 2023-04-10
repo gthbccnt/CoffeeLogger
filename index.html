@@ -613,11 +613,11 @@ function loadSelectedFont() {
     style.appendChild(document.createTextNode(css));
     document.head.appendChild(style);
   }
-  const grinderTitle1 = localStorage.getItem('grinderTitle1')
+  const grinderTitle1 = localStorage.getItem('grinderName1')
   if (grinderTitle1) {
     document.querySelector('#grinder1Title').textContent = grinderTitle1
     }
-      const grinderTitle2 = localStorage.getItem('grinderTitle2')
+      const grinderTitle2 = localStorage.getItem('grinderName2')
   if (grinderTitle2) {
     document.querySelector('#grinder2Title').textContent = grinderTitle2
     }
