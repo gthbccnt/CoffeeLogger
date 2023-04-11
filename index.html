@@ -142,7 +142,7 @@ button {
 #resetButton {
   margin-left: auto;
   height: 12vw;
-  /*width: 20vw;*/
+  padding: 0;
   text-align: center;
   font-size: 5.5vw;
   color: black;
@@ -171,6 +171,7 @@ button {
 
 input, select{
   padding-left: 4vw;
+  min-width: 18vw;
 }
 
 ::placeholder {
@@ -195,7 +196,7 @@ input, select{
 
 /* Add styles to the form container */
 .form-container, #popup {
- width: 90vw;
+ width: 89.6vw;
  left: 5vw;
  top: 15vw;
  position: fixed;
@@ -213,7 +214,10 @@ input, select{
 /* input fields()*/ 
 #logDetails,
 #idTime,
-#selectList {
+#selectList,
+#formInput1,
+#formInput2,
+#formInput3 {
   width: 70vw;
   height: 14vw;
   border: none;
@@ -222,7 +226,9 @@ input, select{
   font-size: 5vw;
   color: black;
   margin-left: auto;
+  outline: none;
 }
+
 #selectList {
   appearance: none;
 }
@@ -235,11 +241,33 @@ input, select{
   outline: none;
 }
 
+#menu-form button {
+  padding: 5pt;
+  width: 30.7%;
+  margin: 0;
+}
+
+#menu-form input {
+  width: 100%;
+  margin-bottom: 3.2%;
+  text-align: left;
+  padding-left: 4vw;
+}
+
+#menu-form input:focus {
+  background-color: #ffffffaa;
+}
+
 #inputIcon {
   font-size: 8vw;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#closeButton {
+  margin-left: 3vw;
+  margin-right: 0vw;
 }
 
 #firstRow, #secondRow, #thirdRow {
@@ -257,41 +285,11 @@ input, select{
   height: 15vw;
   margin-left: 0vw;
 }
-#closeButton {
-  margin-left: 3vw;
-  margin-right: 0vw;
-}
-
-#menu-form input, #menu-form button {
-  height: 8vh;  
-  border: none;
-  outline: none;
-  background-color: #ffffff70;
-  border-radius: 3.5vw;
-  font-size: 5vw;
-}
-
-#menu-form button {
-  padding: 5pt;
-  width: 31%;
-}
-
-#menu-form input {
-  width: 100%;
-  margin-bottom: 3.2%;
-  text-align: left;
-  padding-left: 4vw;
-}
-
-#menu-form input:focus {
-  background-color: #ffffffaa;
-}
 
 #popBtnContainer {
   display: flex;
   justify-content: space-between;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
 }
 
 #popInpContainer {
