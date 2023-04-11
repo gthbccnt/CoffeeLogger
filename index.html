@@ -420,22 +420,6 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 </head>
 <body>
 <button id="menuButton" onclick="showPopup()">&#x100306;</button>
-<div id="popupBackground">
-<div id="popup">
-  <form id="menu-form">
-    <div id="popInpContainer">
-      <input type="text" placeholder="First Grinder" name="firstGrinder" id="formInput1">
-        <input type="text" placeholder="Second Grinder" name="secondGrinder" id="formInput2">
-      <input type="text" placeholder="Enter IFTTT Key" name="iftttKeyInput" id="formInput3">
-    </div>
-    <div id=popBtnContainer>
-      <button onclick="clearLocalStorage()" id="csvBtn">Wipe Data</button>
-      <button onclick="openCsvOrFont()" id="fontBtn">Add File</button>
-      <button type="submit" id="saveButton">Save</button>
-    </div>
-  </form>
-</div>
-</div>
 
 <div id="grinder1Title" class="grinders">Grinder 1</div>
 <div id="roundedCorners1">
@@ -483,6 +467,23 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 </div>
 
 <!-- <button id="toggleB2" onclick="toggleTable2();toggleSlice2()">&#x100068;</button> -->
+
+<div id="popupBackground">
+<div id="popup">
+  <form id="menu-form">
+    <div id="popInpContainer">
+      <input type="text" placeholder="First Grinder" name="firstGrinder" id="formInput1">
+        <input type="text" placeholder="Second Grinder" name="secondGrinder" id="formInput2">
+      <input type="text" placeholder="Enter IFTTT Key" name="iftttKeyInput" id="formInput3">
+    </div>
+    <div id=popBtnContainer>
+      <button onclick="clearLocalStorage()" id="csvBtn">Wipe Data</button>
+      <button onclick="openCsvOrFont()" id="fontBtn">Add File</button>
+      <button type="submit" id="saveButton">Save</button>
+    </div>
+  </form>
+</div>
+</div>
  
 <div class="form-popup" id="myForm">
   <form action="/action_page.php" class="form-container" autocomplete="off" novalidate>
