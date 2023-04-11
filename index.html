@@ -179,7 +179,7 @@ input, select{
   opacity: 0.55;
 }
 
-.form-popup {
+.form-popup, #popupBackground {
   display: none;
   position: fixed;
   top: 0px;
@@ -194,15 +194,15 @@ input, select{
 }
 
 /* Add styles to the form container */
-.form-container {
+.form-container, #popup {
  width: 90vw;
  left: 5vw;
- top: 10vw;
+ top: 15vw;
  position: absolute;
- background-color: #00000010;
+ background-color: #00000030;
  -webkit-backdrop-filter: blur(30px);
  backdrop-filter: blur(30px);
- border-radius: 15px;
+ border-radius: 20px;
  padding: 4vw;
 }
 
@@ -262,34 +262,6 @@ input, select{
   margin-right: 0vw;
 }
 
-#popupBackground {
-  background-color: #ffffff00;
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-  display: none;
-  position: fixed;
-  top:0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  z-index: 999;
-}
-
-#popup {
-  position: fixed;
-  top: 20vh;
-  width: 80vw;
-  background: #00000030;
-  -webkit-backdrop-filter: blur(55px);
-  backdrop-filter: blur(55px);
-  /*box-shadow: 0px 0px 150vw 150vw #000000bb;*/
-  border: none;
-  padding: 5%;
-  border-radius: 5vw;
-  display: none;
-  left: 10%;
-}
-
 #menu-form input, #menu-form button {
   height: 8vh;  
   border: none;
@@ -314,7 +286,6 @@ input, select{
 #menu-form input:focus {
   background-color: #ffffffaa;
 }
-
 
 #popBtnContainer {
   display: flex;
