@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width">
   <link rel="apple-touch-icon" href="icon.png">
   <head>
-<style>
+  <style>
 * {
     box-sizing: border-box;
     font-family: system-ui, iconMode;
@@ -14,13 +14,18 @@
 body {
   margin:0;
   background-color: #D1B888;
-/*  background: linear-gradient(0deg, rgba(62,86,131,1) 0%, rgba(81,142,186,1) 100%);*/
+/*background: linear-gradient(0deg, rgba(204,167,108,1) 0%, rgba(209,184,136,1) 100%);*/
+background: linear-gradient(0deg, rgba(222,179,103,1) 0%, rgba(209,184,136,1) 90%);
   text-align: right;
   touch-action: none;
   background-attachment: fixed;
   height: 100vh;
   width: 100vw;
   overflow:hidden;
+}
+
+::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 #roundedCorners1, #roundedCorners2 {
@@ -33,14 +38,19 @@ body {
   margin-left: 2%;
   margin-bottom: 3vw;
   box-shadow: 0px 0px 12px -2px #00000020;
+  overscroll-behavior: none;
+}
+
+#roundedCorners1 {
+  max-height: 85vw;
 }
 
 .grinders {
   font-weight: light;
-  font-size: 6vw;
+  font-size: 7vw;
   text-align: left;
   margin-bottom: 3vw;
-  margin-left: 3vw;
+  margin-left: 4vw;
 }
 
 table {
@@ -53,20 +63,24 @@ thead tr {
   position: sticky;
   top: 0;
   background-color: #ffffff90;
-  font-size: 5vw;
+  font-size: 3vw;
   border: none;
   -webkit-backdrop-filter: blur(35px);
   backdrop-filter: blur(35px);
-  height: 10vw;
-
+  height: 12vw;
 }
+
+#tableHead1, #tableHead2 { 
+  filter: drop-shadow(0px 0px 2px #00000040);
+}
+
 tbody {
-  font-weight: light;
+/*  font-weight: light;*/
   font-size: 3.5vw;
 }
 td {
-    padding: 4pt;
-    width: 25vw;
+/*    padding: 4pt;*/
+    /*width: 15vw;*/
     border: none;
     height: 9vw;
 }
@@ -78,7 +92,7 @@ tbody tr:nth-child(odd) {
   background-color: #ffffff30;
 }
 tbody td:nth-child(-n+2) {
-  font-size: 3.3vw;
+  font-size: 3vw;
 }
 .dark-theme {
   background-color: #282828;
@@ -124,17 +138,17 @@ tbody td:nth-child(-n+2) {
 .dark-theme #inputIcon {
   color: #ffffffcc;
 }
-          
-/* The popup form - hidden by default */
+
 button {
   font-size: 5.5vw;
   padding:1.5vw;
+  min-width: 18vw;
   color: black;
-  background-color: #ffffff50;
   border: none;
   border-radius: 10px;
   text-align: center;
   margin-right: 2vw;
+  background-color: #ffffff50;
   -webkit-backdrop-filter: blur(55px);
   backdrop-filter: blur(55px);
 }
@@ -146,27 +160,35 @@ button {
   text-align: center;
   font-size: 5.5vw;
   color: black;
-  background-color: #ffffff40;
- -webkit-backdrop-filter: blur(15px);
+  background-color: #ffffff50;
+  -webkit-backdrop-filter: blur(55px);
+  backdrop-filter: blur(55px);
   border: none;
   border-radius: 10px;
 }
 
 #menuButton {
-  z-index: 999;
+  z-index: 0;
   padding: 2.5vw;
-  right: 6vw;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
+  position: relative;
+  right: 0.5vw;
+  max-width:18vw;
+  min-width: 5vw;
+  margin-top: 1.5vh;
+  margin-bottom: -4vh;
   box-shadow: 0px 0px 10px -2px #00000020;
 }
 
 #addBrew {
   position: fixed;
+  background-color: #ffffff30;
+  max-width:18vw;
+  min-width: 15vw;
+  min-height: 13vw;
   bottom: 10vh;
-  right: 4vw;
-  padding: 3vw;
-  box-shadow: 0px 0px 40px 30px #00000010;
+  right: 3vw;
+  padding: 0;
+  box-shadow: 0px 0px 30px 30px #40404020;
 }
 
 input, select{
@@ -198,7 +220,7 @@ input, select{
 .form-container, #popup {
  width: 89.6vw;
  left: 5vw;
- top: 15vw;
+ top: 35vw;
  position: fixed;
  background-color: #00000025;
  -webkit-backdrop-filter: blur(30px);
@@ -221,7 +243,7 @@ input, select{
   width: 70vw;
   height: 14vw;
   border: none;
-  border-radius: 15px;
+  border-radius: 10px;
   background-color: #ffffff50;
   font-size: 5vw;
   color: black;
@@ -299,10 +321,10 @@ input, select{
 }
 /* ======== ANIMATIONS ====== */
 
-.fade-bg-in {
+.fade-in {
   animation: fade-in 0.45s ease;
 }
-.fade-bg-out {
+.fade-out {
   animation: fade-out 0.25s ease;
 }
 
@@ -312,6 +334,22 @@ animation: slide-out-blurred-top 0.25s cubic-bezier(0.755, 0.050, 0.855, 0.060) 
 
 .slide-in-blurred-top {
 animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+.slide-in-blurred-right {
+  animation: slide-in-blurred-right 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+.slide-out-blurred-right {
+  animation: slide-out-blurred-right 0.25s cubic-bezier(0.755, 0.050, 0.855, 0.060) both;
+}
+
+.slide-out-blurred-br {
+animation: slide-out-blurred-br 0.25s cubic-bezier(0.755, 0.050, 0.855, 0.060) both;
+}
+
+.slide-in-blurred-br {
+animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 }
 
 @-webkit-keyframes slide-in-blurred-top {
@@ -395,6 +433,93 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
     opacity: 0;
   }
 }
+
+
+@keyframes slide-in-blurred-right {
+  0% {
+    -webkit-transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
+            transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
+    -webkit-transform-origin: 0% 50%;
+            transform-origin: 0% 50%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0) scaleY(1) scaleX(1);
+            transform: translateX(0) scaleY(1) scaleX(1);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out-blurred-right {
+  0% {
+    -webkit-transform: translateX(0) scaleY(1) scaleX(1);
+            transform: translateX(0) scaleY(1) scaleX(1);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(1000px) scaleX(2) scaleY(0.2);
+            transform: translateX(1000px) scaleX(2) scaleY(0.2);
+    -webkit-transform-origin: 0% 50%;
+            transform-origin: 0% 50%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-blurred-br {
+  0% {
+    -webkit-transform: translate(1000px, 1000px) skew(80deg, 10deg);
+            transform: translate(1000px, 1000px) skew(80deg, 10deg);
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translate(0, 0) skew(0deg, 0deg);
+            transform: translate(0, 0) skew(0deg, 0deg);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out-blurred-br {
+  0% {
+    -webkit-transform: translate(0, 0) skew(0deg, 0deg);
+            transform: translate(0, 0) skew(0deg, 0deg);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate(1000px, 1000px) skew(80deg, 10deg);
+            transform: translate(1000px, 1000px) skew(80deg, 10deg);
+    -webkit-transform-origin: 0% 100%;
+            transform-origin: 0% 100%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+}
+
+
 @keyframes fade-out {
   0% {
     opacity: 1;
@@ -411,28 +536,25 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
     opacity: 1;
   }
 }
-
-/* ======== ANIMATIONS END ====== */
-
-</style>
+  </style>
 </head>
 <body>
-<button id="menuButton" onclick="showPopup()">&#x100306;</button>
+<button id="menuButton" onclick="showPopup()">Menu</button>
 
 <div id="grinder1Title" class="grinders">Grinder 1</div>
 <div id="roundedCorners1">
   <table id="grinder1">
     <thead id="tableHead1">
       <tr>
-              <td>&#x100249;</td>
-              <td>&#x10042b;</td> 
-              <td>&#x1007f2;</td>
-              <td>&#x100b6d;</td> 
-              <td>&#x101384;</td>
-              <td>&#x1001ec;</td> 
-              <td>&#x10155c;</td>
-              <td>&#x1002c4;</td> 
-              <td>&#x10042f;</td>
+              <td>Date</td>
+              <td>Time</td> 
+              <td>Set.</td>
+              <td>gr.</td> 
+              <td>ml.</td>
+              <td>&deg;C</td> 
+              <td>Recipe</td>
+              <td>Rating</td> 
+              <td>Draw</td>
       </tr>
     </thead>
     <tbody>
@@ -441,22 +563,22 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 </div>
 
 <!-- <button id="toggleB1" onclick="toggleTable1();toggleSlice1()">&#x100068;</button> -->
-<button id="addBrew" onclick="openForm()">&#x1003c7;</button>
+<button id="addBrew" onclick="openForm()">Add</button>
 
 <div class="grinders" id="grinder2Title">Grinder 2</div>
 <div id="roundedCorners2">
   <table id="grinder2">
     <thead id="tableHead2">
       <tr>
-              <td>&#x100249;</td>
-              <td>&#x10042b;</td> 
-              <td>&#x1013b4;</td>
-              <td>&#x100b6d;</td> 
-              <td>&#x101384;</td>
-              <td>&#x1001ec;</td> 
-              <td>&#x10155c;</td>
-              <td>&#x1002c4;</td> 
-              <td>&#x10042f;</td>
+               <td>Date</td>
+              <td>Time</td> 
+              <td>Set.</td>
+              <td>gr.</td> 
+              <td>ml.</td>
+              <td>&deg;C</td> 
+              <td>Recipe</td>
+              <td>Rating</td> 
+              <td>Draw</td>
       </tr>
     </thead>
       <tbody>
@@ -475,9 +597,9 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
       <input type="text" placeholder="Enter IFTTT Key" name="iftttKeyInput" id="formInput3">
     </div>
     <div id=popBtnContainer>
-      <button onclick="clearLocalStorage()" id="csvBtn">Wipe Data</button>
+      <button onclick="clearLocalStorage(); reloadPage()" id="csvBtn">Wipe</button>
       <button onclick="openCsvOrFont()" id="fontBtn">Add File</button>
-      <button type="submit" id="saveButton">Save</button>
+      <button type="submit" id="saveButton" onclick="reloadPage()">Save</button>
     </div>
   </form>
 </div>
@@ -491,12 +613,12 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 </div>
 
 <div id="firstRow">
-  <div id="inputIcon">&#x1007f2;</div>
+  <div id="inputIcon">St.</div>
   <input type="text" autocorrect="off" autocapitalize="off" placeholder="Enter measurements" name="log" id="logDetails">
 </div>
 
 <div id="secondRow">
-  <div id="inputIcon">&#x10155c;</div>
+  <div id="inputIcon">Rc.</div>
   <select name="recipe" id="selectList" required>
     <optgroup label="Inverted">
       <option value="TWi">Wendelboe inverted</option>
@@ -505,8 +627,9 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
     </optgroup>
     <optgroup label="Aeropress">
       <option value="JH">James Hoffmann</option>
-      <option value="TW">Tim Wendelboe</option>
+      <option value="TW" selected="selected">Tim Wendelboe</option>
       <option value="OX">Onyx Coffee</option>
+      <option value="AO">Aeropress Original</option>
     </optgroup>
     <optgroup label="V60">
       <option value="TK">Tetsu Kasuya 4:6</option>
@@ -520,19 +643,18 @@ animation: slide-in-blurred-top 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 </div>
 
 <div id="thirdRow">
-  <div id="inputIcon">&#x10042f;</div>
+  <div id="inputIcon">Tm.</div>
   <input type="number" placeholder="Enter time" name="time" id="idTime">
 </div>
     
 <div id=buttonRow>
-    <input type=reset value="&#x100060;" id="resetButton"></input>
+    <input type=reset value="Reset" id="resetButton"></input>
     <button type="button" onclick="closeForm();closeFormEval()" id="closeButton">Close</button>
       </div>
     </form>
   </div>
-
 <script>
-window.addEventListener('beforeunload', () => {
+    window.addEventListener('beforeunload', () => {
     saveDataToLocalStorage("#grinder1 tbody tr", "coffeeLog1");
     saveDataToLocalStorage("#grinder2 tbody tr", "coffeeLog2");
 });
@@ -569,26 +691,60 @@ function saveDataToLocalStorage(userGrinder, userLog) {
 function loadSelectedFont() {
   const fontData = localStorage.getItem('selectedFont');
   if (fontData) {
-    // const tableHeaders = document.querySelectorAll('thead tr td');
-    // const tableHeaderCell = document.querySelector('thead tr td');
-    // if (tableHeaders.length > 0) {
-    //   tableHeaders[0].style.fontSize = "3vw";
-    //   tableHeaders[1].style.fontSize = "3vw";
-    //   tableHeaders[2].style.fontSize = "3vw";
-    //   tableHeaders[0].textContent = '\u{100249}';
-    //   tableHeaders[1].textContent = '\u{10042b}';
-    //   tableHeaders[2].textContent = '\u{101384}';
-    // }
-    // const menuButtonIcon = document.querySelector('#menuButton')
-    //   menuButtonIcon.style.fontSize = "3.5vw";
-    //   menuButtonIcon.textContent = '\u{100306}';
-      const css = `@font-face {
+    const tableHeaders = document.querySelectorAll('thead tr td');
+    const tableHeaderFontsize1 = document.querySelector('#grinder1 thead tr');
+    const tableHeaderFontsize2 = document.querySelector('#grinder2 thead tr');
+    const tableHeaders2 = document.querySelectorAll('#grinder2 thead tr td');
+tableHeaderFontsize1.style.fontSize = '5vw'; 
+tableHeaderFontsize2.style.fontSize = '5vw'; 
+
+tableHeaders[0].textContent = '\u{100249}';
+tableHeaders[1].textContent = '\u{10042b}';
+tableHeaders[2].textContent = '\u{1007f2}';
+tableHeaders[3].textContent = '\u{100b6d}';
+tableHeaders[4].textContent = '\u{101384}';
+tableHeaders[5].textContent = '\u{1001ec}';
+tableHeaders[6].textContent = '\u{10155c}';
+tableHeaders[7].textContent = '\u{1002c4}';
+tableHeaders[8].textContent = '\u{10042f}';
+tableHeaders2[0].textContent = '\u{100249}';
+tableHeaders2[1].textContent = '\u{10042b}';
+tableHeaders2[2].textContent = '\u{1013b4}';
+tableHeaders2[3].textContent = '\u{100b6d}';
+tableHeaders2[4].textContent = '\u{101384}';
+tableHeaders2[5].textContent = '\u{1001ec}';
+tableHeaders2[6].textContent = '\u{10155c}';
+tableHeaders2[7].textContent = '\u{1002c4}';
+tableHeaders2[8].textContent = '\u{10042f}';
+  
+const menuButtonIcon = document.querySelector('#menuButton')
+  menuButtonIcon.textContent = '\u{100306}';
+  menuButtonIcon.style.fontSize = "7vw";
+
+const addButtonIcon = document.querySelector('#addBrew')
+  addButtonIcon.textContent = '\u{10004c}'
+  addButtonIcon.style.fontSize = '12vw';
+  addButtonIcon.style.height = '15vw';
+  addButtonIcon.style.width = '15vw';
+  addButtonIcon.style.borderRadius = '50%';
+
+
+
+const resetButtonIcon = document.querySelector('#resetButton')
+  resetButtonIcon.textContent = '\u{100060}';
+  
+const inputIcons = document.querySelectorAll('#inputIcon')
+    inputIcons[0].textContent ='\u{1007f2}';
+    inputIcons[1].textContent ='\u{10155c}';
+    inputIcons[2].textContent ='\u{10042f}';
+
+const css = `@font-face {
       font-family: 'iconMode';
       src: url('data:font/opentype;charset=utf-8;base64,${fontData}');
       font-display: swap;
     }`;
-    const style = document.createElement('style');
-    style.appendChild(document.createTextNode(css));
+const style = document.createElement('style');
+style.appendChild(document.createTextNode(css));
     document.head.appendChild(style);
   }
 }
@@ -623,28 +779,50 @@ function loadLogs(userGrinder, selectedTable) {
   const data = JSON.parse(localStorage.getItem(userGrinder));
   const tableBody = document.querySelector(selectedTable);
   if (data) {
-  // iterate through the data array from beginning to end
+    // iterate through the data array from beginning to end
     for (let i = 0; i < data.length; i++) {
       const row = data[i];
       const tableRow = document.createElement('tr');
       const dateCell = document.createElement('td');
       dateCell.textContent = row.date;
+      dateCell.setAttribute('data-row', i+1);
+      dateCell.setAttribute('data-col', 1);
+      dateCell.onclick = function() {
+        confirmDeleteRow(this);
+      };
       const timeCell = document.createElement('td');
       timeCell.textContent = row.time;
+      timeCell.setAttribute('data-row', i+1);
+      timeCell.setAttribute('data-col', 2);
       const setCell = document.createElement('td');
       setCell.textContent = row.setting;
+      setCell.setAttribute('data-row', i+1);
+      setCell.setAttribute('data-col', 3);
       const grCell = document.createElement('td');
       grCell.textContent = row.gr;
+      grCell.setAttribute('data-row', i+1);
+      grCell.setAttribute('data-col', 4);
       const mlCell = document.createElement('td');
       mlCell.textContent = row.ml;
+      mlCell.setAttribute('data-row', i+1);
+      mlCell.setAttribute('data-col', 5);
       const degCell = document.createElement('td');
       degCell.textContent = row.degrees;
+      degCell.setAttribute('data-row', i+1);
+      degCell.setAttribute('data-col', 6);
       const recCell = document.createElement('td');
       recCell.textContent = row.recipe;
+      recCell.setAttribute('data-row', i+1);
+      recCell.setAttribute('data-col', 7);
       const ratCell = document.createElement('td');
       ratCell.textContent = row.rating;
+      ratCell.setAttribute('data-row', i+1);
+      ratCell.setAttribute('data-col', 8);
+      ratCell.classList.add('rating-cell');
       const drawCell = document.createElement('td');
       drawCell.textContent = row.drawdown;
+      drawCell.setAttribute('data-row', i+1);
+      drawCell.setAttribute('data-col', 9);
       tableRow.appendChild(dateCell);
       tableRow.appendChild(timeCell);
       tableRow.appendChild(setCell);
@@ -662,69 +840,6 @@ function loadLogs(userGrinder, selectedTable) {
 const rowNumber = 8;
 let useSlice1 = false;
 let useSlice2 = false;
-
-// function toggleTable1() {
-//   if (useSlice1) {
-//     while (tbody1.rows.length > rowNumber) {
-//       tbody1.deleteRow(tbody1.rows.length - 1);
-//     }
-//   } else {
-//     rows1.slice(rowNumber,).forEach((row) => {
-//       const cells = row.trim().split(";");
-//       const tr = tbody1.insertRow();
-      
-//   cells.forEach((cell, index) => {
-//     const td = tr.insertCell();
-//     td.textContent = cell;
-//     if (index === 7) {
-//       td.classList.add('rating-cell');
-//      }
-//     });
-//    });
-//   }
-//   const button = document.getElementById('toggleB1');
-//   if (button.textContent=== '\u{100066}') {
-//     button.textContent = '\u{100068}';
-//   } else {
-//     button.textContent = '\u{100066}';
-//   }
-// }
-
-// function toggleTable2() {
-//   if (useSlice2) {
-//     while (tbody2.rows.length > rowNumber) {
-//       tbody2.deleteRow(tbody2.rows.length - 1);
-//     }
-//   } else {
-//     rows2.slice(rowNumber,).forEach((row) => {
-//       const cells = row.trim().split(";");
-//       const tr = tbody2.insertRow();
-      
-//   cells.forEach((cell, index) => {
-//     const td = tr.insertCell();
-//     td.textContent = cell;
-//     if (index === 7) {
-//       td.classList.add('rating-cell');
-//      }
-//     });
-//    });
-//   }
-//   const button = document.getElementById('toggleB2');
-//   if (button.textContent=== '\u{100066}') {
-//     button.textContent = '\u{100068}';
-//   } else {
-//     button.textContent = '\u{100066}';
-//   }
-// }
-
-// function toggleSlice1() {
-//   useSlice1 = !useSlice1;
-// }
-// function toggleSlice2() {
-//   useSlice2 = !useSlice2;
-// }
-
-//initialTable();
     
 const bodyDarkMode = document.querySelector('body');
 
@@ -750,23 +865,23 @@ const formPopup = document.getElementById("myForm")
 const formContainer = formPopup.querySelector(".form-container");
 
 function openForm() {
-  formContainer.classList.add("slide-in-blurred-top");
-  formPopup.classList.add("fade-bg-in")
+  formContainer.classList.add("slide-in-blurred-br");
+  formPopup.classList.add("fade-in")
   formPopup.style.display = "block";
   setTimeout(function() {
-    formContainer.classList.remove("slide-in-blurred-top");
-    formPopup.classList.remove("fade-bg-in");
+    formContainer.classList.remove("slide-in-blurred-br");
+    formPopup.classList.remove("fade-in");
   }, 300);
 }
 
 
 function closeForm() {
-  formContainer.classList.add("slide-out-blurred-top");
-  formPopup.classList.add("fade-bg-out");
+  formContainer.classList.add("slide-out-blurred-br");
+  formPopup.classList.add("fade-out");
   setTimeout(function() {
     formPopup.style.display = "none";
-    formContainer.classList.remove("slide-out-blurred-top");
-    formPopup.classList.remove("fade-bg-out");
+    formContainer.classList.remove("slide-out-blurred-br");
+    formPopup.classList.remove("fade-out");
   }, 250);
 }
 
@@ -777,25 +892,29 @@ function closeFormEval() {
   const currentTime = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
   const logInput = document.getElementById("logDetails").value
   const logCells = logInput.replaceAll("-",";").split(";");
-console.log("logInput: " + logInput)
   const selectList = document.getElementById("selectList").value;
   const idTime = document.getElementById("idTime").value.replace(".", ":");
   let tr;
   let rows;
   if (logInput.length>0) {
-  if (logInput.includes(".")){
-       tr = tbody1.insertRow(0);
-       rows = tbody1.rows;
-  } else {
-       tr = tbody2.insertRow(0); 
-       rows = tbody2.rows;
-  }
+    if (logInput.includes(".")){
+      tr = tbody1.insertRow(0);
+      rows = tbody1.rows;
+    } else {
+      tr = tbody2.insertRow(0); 
+      rows = tbody2.rows;
+    }
     const cells = [currentDate, currentTime, logCells[0], logCells[1], logCells[2], logCells[3], selectList, "3", idTime];
     cells.forEach((cell, cellIndex) => {
       const td = tr.insertCell();
       td.textContent = cell;
       if (cellIndex === 7) {
         td.classList.add('rating-cell');
+        td.addEventListener('click', function() {
+          const ratingPopup = document.querySelector('#rating-popup');
+          ratingPopup.style.display = 'flex';
+          this.classList.add('selected-cell');
+        });
       }
       td.setAttribute('data-row', 0);
       td.setAttribute('data-col', cellIndex);
@@ -812,75 +931,67 @@ console.log("logInput: " + logInput)
   }
 }
 
-// ====== END brew form
 
+// ====== END brew form
+setTimeout(() => {
 const ratingOptions = [1, 2, 3, 4, 5, 6];
 const ratingPopup = document.createElement('div');
 ratingPopup.setAttribute('id', 'rating-popup');
 ratingPopup.style.display = 'none';
 ratingPopup.style.justifyContent = 'center';
-ratingPopup.style.fontWeight = 'light';
 ratingPopup.style.position = 'fixed';
 ratingPopup.style.top = '0';
-ratingPopup.style.left = '0';
 ratingPopup.style.width = '100vw';
 ratingPopup.style.height = '100vh';
- ratingPopup.style.borderRadius = '30px';
- ratingPopup.style.padding = '20px';
-ratingPopup.style.backgroundColor = '#f0f0f010';
-ratingPopup.style.webkitBackdropFilter = 'blur(20px)';
+ratingPopup.style.webkitBackdropFilter = 'blur(15px)';
 ratingPopup.style.zIndex = '999';
-ratingPopup.classList.add('fade-bg-in');
+ratingPopup.classList.add('fade-in');
 
 const ratingContainer = document.createElement('div');
 ratingContainer.setAttribute('id', 'rating-container');
 ratingContainer.style.position = 'fixed';
-ratingContainer.style.top = '30vh';
-ratingContainer.style.backgroundColor = '#00000030';
-ratingContainer.style.borderRadius = '25px';
-ratingContainer.style.webkitBackdropFilter = 'blur(35px)';
-ratingContainer.classList.add('slide-in-blurred-top'); 
+ratingContainer.style.top = '20%';
+ratingContainer.style.right = '10%'
+ratingContainer.style.backgroundColor = '#00000020';
+ratingContainer.style.borderRadius = '12px';
+//ratingContainer.style.padding = '1vw'
+ratingContainer.style.webkitBackdropFilter = 'blur(40px)';
+ratingContainer.classList.add('slide-in-blurred-right'); 
 
 const ratingList = document.createElement('ul');
-ratingList.style.display = 'flex';
-ratingList.style.flexWrap = 'wrap';
 ratingList.style.justifyContent = 'space-evenly';
 ratingList.style.alignItems = 'center';
-ratingList.style.marginTop = '26px';
-ratingList.style.marginBottom = '22px';
-ratingList.style.padding = '1vw';
-
-const ratingItemSize = 11; // in vw units
-const ratingItemMargin = 1; // in vw units
-const ratingItemCountPerRow = Math.floor((85 - ratingItemMargin) / (ratingItemSize + ratingItemMargin)); // max count of items per row
-const ratingItemWidth = ((85 - ratingItemMargin) / ratingItemCountPerRow) - ratingItemMargin; // calculate width based on max count and margin
+ratingList.style.padding = '0vw';
+ratingList.style.marginTop = '8vw'
+ratingList.style.marginBottom = '3vw'
 
 ratingOptions.forEach(option => {
   const ratingItem = document.createElement('li');
   ratingItem.style.display = 'flex';
   ratingItem.style.justifyContent = 'center';
   ratingItem.style.alignItems = 'center';
-  ratingItem.style.width = ratingItemWidth +'vw';
-  ratingItem.style.height = ratingItemSize +'vw';
-  ratingItem.style.margin = (ratingItemMargin / 2)+'vw';
-  ratingItem.style.borderRadius = '25%';
+  ratingItem.style.width = '15vw';
+  ratingItem.style.height = '15vw';
+  ratingItem.style.margin = '3vw';
+  ratingItem.style.borderRadius = '20%';
   ratingItem.style.backgroundColor = '#ffffff60';
   ratingItem.style.webkitBackdropFilter = 'blur(25px)';
-  ratingItem.style.fontSize = ratingItemSize-2 +'vw';
-  ratingItem.style.color = 'black';
-  ratingItem.style.cursor = 'pointer';
+  //ratingItem.style.boxShadow = '0px 0px 5px -5px'
+  ratingItem.style.fontFamily = 'system-ui';
+  ratingItem.style.fontWeight = '600';
+  ratingItem.style.fontSize = '9vw';
   ratingItem.innerText = option;
   ratingItem.addEventListener('click', function() {
     const selectedRating = this.innerText;
     const selectedCell = document.querySelector('.selected-cell');
     selectedCell.innerText = selectedRating;
     selectedCell.classList.remove('selected-cell');
-    ratingPopup.classList.replace('fade-bg-in', 'fade-bg-out'); 
-    ratingContainer.classList.replace('slide-in-blurred-top', 'slide-out-blurred-top'); 
+    ratingPopup.classList.replace('fade-in', 'fade-out'); 
+    ratingContainer.classList.replace('slide-in-blurred-right', 'slide-out-blurred-right'); 
     setTimeout(() => {
       ratingPopup.style.display = 'none';
-      ratingPopup.classList.replace('fade-bg-out', 'fade-bg-in');
-      ratingContainer.classList.replace('slide-out-blurred-top', 'slide-in-blurred-top');
+      ratingPopup.classList.replace('fade-out', 'fade-in');
+      ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
     }, 250);
   });
   ratingList.appendChild(ratingItem);
@@ -889,28 +1000,29 @@ ratingOptions.forEach(option => {
 const cancelButton = document.createElement('li');
 cancelButton.style.display = 'flex';
 cancelButton.style.justifyContent = 'center';
+cancelButton.style.position = "fixed";
+cancelButton.style.top = '-2.8vw';
+cancelButton.style.right = '-2.8vw';
 cancelButton.style.alignItems = 'center';
-cancelButton.style.width = '11vw';
-cancelButton.style.height = '11vw';
-cancelButton.style.margin = '1vw';
-cancelButton.style.borderRadius = '25%';
-cancelButton.style.backgroundColor = '#ffffff60';
+cancelButton.style.width = '10vw';
+cancelButton.style.height = '10vw';
+cancelButton.style.fontSize = '7vw'
+cancelButton.style.boxShadow = '0px 0px 10px -5px'
+cancelButton.style.borderRadius = '50%';
+cancelButton.style.backgroundColor = '#ffffff50';
 cancelButton.style.webkitBackdropFilter = 'blur(25px)';
-cancelButton.style.fontSize = '6vw';
-cancelButton.style.color = 'black';
-cancelButton.style.cursor = 'pointer';
 cancelButton.innerText = '\u{100060}';
 cancelButton.addEventListener('click', function() {
-    ratingPopup.classList.replace('fade-bg-in', 'fade-bg-out');
-  ratingContainer.classList.replace('slide-in-blurred-top', 'slide-out-blurred-top'); 
+  ratingPopup.classList.replace('fade-in', 'fade-out');
+  ratingContainer.classList.replace('slide-in-blurred-right', 'slide-out-blurred-right'); 
     setTimeout(() => {
       ratingPopup.style.display = 'none';
-      ratingPopup.classList.replace('fade-bg-out', 'fade-bg-in'); 
-      ratingContainer.classList.replace('slide-out-blurred-top', 'slide-in-blurred-top');
+      ratingPopup.classList.replace('fade-out', 'fade-in'); 
+      ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
     }, 250);
   });
 
-ratingList.appendChild(cancelButton);
+ratingContainer.appendChild(cancelButton);
     ratingContainer.appendChild(ratingList);
     ratingPopup.appendChild(ratingContainer);
     document.body.appendChild(ratingPopup);
@@ -921,13 +1033,15 @@ ratingList.appendChild(cancelButton);
         const row = this.getAttribute('data-row');
         const col = this.getAttribute('data-col');
         const cellRect = this.getBoundingClientRect();
-        ratingPopup.style.top = '0px';
-        ratingPopup.style.left ='0px';
-        ratingPopup.style.display = 'flex';
+
+  ratingPopup.style.top = '0px';
+  ratingPopup.style.left ='0px';
+  ratingPopup.style.display = 'flex';
         ratingPopup.classList.add('active');
         this.classList.add('selected-cell');
       });
     });
+}, 100);
 
 // const tbodyEdit = document.querySelector('tbody');
 // tbodyEdit.addEventListener('click', function(event) {
@@ -948,6 +1062,24 @@ ratingList.appendChild(cancelButton);
 //     }
 //   }
 // });
+
+function confirmDeleteRow(row) {
+  // Ask the user if they want to delete the row
+  var confirmation = confirm("Are you sure you want to delete this row?");
+  
+  // If the user clicked "OK", delete the row
+  if (confirmation) {
+    // Get the index of the row
+    var rowIndex = row.parentNode.parentNode.rowIndex;
+    
+    // Get the table body element
+    var tableBody = row.parentNode.parentNode.parentNode.tBodies[0];
+    
+    // Delete the row from the table body
+    tableBody.deleteRow(rowIndex);
+  }
+}
+
 
 // ========= popup =====
 function showPopup() {
@@ -993,6 +1125,13 @@ function showPopup() {
   });
 }
 
+
+function reloadPage() {
+  setTimeout(() => {
+    location.reload();
+  }, 200)
+}
+
 function openCsvOrFont() {
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
@@ -1003,7 +1142,9 @@ function openCsvOrFont() {
     reader.onload = () => {
       const fileData = reader.result;
       if (file.type === 'text/csv') {
-        addCsvToTable(fileData);
+        console.log(file.name)
+        addCsvToTable(fileData, file.name);
+        reloadPage();
       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
         const reader = new FileReader();
         reader.onload = () => {
@@ -1011,6 +1152,7 @@ function openCsvOrFont() {
           try {
             localStorage.setItem('selectedFont', fontData);
             alert('Selected font saved to local storage!');
+            reloadPage();
           } catch (e) {
             alert('Error saving font to local storage: ' + e.message);
           }
@@ -1023,18 +1165,24 @@ function openCsvOrFont() {
   fileInput.click();
 }
 
-function addCsvToTable(csvData) {
+
+function addCsvToTable(csvData, fileName) {
+  const fileNameString = fileName;
+  let tbodyTemp = document.querySelector('#grinder1 tbody');
+  if (fileNameString.includes("C2")===true) {
+    tbodyTemp = document.querySelector('#grinder2 tbody');
+  }
+  console.log(tbodyTemp)
   const rows = csvData.split('\n').map(row => row.split(';'));
   rows.slice(0).forEach((row, rowIndex) => {
-    const tr = tbody.insertRow();
+    const tr = tbodyTemp.insertRow();
     row.forEach((cell, cellIndex) => {
       const td = tr.insertCell();
       td.textContent = cell;
     });
   });
- // Store the CSV data in a global variable for later use
-  window.csvWaterLog = csvData;
 }
+
 
 function checkStoredLog() {
   if (!localStorage.getItem('coffeeLog1')) {
@@ -1053,8 +1201,10 @@ function sendPostRequest(value, apiKey) {
 
 function clearLocalStorage() {
   localStorage.clear();
-  const tbody = document.querySelector('tbody');
-  tbody.innerHTML = '';
+  const tbody1 = document.querySelector('#grinder1 tbody');
+  const tbody2 = document.querySelector('#grinder2 tbody');
+  tbody1.innerHTML = '';
+  tbody2.innerHTML = '';
 }
 
 </script>
