@@ -110,20 +110,23 @@ tbody td:nth-child(-n+2) {
     color: #d2b48cee;
 }
 .dark-theme button,
+.dark-theme #resetButton,
+.dark-theme #addBrew {
+  background-color: #d2b48c60;
+  color: #35281e;
+}
+
 .dark-theme #logDetails,
 .dark-theme #idTime,
-.dark-theme #resetButton,
-.dark-theme #addBrew,
 .dark-theme #formInput1,
 .dark-theme #formInput2,
 .dark-theme #formInput3,
 .dark-theme #selectList,
 .dark-theme input {
-  background-color: #d2b48c40;
-  color: #35281e;
+  background-color: #35281e50;
 }
-.dark-theme .form-container, .dark-theme #popup {
-   background-color: #d2b48c40;
+.dark-theme .form-container, .dark-theme #popup, .dark-theme #rating-container {
+   background-color: #d2b48c30;
 }
 .dark-theme #logDetails:focus,
 .dark-theme #idTime:focus,
@@ -132,7 +135,7 @@ tbody td:nth-child(-n+2) {
 .dark-theme #formInput2:focus,
 .dark-theme #formInput3:focus {
   -webkit-backdrop-filter: blur(35px);
-  background-color: #35281e50;
+  background-color: #d2b48c40;
   outline: none;
 }
 .dark-theme #title {
@@ -142,14 +145,14 @@ tbody td:nth-child(-n+2) {
 
 .dark-theme #grinder1Title, .dark-theme #grinder2Title {
   font-weight: bold;
-  color: #d2b48c60;
+  color: #d2b48caa;
 }
 
 .dark-theme #inputIcon {
   color: #35281e;
 }
 
-.dark-theme #rating-item, .dark-theme #cancel-button {
+.dark-theme #rating-item, .dark-theme #cancelButton {
   color: #35281e;
   background-color: #ffffff30;
 }
@@ -333,6 +336,65 @@ input, select{
   justify-content: space-evenly;
   margin-left: auto;
   margin-right: auto;
+}
+
+#rating-popup {
+  display: none;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 999;
+}
+
+#rating-container {
+  position: fixed;
+  top: 20%;
+  right: 10%;
+  background-color: #00000020;
+  border-radius: 12px;
+  -webkit-backdrop-filter: blur(40px);
+}
+
+#rating-container ul {
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0;
+  margin-top: 8vw;
+  margin-bottom: 3vw;
+}
+
+#rating-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15vw;
+  height: 15vw;
+  margin: 3vw;
+  border-radius: 20%;
+  -webkit-backdrop-filter: blur(25px);
+  background-color: #ffffff60;
+  color: black;
+  font-family: system-ui;
+  font-weight: 600;
+  font-size: 9vw;
+}
+
+#cancelButton {
+  position: fixed;
+  padding:0;
+  top: -2.8vw;
+  right: -2.8vw;
+  display: flex;
+  justify-content: center;
+  width: 10vw;
+  height: 10vw;
+  font-size: 8vw;
+  box-shadow: 0px 0px 10px -5px;
+  border-radius: 50%;
+  -webkit-backdrop-filter: blur(25px);
 }
 /* ======== ANIMATIONS ====== */
 
@@ -668,7 +730,32 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
       </div>
     </form>
   </div>
+<div id="rating-popup">
+	<div id="rating-container">
+    		<li id="cancelButton">X</li>
+		<ul id="rating-list">
+			<li id="rating-item">1</li>
+			<li id="rating-item">2</li>
+			<li id="rating-item">3</li>
+			<li id="rating-item">4</li>
+			<li id="rating-item">5</li>
+			<li id="rating-item">6</li>
+		</ul>
+	</div>
+</div>
 <script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        // Registration failed
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
+
     window.addEventListener('beforeunload', () => {
     saveDataToLocalStorage("#grinder1 tbody tr", "coffeeLog1");
     saveDataToLocalStorage("#grinder2 tbody tr", "coffeeLog2");
@@ -742,6 +829,9 @@ const addButtonIcon = document.querySelector('#addBrew')
   addButtonIcon.style.height = '15vw';
   addButtonIcon.style.width = '15vw';
   addButtonIcon.style.borderRadius = '50%';
+  
+const cancelButtonIcon = document.querySelector('#cancelButton')
+	cancelButtonIcon.textContent = '\u{100060}'
 
 
 
@@ -852,16 +942,19 @@ function loadLogs(userGrinder, selectedTable) {
   }
 }
 
-const rowNumber = 8;
-let useSlice1 = false;
-let useSlice2 = false;
+//const rowNumber = 8;
+//let useSlice1 = false;
+//let useSlice2 = false;
     
 const bodyDarkMode = document.querySelector('body');
+  var metaTag = document.querySelector('meta[name="theme-color"]');
 
 // Check if the system's color scheme is light or dark
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     bodyDarkMode.classList.add('dark-theme');
+    metaTag.setAttribute('content', '#3d2b1f');// add value for popup
   } else {
+    metaTag.setAttribute('content', '#D1B888')
     bodyDarkMode.classList.remove('dark-theme');
   }
 
@@ -869,7 +962,9 @@ const bodyDarkMode = document.querySelector('body');
 window.matchMedia('(prefers-color-scheme: dark)').addListener((event) => {
   if (event.matches) {
     bodyDarkMode.classList.add('dark-theme');
+    metaTag.setAttribute('content', '#3d2b1f');// add value for popup
   } else {
+    metaTag.setAttribute('content', '#D1B888')
     bodyDarkMode.classList.remove('dark-theme');
   }
 })
@@ -945,59 +1040,33 @@ function closeFormEval() {
     }
   }
 }
-
-
 // ====== END brew form
+// ===== RATING =====
 setTimeout(() => {
-const ratingOptions = [1, 2, 3, 4, 5, 6];
-const ratingPopup = document.createElement('div');
-ratingPopup.setAttribute('id', 'rating-popup');
-ratingPopup.style.display = 'none';
-ratingPopup.style.justifyContent = 'center';
-ratingPopup.style.position = 'fixed';
-ratingPopup.style.top = '0';
-ratingPopup.style.width = '100vw';
-ratingPopup.style.height = '100vh';
-ratingPopup.style.webkitBackdropFilter = 'blur(15px)';
-ratingPopup.style.zIndex = '999';
-ratingPopup.classList.add('fade-in');
+const ratingCells = document.querySelectorAll('.rating-cell');
+const ratingPopup = document.getElementById('rating-popup');
+const ratingContainer = document.getElementById('rating-container');
+const ratingItems = document.querySelectorAll('#rating-list li');
+const cancelButton = document.getElementById('cancelButton');
 
-const ratingContainer = document.createElement('div');
-ratingContainer.setAttribute('id', 'rating-container');
-ratingContainer.style.position = 'fixed';
-ratingContainer.style.top = '20%';
-ratingContainer.style.right = '10%'
-ratingContainer.style.backgroundColor = '#00000020';
-ratingContainer.style.borderRadius = '12px';
-//ratingContainer.style.padding = '1vw'
-ratingContainer.style.webkitBackdropFilter = 'blur(40px)';
-ratingContainer.classList.add('slide-in-blurred-right'); 
+ratingCells.forEach(cell => {
+  cell.addEventListener('click', function() {
+    ratingPopup.classList.add('fade-in'); 
+    ratingContainer.classList.add('slide-in-blurred-right'); 
+    const row = this.getAttribute('data-row');
+    const col = this.getAttribute('data-col');
+    const cellRect = this.getBoundingClientRect();
 
-const ratingList = document.createElement('ul');
-ratingList.style.justifyContent = 'space-evenly';
-ratingList.style.alignItems = 'center';
-ratingList.style.padding = '0vw';
-ratingList.style.marginTop = '8vw'
-ratingList.style.marginBottom = '3vw'
+    //ratingPopup.style.top = cellRect.top + window.pageYOffset + 'px';
+    //ratingPopup.style.left = cellRect.left + window.pageXOffset + 'px';
+    ratingPopup.style.display = 'flex';
+    ratingPopup.classList.add('active');
+    this.classList.add('selected-cell');
+  });
+});
 
-ratingOptions.forEach(option => {
-  const ratingItem = document.createElement('li');
-  ratingItem.setAttribute('id', 'rating-item')
-  ratingItem.style.display = 'flex';
-  ratingItem.style.justifyContent = 'center';
-  ratingItem.style.alignItems = 'center';
-  ratingItem.style.width = '15vw';
-  ratingItem.style.height = '15vw';
-  ratingItem.style.margin = '3vw';
-  ratingItem.style.borderRadius = '20%';
-  //ratingItem.style.backgroundColor = '#ffffff60';
-  ratingItem.style.webkitBackdropFilter = 'blur(25px)';
-  //ratingItem.style.boxShadow = '0px 0px 5px -5px'
-  ratingItem.style.fontFamily = 'system-ui';
-  ratingItem.style.fontWeight = '600';
-  ratingItem.style.fontSize = '9vw';
-  ratingItem.innerText = option;
-  ratingItem.addEventListener('click', function() {
+ratingItems.forEach(item => {
+  item.addEventListener('click', function() {
     const selectedRating = this.innerText;
     const selectedCell = document.querySelector('.selected-cell');
     selectedCell.innerText = selectedRating;
@@ -1010,55 +1079,19 @@ ratingOptions.forEach(option => {
       ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
     }, 250);
   });
-  ratingList.appendChild(ratingItem);
 });
 
-const cancelButton = document.createElement('li');
-cancelButton.setAttribute('id', 'cancel-button')
-cancelButton.style.display = 'flex';
-cancelButton.style.justifyContent = 'center';
-cancelButton.style.position = "fixed";
-cancelButton.style.top = '-2.8vw';
-cancelButton.style.right = '-2.8vw';
-cancelButton.style.alignItems = 'center';
-cancelButton.style.width = '10vw';
-cancelButton.style.height = '10vw';
-cancelButton.style.fontSize = '7vw'
-cancelButton.style.boxShadow = '0px 0px 10px -5px'
-cancelButton.style.borderRadius = '50%';
-//cancelButton.style.backgroundColor = '#ffffff50';
-cancelButton.style.webkitBackdropFilter = 'blur(25px)';
-cancelButton.innerText = '\u{100060}';
 cancelButton.addEventListener('click', function() {
   ratingPopup.classList.replace('fade-in', 'fade-out');
   ratingContainer.classList.replace('slide-in-blurred-right', 'slide-out-blurred-right'); 
-    setTimeout(() => {
-      ratingPopup.style.display = 'none';
-      ratingPopup.classList.replace('fade-out', 'fade-in'); 
-      ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
-    }, 250);
-  });
-
-ratingContainer.appendChild(cancelButton);
-    ratingContainer.appendChild(ratingList);
-    ratingPopup.appendChild(ratingContainer);
-    document.body.appendChild(ratingPopup);
-
-    const ratingCells = document.querySelectorAll('.rating-cell');
-    ratingCells.forEach(cell => {
-      cell.addEventListener('click', function() {
-        const row = this.getAttribute('data-row');
-        const col = this.getAttribute('data-col');
-        const cellRect = this.getBoundingClientRect();
-
-  ratingPopup.style.top = '0px';
-  ratingPopup.style.left ='0px';
-  ratingPopup.style.display = 'flex';
-        ratingPopup.classList.add('active');
-        this.classList.add('selected-cell');
-      });
-    });
+  setTimeout(() => {
+    ratingPopup.style.display = 'none';
+    ratingPopup.classList.replace('fade-out', 'fade-in'); 
+    ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
+  }, 250);
+});
 }, 100);
+// ====== END RATING =====
 
 // const tbodyEdit = document.querySelector('tbody');
 // tbodyEdit.addEventListener('click', function(event) {
@@ -1102,10 +1135,8 @@ function confirmDeleteRow(row) {
 function showPopup() {
   const backgroundPopup = document.body.querySelector('#popupBackground')
   const popup = document.body.querySelector('#popup')
-  var metaTag = document.querySelector('meta[name="theme-color"]');
 
   backgroundPopup.classList.add('fade-in');
-  metaTag.setAttribute('content', '#D1B888');// add value for popup
   popup.classList.add('slide-in-blurred-top');
   backgroundPopup.style.display= 'block';
   popup.style.display= 'block';
@@ -1129,7 +1160,7 @@ function showPopup() {
 
     backgroundPopup.classList.remove('fade-in');
     popup.classList.remove('slide-in-blurred-top');
-    metaTag.setAttribute('content', '#D1B888');
+
     backgroundPopup.classList.add('fade-out');
     popup.classList.add('slide-out-blurred-top');
     
