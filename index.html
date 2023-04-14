@@ -1255,6 +1255,16 @@ function clearLocalStorage() {
   tbody2.innerHTML = '';
 }
 
+function sendPostRequest(value, apiKey) {
+  const table1Data = Array.from(document.querySelectorAll('#grinder1 tbody td'), td => td.textContent.trim());
+  const data = JSON.stringify(table1Data);
+  const script = document.createElement('script');
+  const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?value1=${encodeURIComponent(value)}&value2=${encodeURIComponent(data)}`;
+  script.src = url;
+  document.body.appendChild(script);
+}
+
+
 </script>
 </body>
 </html>
