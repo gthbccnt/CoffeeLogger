@@ -1255,15 +1255,20 @@ function clearLocalStorage() {
   tbody2.innerHTML = '';
 }
 
-function sendPostRequest(value, apiKey) {
+function sendPostRequest(apiKey) {
   const table1Data = Array.from(document.querySelectorAll('#grinder1 tbody td'), td => td.textContent.trim());
   const data = JSON.stringify(table1Data);
   const script = document.createElement('script');
-  const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?value1=${encodeURIComponent(value)}&value2=${encodeURIComponent(data)}`;
+  const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?&value1=${encodeURIComponent(data)}`;
   script.src = url;
   document.body.appendChild(script);
 }
 
+if (localStorage.getItem('iftttKey')){
+ // const value = document.getElementById('currentAmount').textContent
+  const key = localStorage.getItem('iftttKey')
+  sendPostRequest(key);
+}
 
 </script>
 </body>
