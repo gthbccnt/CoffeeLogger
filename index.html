@@ -1002,7 +1002,7 @@ const bodyDarkMode = document.querySelector('body');
 // Check if the system's color scheme is light or dark
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     bodyDarkMode.classList.add('dark-theme');
-    metaTag.setAttribute('content', '#3d2b1f');// add value for popup
+    metaTag.setAttribute('content', '#1c1f21');// add value for popup
   } else {
     metaTag.setAttribute('content', '#D1B888')
     bodyDarkMode.classList.remove('dark-theme');
@@ -1012,7 +1012,7 @@ const bodyDarkMode = document.querySelector('body');
 window.matchMedia('(prefers-color-scheme: dark)').addListener((event) => {
   if (event.matches) {
     bodyDarkMode.classList.add('dark-theme');
-    metaTag.setAttribute('content', '#3d2b1f');// add value for popup
+    metaTag.setAttribute('content', '#1c1f21');// add value for popup
   } else {
     metaTag.setAttribute('content', '#D1B888')
     bodyDarkMode.classList.remove('dark-theme');
