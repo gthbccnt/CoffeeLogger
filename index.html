@@ -11,6 +11,7 @@
     box-sizing: border-box;
     font-family: system-ui, iconMode;
 }
+
 body {
   margin:0;
   background-color: #D1B888;
@@ -79,7 +80,7 @@ tbody {
 }
 td {
     border: none;
-    height: 9vw;
+    height: 10vw;
 }
 
 tbody tr:nth-child(even) {
@@ -92,28 +93,41 @@ tbody td:nth-child(-n+2) {
   font-size: 3vw;
 }
 .dark-theme {
-  background-color: #3d2b1f;
-  background: linear-gradient(0deg, #35281e 0%, #3d2b1f 90%);
-  color: #efdecdbb;
+  background-color: #353935;
+  background: linear-gradient(0deg, #121212 0%, #1c1f21 100%);
+  color: #ffffff87;/*#b5b4b2ee;*/
 }
-.dark-theme td {
 
-}
 .dark-theme tbody tr:nth-child(even) {
-    background-color: #533e2d40;
+    background-color: #ffffff08;
 }
 .dark-theme tbody tr:nth-child(odd) {
-  background-color: #533e2daa;
+  background-color: #ffffff02;
 }
 .dark-theme thead tr {
-    background-color: #533e2d60;
-    color: #d2b48cee;
+    background-color: #42494930;
 }
+
+.dark-theme thead tr td{
+    color: #ffffff87;
+}
+
 .dark-theme button,
-.dark-theme #resetButton,
+.dark-theme #resetButton {
+  background-color: #00000025;
+  color: #000000;
+}
+
+.dark-theme #addBrew, .dark-theme #menuButton {
+  background-color: #ffffff15;
+}
+
 .dark-theme #addBrew {
-  background-color: #d2b48c60;
-  color: #35281e;
+  box-shadow: 0px 0px 30px 30px #00000025;
+}
+
+.dark-theme #roundedCorners1, .dark-theme #roundedCorners2 {
+  box-shadow: 0px 0px 12px -2px #00000020;
 }
 
 .dark-theme #logDetails,
@@ -123,14 +137,20 @@ tbody td:nth-child(-n+2) {
 .dark-theme #formInput3,
 .dark-theme #selectList,
 .dark-theme input {
-  background-color: #35281e50;
+  background-color: #00000030;
+  color: #A9A9A987;
 }
 
 .dark-theme #selectList {
-  color: #d2b48c;
+  color: #000000bb;
 }
 .dark-theme .form-container, .dark-theme #popup, .dark-theme #rating-container {
-   background-color: #ffffff10; /*#d2b48c30;*/
+   background-color: #ffffff15; /*#d2b48c30;*/
+   -webkit-backdrop-filter: blur(15px);
+   backdrop-filter: blur(15px);
+}
+.dark-theme .form-popup, .dark-theme #popupBackground, .dark-theme #rating-popup {
+  background-color: #ffffff00;
 }
 .dark-theme #logDetails:focus,
 .dark-theme #idTime:focus,
@@ -139,29 +159,28 @@ tbody td:nth-child(-n+2) {
 .dark-theme #formInput2:focus,
 .dark-theme #formInput3:focus {
   -webkit-backdrop-filter: blur(35px);
-  background-color: #d2b48c40;
+  background-color: #00000050;
   outline: none;
 }
 .dark-theme #title {
   font-weight: bold;
-  color: #35281e;
+  color: #000000;
 }
 
 .dark-theme #grinder1Title, .dark-theme #grinder2Title {
-  font-weight: bold;
-  color: #d2b48caa;
+  color: #ebebeb40;
 }
 
 .dark-theme #inputIcon {
-  color: #35281e;
+  color: #000000;
 }
 
 .dark-theme #rating-item, .dark-theme #cancelButton {
-  color: #35281e;
-  background-color: #ffffff30;
+  color: #000000;
+  background-color: #ffffff10;
 }
 .dark-theme ::placeholder {
-  color: #d2b48c70;
+  color: #000000;
 }
 
 button {
@@ -257,6 +276,7 @@ input, select{
 #title {
   font-size: 10vw;
   font-weight: bold;
+  margin-left: 1vw;
 }
 /* input fields()*/ 
 #logDetails,
@@ -361,7 +381,7 @@ input, select{
   top: 20%;
   right: 10%;
   background-color: #00000020;
-  border-radius: 12px;
+  border-radius: 20px;
   -webkit-backdrop-filter: blur(40px);
 }
 
@@ -402,6 +422,14 @@ input, select{
   box-shadow: 0px 0px 10px -5px;
   border-radius: 50%;
   -webkit-backdrop-filter: blur(25px);
+}
+
+.markDelete {
+  background-color: #ff000060 !important;
+}
+
+.dark-theme .markDelete {
+  background-color: #ff000030 !important;
 }
 /* ======== ANIMATIONS ====== */
 
@@ -693,16 +721,16 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
   <form action="/action_page.php" class="form-container" autocomplete="off" novalidate>
 
 <div id="headRow">
-<div id=title>Add Brew</div>
+<div id=title>Log Brew</div>
 </div>
 
 <div id="firstRow">
-  <div id="inputIcon">St.</div>
+  <div id="inputIcon">S.</div>
   <input type="text" autocorrect="off" autocapitalize="off" placeholder="Enter measurements" name="log" id="logDetails">
 </div>
 
 <div id="secondRow">
-  <div id="inputIcon">Rc.</div>
+  <div id="inputIcon">R.</div>
   <select name="recipe" id="selectList" required>
     <optgroup label="Inverted">
       <option value="TWi">Wendelboe inverted</option>
@@ -727,7 +755,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 </div>
 
 <div id="thirdRow">
-  <div id="inputIcon">Tm.</div>
+  <div id="inputIcon">T.</div>
   <input type="number" placeholder="Enter time" name="time" id="idTime">
 </div>
     
@@ -751,6 +779,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 	</div>
 </div>
 <script>
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
@@ -900,7 +929,7 @@ function loadLogs(userGrinder, selectedTable) {
       dateCell.setAttribute('data-row', i+1);
       dateCell.setAttribute('data-col', 1);
       dateCell.onclick = function() {
-        confirmDeleteRow(this);
+      handleClick(this);
       };
       const timeCell = document.createElement('td');
       timeCell.textContent = row.time;
@@ -947,6 +976,20 @@ function loadLogs(userGrinder, selectedTable) {
       tableBody.appendChild(tableRow);//, tableBody.firstChild); // use appendChild instead of insertBefore
     }
   }
+}
+
+
+function handleClick(cell) {
+  const row = cell.parentNode;
+  row.classList.add('markDelete');
+  setTimeout(() => {
+  const confirmDelete = confirm('Delete this brew log?');
+  if (confirmDelete) {
+    row.parentNode.removeChild(row);
+  } else {
+    row.classList.remove('markDelete');
+  }
+  }, 100);
 }
 
 //const rowNumber = 8;
@@ -1100,42 +1143,41 @@ cancelButton.addEventListener('click', function() {
 }, 100);
 // ====== END RATING =====
 
-// const tbodyEdit = document.querySelector('tbody');
-// tbodyEdit.addEventListener('click', function(event) {
-//   if (event.target.tagName === 'TR') {
-//     const confirmDelete = confirm('Are you sure you want to delete this row?');
-//     if (confirmDelete) {
-//       event.target.remove();
-//       const rowsU = document.querySelectorAll("tbody tr");
-//       rowsU.forEach((line) => {
-//         const cellsU = line.cells;
-//         const rowDate = cellsU[0].textContent;
-//         const rowTime = Number(cellsU[1].textContent.split(":")[0]);
-//         if (rowDate === date && rowTime >= 2) {
-//           updatedAmount += Number(cellsU[2].textContent);
-//         }
-//       });
-//       document.getElementById("currentAmount").textContent = updatedAmount;
-//     }
-//   }
-// });
-
-function confirmDeleteRow(row) {
+//function confirmDeleteRow(row) {
+  // Get the table row element
+  //var tableRow = row.parentNode.parentNode;
+  
+  // Save the original background color of the row
+  //var originalColor = tableRow.style.backgroundColor;
+  
+  // Set the background color of the row to red
+  
   // Ask the user if they want to delete the row
-  var confirmation = confirm("Are you sure you want to delete this row?");
+  //tableRow.classList.add('confirmDelete');
+//setTimeout(() => {
+  //var confirmation = confirm("Delete this log entry?");
+  //}, 50);
   
   // If the user clicked "OK", delete the row
-  if (confirmation) {
+  //if (confirmation) {
     // Get the index of the row
-    var rowIndex = row.parentNode.parentNode.rowIndex;
+    //var rowIndex = tableRow.rowIndex;
     
     // Get the table body element
-    var tableBody = row.parentNode.parentNode.parentNode.tBodies[0];
+    //var tableBody = tableRow.parentNode.tBodies[0];
     
     // Delete the row from the table body
-    tableBody.deleteRow(rowIndex);
-  }
-}
+    //tableBody.deleteRow(rowIndex);
+  //} else {
+    // If the user clicked "Cancel", restore the original background color of the row
+//setTimeout(() => {
+    //tableRow.classList.remove('confirmDelete');
+//    },10);
+  //}
+//}
+
+
+
 
 
 // ========= popup =====
@@ -1187,10 +1229,43 @@ function reloadPage() {
   }, 200)
 }
 
+// function openCsvOrFont() {
+//   const fileInput = document.createElement('input');
+//   fileInput.type = 'file';
+//   fileInput.accept = '.csv,.ttf,.otf';
+//   fileInput.onchange = () => {
+//     const file = fileInput.files[0];
+//     const reader = new FileReader();
+//     reader.onload = () => {
+//       const fileData = reader.result;
+//       if (file.type === 'text/csv') {
+//         console.log(file.name)
+//         addCsvToTable(fileData, file.name);
+//         reloadPage();
+//       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
+//         const reader = new FileReader();
+//         reader.onload = () => {
+//           const fontData = reader.result.split(',')[1];
+//           try {
+//             localStorage.setItem('selectedFont', fontData);
+//             alert('Selected font saved to local storage!');
+//             reloadPage();
+//           } catch (e) {
+//             alert('Error saving font to local storage: ' + e.message);
+//           }
+//         };
+//         reader.readAsDataURL(file);
+//       }
+//     };
+//     reader.readAsText(file);
+//   };
+//   fileInput.click();
+// }
+
 function openCsvOrFont() {
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
-  fileInput.accept = '.csv,.ttf,.otf';
+  fileInput.accept = '.csv,.ttf,.otf,.json';
   fileInput.onchange = () => {
     const file = fileInput.files[0];
     const reader = new FileReader();
@@ -1213,6 +1288,15 @@ function openCsvOrFont() {
           }
         };
         reader.readAsDataURL(file);
+      } else if (file.type === 'application/json') {
+        try {
+          const json = JSON.parse(fileData);
+          localStorage.setItem('google_json_key', JSON.stringify(json));
+          alert('Google JSON key saved to local storage!');
+          reloadPage();
+        } catch (e) {
+          alert('Error saving Google JSON key to local storage: ' + e.message);
+        }
       }
     };
     reader.readAsText(file);
@@ -1264,19 +1348,78 @@ function clearLocalStorage() {
   tbody2.innerHTML = '';
 }
 
-function sendPostRequest(apiKey) {
-  const table1Data = Array.from(document.querySelectorAll('#grinder1 tbody td'), td => td.textContent.trim());
-  const data = JSON.stringify(table1Data);
-  const script = document.createElement('script');
-  const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?&value1=${encodeURIComponent(data)}`;
-  script.src = url;
-  document.body.appendChild(script);
+// function sendPostRequest(apiKey) {
+//   const table1 = document.querySelector('#grinder1 tbody');
+//   const rows = Array.from(table1.querySelectorAll('tr'));
+//   const csvString = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()).join(',')).join('\n');
+
+//   const script = document.createElement('script');
+//   const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?&value1=${encodeURIComponent(csvString)}`;
+//   console.log(url);
+
+//   script.src = url;
+//   document.body.appendChild(script);
+// }
+
+
+function sendPostRequestGSheets() {
+  const table1 = document.querySelector('#grinder1 tbody');
+  const rows = Array.from(table1.querySelectorAll('tr'));
+  const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
+  const sheetId = '1W9EIWuNa2-1gyfWchaNuwLDOF2038aYyoiIXUtaSNZM';
+  const range = 'Sheet1';
+
+  const jsonKey = localStorage.getItem('google_json_key');
+  const keyObject = JSON.parse(jsonKey);
+
+  gapi.client.init({
+    apiKey: keyObject.private_key,
+    clientId: keyObject.client_id,
+    discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+    scope: 'https://www.googleapis.com/auth/spreadsheets',
+  }).then(() => {
+    return gapi.auth2.getAuthInstance().signIn();
+  }).then(() => {
+    return gapi.client.sheets.spreadsheets.values.update({
+      spreadsheetId: sheetId,
+      range: range,
+      valueInputOption: 'RAW',
+      resource: { values: data },
+    });
+  }).then(() => {
+    console.log('Data written to sheet successfully');
+  }).catch(error => {
+    console.error('Error writing data to sheet:', error);
+  });
 }
 
-//if (localStorage.getItem('iftttKey')){
+// //Get the JSON key from local storage
+ //const jsonKey = JSON.parse(localStorage.getItem('google_json_key'));
+
+// // Load the Google API client with the JSON key
+ //gapi.load('client', () => {
+   //gapi.client.init({
+     //apiKey: jsonKey.api_key,
+     //clientId: jsonKey.client_id,
+     //discoveryDocs: jsonKey.discovery_docs,
+     //scope: jsonKey.scope,
+   //}).then(() => {
+     //console.log('Google API client loaded');
+     //sendPostRequestGSheets(jsonKey.sheet_id, jsonKey.sheet_range);
+   //}).catch(error => {
+     //console.error('Error loading Google API client:', error);
+   //});
+ //});
+
+
+
+
+// setTimeout(() => {
+// if (localStorage.getItem('iftttKey')){
 //  const key = localStorage.getItem('iftttKey')
 //  sendPostRequest(key);
-//}
+// }
+// }, 500);
 
 </script>
 </body>
