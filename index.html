@@ -643,7 +643,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 }
   </style>
 </head>
-<body>
+<body onload="init()">
 <button id="menuButton" onclick="showPopup()">Menu</button>
 
 <div id="grinder1Title" class="grinders">Grinder 1</div>
@@ -774,69 +774,61 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 <script src="https://apis.google.com/js/api.js"></script>
 
 <script>
-var storedGoogleSheetsID = localStorage.getItem('sheetsID');
-console.log(storedGoogleSheetsID);
+var storedSheetsId = localStorage.getItem('sheetsID');
+console.log(storedSheetsId);
 var storedGoogleKey = localStorage.getItem('google_json_key');
 var storedGoogleJSONKey = JSON.parse(storedGoogleKey);
-console.log(storedGoogleJSONKey)
-console.log(storedGoogleJSONKey.client_id)
-console.log(storedGoogleJSONKey.client_email)
-console.log(storedGoogleJSONKey.private_key)
-  
-function sendTableToGoogleSheet(tableId, sheetId) {
+var storedApiKey = storedGoogleJSONKey.api_key;
+console.log(storedApiKey);
+
+function init() {
   // Load the Google API client library
   gapi.load('client', function() {
-    // Initialize the Google API client with the credentials from localStorage
     gapi.client.init({
-      'apiKey': null,
-      'clientId': storedGoogleJSONKey.client_id,
-      'discoveryDocs': null,
-      'scope': null,
-      'serviceAccountId': null,
-      'fetch_basic_profile': null,
-      'hosted_domain': null,
-      'login_hint': null,
-      'ux_mode': null,
-      'redirect_uri': null,
-      'cookie_policy': 'single_host_origin', // add this line
-      'client_email': storedGoogleJSONKey.client_email,
-      'private_key': storedGoogleJSONKey.private_key,
+      apiKey: storedApiKey,
+      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
     }).then(function() {
-      // Load the Google Sheets API
-      return gapi.client.load('https://sheets.googleapis.com/$discovery/rest?version=v4');
-    }).then(function() {
-      // Get the table data
-      var table = document.getElementById(tableId);
-      var rows = table.rows;
-      var data = [];
-      for (var i = 0; i < rows.length; i++) {
-        var row = [];
-        var cells = rows[i].cells;
-        for (var j = 0; j < cells.length; j++) {
-          row.push(cells[j].innerText);
-        }
-        data.push(row);
-      }
-      // Send the table data to the Google Sheet
-      return gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: sheetId,
-        range: 'Sheet1!A1',
-        valueInputOption: 'RAW',
-        resource: {
-          values: data
-        }
-      });
-}).then(function(response) {
-  console.log(response);
-}, function(reason) {
-  if (typeof reason.result !== 'undefined' && typeof reason.result.error !== 'undefined') {
-    console.error('Error: ' + reason.result.error.message);
-  } else {
-    console.error('Error: ' + reason);
-  }
-});
+      // Once the client library has loaded, you can call your function that uses the Sheets API
+      sendTableToGoogleSheets('grinder1', storedSheetsId, storedApiKey);
+    }, function(error) {
+      console.log(error);
+    });
   });
 }
+  
+function sendTableToGoogleSheets(tableId, sheetId, apiKey) {
+  var table = document.getElementById(tableId);
+  var rows = table.getElementsByTagName('tr');
+  var cols = rows[0].getElementsByTagName('td');
+  
+  // Create an array to hold the table data
+  var data = [];
+  // Loop through the rows and columns to extract the data
+  for (var i = 0; i < rows.length; i++) {
+    var rowData = [];
+    var cells = rows[i].getElementsByTagName('td');
+    for (var j = 0; j < cells.length; j++) {
+      rowData.push(cells[j].textContent);
+    }
+    data.push(rowData);
+  }
+  
+  // Use the Sheets API to send the data to Google Sheets
+  var apiUrl = 'https://sheets.googleapis.com/v4/spreadsheets/' + sheetId + '/values/Sheet1!A1:Z1000?valueInputOption=RAW&key=' + apiKey;
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', apiUrl);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Authorization', 'Bearer ' + gapi.auth.getToken().access_token);
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      console.log('Data sent to Google Sheets successfully.');
+    } else {
+      console.log('Error sending data to Google Sheets.');
+    }
+  };
+  xhr.send(JSON.stringify({ values: data }));
+}
+
 
 
 
@@ -1401,9 +1393,9 @@ function clearLocalStorage() {
 //  sendPostRequest(key);
 // }
 // }, 500);
-setTimeout(() => {
-sendTableToGoogleSheet('grinder1', 'storedGoogleSheetsID');
-}, 100);
+// setTimeout(() => {
+// sendTableToGoogleSheets('grinder1', storedSheetsId, storedApiKey)
+// }, 1000);
 </script>
 </body>
 </html>
