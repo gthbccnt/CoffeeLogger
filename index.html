@@ -296,6 +296,10 @@ input, select{
   outline: none;
 }
 
+.sheetsIDFound::placeholder {
+  font-size: 2.5vw;
+}
+
 #selectList {
   appearance: none;
 }
@@ -755,68 +759,119 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
     </form>
   </div>
 <div id="rating-popup">
-	<div id="rating-container">
-    		<li id="cancelButton">X</li>
-		<ul id="rating-list">
-			<li id="rating-item">1</li>
-			<li id="rating-item">2</li>
-			<li id="rating-item">3</li>
-			<li id="rating-item">4</li>
-			<li id="rating-item">5</li>
-			<li id="rating-item">6</li>
-		</ul>
-	</div>
+  <div id="rating-container">
+        <li id="cancelButton">X</li>
+    <ul id="rating-list">
+      <li id="rating-item">1</li>
+      <li id="rating-item">2</li>
+      <li id="rating-item">3</li>
+      <li id="rating-item">4</li>
+      <li id="rating-item">5</li>
+      <li id="rating-item">6</li>
+    </ul>
+  </div>
 </div>
-<script src="https://apis.google.com/js/api.js"></script>
+<!-- <script src="https://apis.google.com/js/api.js"></script>
 <script>
-  const range = 'Sheet1!A1';
-  const jsonKey = localStorage.getItem('google_json_key');
-  const keyObject = JSON.parse(jsonKey);
-  const storedSheetId = localStorage.getItem('sheetsID')
-  
-  function sendPostRequestGSheets() {
-    const table1 = document.querySelector('#grinder1 tbody');
-    const rows = Array.from(table1.querySelectorAll('tr'));
-    const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
-  
-    gapi.client.init({
-      apiKey: keyObject.private_key,
-      clientId: keyObject.client_id,
-      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-      scope: 'https://www.googleapis.com/auth/spreadsheets',
-    }).then(() => {
-      return gapi.auth2.getAuthInstance().signIn();
-    }).then(() => {
-      return gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: storedSheetId,
-        range: range,
-        valueInputOption: 'RAW',
-        resource: { values: data },
-      })
-    }).then(() => {
-      console.log('Data written to sheet successfully');
-    }).catch(error => {
-      console.error('Error writing data to sheet:', error);
-    });
-  }
+const range = 'Sheet1!A1';
+const jsonKey = localStorage.getItem('google_json_key');
+const keyObject = JSON.parse(jsonKey);
+const storedSheetId = localStorage.getItem('sheetsID');
 
-  gapi.load('client', () => {
+function sendPostRequestGSheets() {
+  const table1 = document.querySelector('#grinder1 tbody');
+  const rows = Array.from(table1.querySelectorAll('tr'));
+  const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
+
+  gapi.client.init({
+    cookie_policy: 'single_host_origin',
+  }).then(() => {
+    return gapi.auth2.getAuthInstance().signIn();
+  }).then(() => {
+    return gapi.client.sheets.spreadsheets.values.update({
+      spreadsheetId: storedSheetId,
+      range: range,
+      valueInputOption: 'RAW',
+      resource: { values: data },
+    });
+  }).then(() => {
+    console.log('Data written to sheet successfully');
+  }).catch(error => {
+    console.error('Error writing data to sheet:', error);
+  });
+}
+
+gapi.load('client', () => {
+gapi.client.init({
+  apiKey: keyObject.private_key,
+  clientId: keyObject.client_id,
+  discoveryDocs: keyObject.discoveryDocs,
+  scope: keyObject.scope,
+}).then(() => {
+  console.log('Google API client loaded');
+  sendPostRequestGSheets();
+}).catch(error => {
+  console.error('Error loading Google API client:', error);
+});
+});
+</script> -->
+<script src="https://apis.google.com/js/api.js"></script>
+
+<script>
+  const storedGoogleSheetsID = localStorage.getItem('sheetsID')
+  
+function sendTableToGoogleSheet(tableId, sheetId) {
+  // Load the Google API client library
+  gapi.load('client', function() {
+    // Initialize the Google API client with the credentials from localStorage
     gapi.client.init({
-      apiKey: jsonKey.api_key,
-      clientId: jsonKey.client_id,
-      discoveryDocs: jsonKey.discovery_docs,
-      scope: jsonKey.scope,
-    }).then(() => {
-      console.log('Google API client loaded');
-      sendPostRequestGSheets(storedSheetId, range);
-    }).catch(error => {
-      console.error('Error loading Google API client:', error);
+      'apiKey': null,
+      'clientId': null,
+      'discoveryDocs': null,
+      'scope': null,
+      'serviceAccountId': null,
+      'fetch_basic_profile': null,
+      'hosted_domain': null,
+      'login_hint': null,
+      'ux_mode': null,
+      'redirect_uri': null,
+      'cookie_policy': 'single_host_origin', // add this line
+      'client_email': localStorage.getItem('client_email'),
+      'private_key': localStorage.getItem('private_key'),
+    }).then(function() {
+      // Load the Google Sheets API
+      return gapi.client.load('https://sheets.googleapis.com/$discovery/rest?version=v4');
+    }).then(function() {
+      // Get the table data
+      var table = document.getElementById(tableId);
+      var rows = table.rows;
+      var data = [];
+      for (var i = 0; i < rows.length; i++) {
+        var row = [];
+        var cells = rows[i].cells;
+        for (var j = 0; j < cells.length; j++) {
+          row.push(cells[j].innerText);
+        }
+        data.push(row);
+      }
+      // Send the table data to the Google Sheet
+      return gapi.client.sheets.spreadsheets.values.update({
+        spreadsheetId: sheetId,
+        range: 'Sheet1!A1',
+        valueInputOption: 'RAW',
+        resource: {
+          values: data
+        }
+      });
+    }).then(function(response) {
+      console.log(response);
+    }, function(reason) {
+      console.error('Error: ' + reason.result.error.message);
     });
   });
-</script>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+}
 
-<script>
+
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
@@ -905,7 +960,7 @@ const addButtonIcon = document.querySelector('#addBrew')
   addButtonIcon.style.borderRadius = '50%';
   
 const cancelButtonIcon = document.querySelector('#cancelButton')
-	cancelButtonIcon.textContent = '\u{100060}'
+  cancelButtonIcon.textContent = '\u{100060}'
 
 
 
@@ -949,7 +1004,8 @@ window.addEventListener('load', () => {
     const gSheetID = localStorage.getItem('sheetsID')
     if (gSheetID){
       const popupIftttInput = document.getElementById('formInput3')
-      popupIftttInput.setAttribute('placeholder', 'ID' + gSheetID)
+      popupIftttInput.classList.add('sheetsIDFound')
+      popupIftttInput.setAttribute('placeholder', 'ID: ' + gSheetID)
     }
   }, 10);
 });
@@ -1369,16 +1425,9 @@ function clearLocalStorage() {
 //   document.body.appendChild(script);
 // }
 
-
-
-
-// setTimeout(() => {
-// if (localStorage.getItem('iftttKey')){
-//  const key = localStorage.getItem('iftttKey')
-//  sendPostRequest(key);
-// }
-// }, 500);
-
+setTimeout(() => {
+sendTableToGoogleSheet('#grinder1', 'storedGoogleSheetsID');
+}, 100);
 </script>
 </body>
 </html>
