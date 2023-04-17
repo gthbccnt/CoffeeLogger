@@ -771,54 +771,10 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
     </ul>
   </div>
 </div>
-<!-- <script src="https://apis.google.com/js/api.js"></script>
-<script>
-const range = 'Sheet1!A1';
-const jsonKey = localStorage.getItem('google_json_key');
-const keyObject = JSON.parse(jsonKey);
-const storedSheetId = localStorage.getItem('sheetsID');
-
-function sendPostRequestGSheets() {
-  const table1 = document.querySelector('#grinder1 tbody');
-  const rows = Array.from(table1.querySelectorAll('tr'));
-  const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
-
-  gapi.client.init({
-    cookie_policy: 'single_host_origin',
-  }).then(() => {
-    return gapi.auth2.getAuthInstance().signIn();
-  }).then(() => {
-    return gapi.client.sheets.spreadsheets.values.update({
-      spreadsheetId: storedSheetId,
-      range: range,
-      valueInputOption: 'RAW',
-      resource: { values: data },
-    });
-  }).then(() => {
-    console.log('Data written to sheet successfully');
-  }).catch(error => {
-    console.error('Error writing data to sheet:', error);
-  });
-}
-
-gapi.load('client', () => {
-gapi.client.init({
-  apiKey: keyObject.private_key,
-  clientId: keyObject.client_id,
-  discoveryDocs: keyObject.discoveryDocs,
-  scope: keyObject.scope,
-}).then(() => {
-  console.log('Google API client loaded');
-  sendPostRequestGSheets();
-}).catch(error => {
-  console.error('Error loading Google API client:', error);
-});
-});
-</script> -->
 <script src="https://apis.google.com/js/api.js"></script>
 
 <script>
-  const storedGoogleSheetsID = localStorage.getItem('sheetsID')
+const storedGoogleSheetsID = localStorage.getItem('sheetsID')
   
 function sendTableToGoogleSheet(tableId, sheetId) {
   // Load the Google API client library
@@ -863,11 +819,15 @@ function sendTableToGoogleSheet(tableId, sheetId) {
           values: data
         }
       });
-    }).then(function(response) {
-      console.log(response);
-    }, function(reason) {
-      console.error('Error: ' + reason.result.error.message);
-    });
+}).then(function(response) {
+  console.log(response);
+}, function(reason) {
+  if (typeof reason.result !== 'undefined' && typeof reason.result.error !== 'undefined') {
+    console.error('Error: ' + reason.result.error.message);
+  } else {
+    console.error('Error: ' + reason);
+  }
+});
   });
 }
 
@@ -1425,6 +1385,15 @@ function clearLocalStorage() {
 //   document.body.appendChild(script);
 // }
 
+
+
+
+// setTimeout(() => {
+// if (localStorage.getItem('iftttKey')){
+//  const key = localStorage.getItem('iftttKey')
+//  sendPostRequest(key);
+// }
+// }, 500);
 setTimeout(() => {
 sendTableToGoogleSheet('#grinder1', 'storedGoogleSheetsID');
 }, 100);
