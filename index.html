@@ -946,9 +946,10 @@ window.addEventListener('load', () => {
       document.querySelector('#grinder2Title').textContent = grinderTitle2
       document.querySelector('#formInput2').setAttribute('placeholder', 'Current: ' + grinderTitle2)
     }
-    if (!localStorage.getItem('sheetsID')){} else {
+    const gSheetID = localStorage.getItem('sheetsID')
+    if (gSheetID){
       const popupIftttInput = document.getElementById('formInput3')
-      popupIftttInput.setAttribute('placeholder', 'Sheets ID found')
+      popupIftttInput.setAttribute('placeholder', 'ID' + gSheetID)
     }
   }, 10);
 });
