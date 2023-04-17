@@ -775,6 +775,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 
 <script>
 const storedGoogleSheetsID = localStorage.getItem('sheetsID')
+const storedGoogleJSONKey = localStorage.getItem('google_json_key')
   
 function sendTableToGoogleSheet(tableId, sheetId) {
   // Load the Google API client library
@@ -782,7 +783,7 @@ function sendTableToGoogleSheet(tableId, sheetId) {
     // Initialize the Google API client with the credentials from localStorage
     gapi.client.init({
       'apiKey': null,
-      'clientId': null,
+      'clientId': storedGoogleJSONKey.client_id,
       'discoveryDocs': null,
       'scope': null,
       'serviceAccountId': null,
@@ -791,9 +792,9 @@ function sendTableToGoogleSheet(tableId, sheetId) {
       'login_hint': null,
       'ux_mode': null,
       'redirect_uri': null,
-      'cookie_policy': 'single_host_origin', // add this line
-      'client_email': localStorage.getItem('client_email'),
-      'private_key': localStorage.getItem('private_key'),
+      // 'cookie_policy': 'single_host_origin', // add this line
+      'client_email': storedGoogleJSONKey.client_email,
+      'private_key': storedGoogleJSONKey.private_key,
     }).then(function() {
       // Load the Google Sheets API
       return gapi.client.load('https://sheets.googleapis.com/$discovery/rest?version=v4');
@@ -1395,8 +1396,8 @@ function clearLocalStorage() {
 // }
 // }, 500);
 setTimeout(() => {
-sendTableToGoogleSheet('grinder1', 'storedGoogleSheetsID');
-}, 1000);
+sendTableToGoogleSheet('#grinder1', 'storedGoogleSheetsID');
+}, 100);
 </script>
 </body>
 </html>
