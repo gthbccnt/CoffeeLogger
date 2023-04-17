@@ -1355,7 +1355,7 @@ function sendPostRequestGSheets() {
   const table1 = document.querySelector('#grinder1 tbody');
   const rows = Array.from(table1.querySelectorAll('tr'));
   const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
-  const sheetId = '1W9EIWuNa2-1gyfWchaNuwLDOF2038aYyoiIXUtaSNZM';
+  const sheetId = 'sheetKey';
   const range = 'Sheet1';
 
   const jsonKey = localStorage.getItem('google_json_key');
