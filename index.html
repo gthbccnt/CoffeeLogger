@@ -774,8 +774,14 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 <script src="https://apis.google.com/js/api.js"></script>
 
 <script>
-const storedGoogleSheetsID = localStorage.getItem('sheetsID')
-const storedGoogleJSONKey = localStorage.getItem('google_json_key')
+var storedGoogleSheetsID = localStorage.getItem('sheetsID');
+console.log(storedGoogleSheetsID);
+var storedGoogleKey = localStorage.getItem('google_json_key');
+var storedGoogleJSONKey = JSON.parse(storedGoogleKey);
+console.log(storedGoogleJSONKey)
+console.log(storedGoogleJSONKey.client_id)
+console.log(storedGoogleJSONKey.client_email)
+console.log(storedGoogleJSONKey.private_key)
   
 function sendTableToGoogleSheet(tableId, sheetId) {
   // Load the Google API client library
