@@ -798,7 +798,7 @@ function sendTableToGoogleSheet(tableId, sheetId) {
       'login_hint': null,
       'ux_mode': null,
       'redirect_uri': null,
-      // 'cookie_policy': 'single_host_origin', // add this line
+      'cookie_policy': 'single_host_origin', // add this line
       'client_email': storedGoogleJSONKey.client_email,
       'private_key': storedGoogleJSONKey.private_key,
     }).then(function() {
