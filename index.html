@@ -774,53 +774,80 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 <script src="https://apis.google.com/js/api.js"></script>
 
 <script>
-function sendTableToGoogleSheets(sheetId, apikey, clientid, tableId) {
-  // Load the Google Sheets API client library
-  gapi.load('client', function() {
-    // Initialize the Google API client with your client ID and API key
+function sendTableToGoogleSheets(apiKey, clientId, sheetId) {
+  gapi.load('client:auth2', function() {
     gapi.client.init({
-      apiKey: apikey,
-      clientId: clientid,
-      cookie_policy: 'none',
-      scope: 'https://www.googleapis.com/auth/spreadsheets'
+      apiKey: apiKey,
+      clientId: clientId,
+      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+      scope: 'https://www.googleapis.com/auth/spreadsheets',
+      cookie_policy: 'none'
     }).then(function() {
-      // Authorize the Google API client with OAuth2
-      return gapi.auth2.getAuthInstance().signIn();
-    }).then(function() {
-      // Get an access token for the Sheets API
-      return gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-    }).then(function(accessToken) {
-      // Get the table element
-      var table = document.getElementById(tableId);
-
-      // Get the table data
-      var data = [];
-      var rows = table.rows;
-      for (var i = 0; i < rows.length; i++) {
-        var row = [];
-        var cells = rows[i].cells;
-        for (var j = 0; j < cells.length; j++) {
-          row.push(cells[j].textContent);
-        }
-        data.push(row);
-      }
-
-      // Use the Sheets API with the access token to send the data to Google Sheets
-      var range = 'Sheet1!A1:' + String.fromCharCode(data[0].length + 64) + (data.length + 1);
-      var params = {
-        spreadsheetId: sheetId,
-        range: range,
-        valueInputOption: 'RAW',
-        resource: { values: data }
-      };
-      gapi.client.sheets.spreadsheets.values.update(params).then(function(response) {
-        console.log('Data sent to Google Sheets successfully.');
-      }, function(reason) {
-        console.log('Error sending data to Google Sheets.');
+      gapi.auth2.getAuthInstance().signIn().then(function() {
+        var tableData = getTableData('grinder1');
+        var sheetName = 'Table';
+        var spreadsheetId = sheetId;
+        createSheet(spreadsheetId, sheetName);
+        var range = sheetName + '!A1';
+        writeData(spreadsheetId, range, tableData);
       });
     });
   });
+
+  function getTableData(tableId) {
+    var table = document.getElementById(tableId);
+    var rows = table.rows;
+    var data = [];
+    for (var i = 0; i < rows.length; i++) {
+      var row = [];
+      for (var j = 0; j < rows[i].cells.length; j++) {
+        row.push(rows[i].cells[j].innerHTML);
+      }
+      data.push(row);
+    }
+    return data;
+  }
+
+  function createSheet(spreadsheetId, sheetName) {
+    var request = {
+      'requests': [
+        {
+          'addSheet': {
+            'properties': {
+              'title': sheetName,
+            }
+          }
+        }
+      ]
+    };
+    gapi.client.sheets.spreadsheets.batchUpdate({
+      spreadsheetId: spreadsheetId,
+      resource: request,
+    }).then(function(response) {
+      console.log('Sheet created');
+    }, function(reason) {
+      console.error('Error: ' + reason.result.error.message);
+    });
+  }
+
+  function writeData(spreadsheetId, range, data) {
+    var valueRange = {
+      'values': data
+    };
+    gapi.client.sheets.spreadsheets.values.update({
+      spreadsheetId: spreadsheetId,
+      range: range,
+      valueInputOption: 'RAW',
+      resource: valueRange,
+    }).then(function(response) {
+      console.log('Data written to sheet');
+    }, function(reason) {
+      console.error('Error: ' + reason.result.error.message);
+    });
+  }
+
 }
+
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
@@ -1390,13 +1417,14 @@ var storedSheetsId = localStorage.getItem('sheetsID');
 console.log('sheetID: ' + storedSheetsId);
 var storedGoogleKey = localStorage.getItem('google_json_key');
 var storedGoogleJSONKey = JSON.parse(storedGoogleKey);
-var storedApiKey = storedGoogleJSONKey.api_key;
-var storedClientID = storedGoogleJSONKey.client_id
+var storedApiKey = storedGoogleJSONKey.web.api_key;
+var storedClientID = storedGoogleJSONKey.web.client_id
 console.log('api: ' + storedApiKey);
 console.log('clientid: ' + storedClientID);
 
 setTimeout(() => {
-sendTableToGoogleSheets(storedSheetsId, storedApiKey, storedClientID, 'grinder1')
+sendTableToGoogleSheets(storedApiKey, storedClientID, storedSheetsId)
+//sendTableToGoogleSheets(storedSheetsId, storedApiKey, storedClientID, 'grinder1')
 }, 1000);
 </script>
 </body>
