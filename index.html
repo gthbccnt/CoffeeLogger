@@ -695,7 +695,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
     <div id="popInpContainer">
       <input type="text" placeholder="First Grinder" name="firstGrinder" id="formInput1">
         <input type="text" placeholder="Second Grinder" name="secondGrinder" id="formInput2">
-      <input type="text" placeholder="Enter IFTTT Key" name="iftttKeyInput" id="formInput3">
+      <input type="text" placeholder="Enter Sheets ID" name="iftttKeyInput" id="formInput3">
     </div>
     <div id=popBtnContainer>
       <button onclick="clearLocalStorage(); reloadPage()" id="csvBtn">Wipe</button>
@@ -767,6 +767,62 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 		</ul>
 	</div>
 </div>
+<script src="https://apis.google.com/js/api.js"></script>
+<script>
+  function onApiLoad() {
+    loadGoogleApiClient();
+  }
+  
+  const range = 'Sheet1!A1';
+  const jsonKey = localStorage.getItem('google_json_key');
+  const keyObject = JSON.parse(jsonKey);
+  const storedSheetId = localStorage.getItem('sheetKey')
+  
+  function sendPostRequestGSheets() {
+  const table1 = document.querySelector('#grinder1 tbody');
+  const rows = Array.from(table1.querySelectorAll('tr'));
+  const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
+  //const sheetId = 'sheetKey';
+
+  gapi.client.init({
+    apiKey: keyObject.private_key,
+    clientId: keyObject.client_id,
+    discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+    scope: 'https://www.googleapis.com/auth/spreadsheets',
+  }).then(() => {
+    return gapi.auth2.getAuthInstance().signIn();
+  }).then(() => {
+    return gapi.client.sheets.spreadsheets.values.update({
+      spreadsheetId: sheetId,
+      range: range,
+      valueInputOption: 'RAW',
+      resource: { values: data },
+    });
+  }).then(() => {
+    console.log('Data written to sheet successfully');
+  }).catch(error => {
+    console.error('Error writing data to sheet:', error);
+  });
+}
+
+// // Load the Google API client with the JSON key
+ gapi.load('client', () => {
+   gapi.client.init({
+     apiKey: jsonKey.api_key,
+     clientId: jsonKey.client_id,
+     discoveryDocs: jsonKey.discovery_docs,
+     scope: jsonKey.scope,
+   }).then(() => {
+     console.log('Google API client loaded');
+     sendPostRequestGSheets(storedSheetId, range);
+   }).catch(error => {
+     console.error('Error loading Google API client:', error);
+   });
+ });
+  
+</script>
+<script src="https://apis.google.com/js/platform.js?onload=onApiLoad" async defer></script>
+
 <script>
 
 if ('serviceWorker' in navigator) {
@@ -899,7 +955,7 @@ window.addEventListener('load', () => {
     }
     if (!localStorage.getItem('iftttKey')){} else {
       const popupIftttInput = document.getElementById('formInput3')
-      popupIftttInput.setAttribute('placeholder', 'IFTTT key found')
+      popupIftttInput.setAttribute('placeholder', 'Sheets ID found')
     }
   }, 10);
 });
@@ -926,31 +982,38 @@ function loadLogs(userGrinder, selectedTable) {
       timeCell.setAttribute('data-col', 2);
       const setCell = document.createElement('td');
       setCell.textContent = row.setting;
+      setCell.classList.add('editable')
       setCell.setAttribute('data-row', i+1);
       setCell.setAttribute('data-col', 3);
       const grCell = document.createElement('td');
       grCell.textContent = row.gr;
+      grCell.classList.add('editable')
       grCell.setAttribute('data-row', i+1);
       grCell.setAttribute('data-col', 4);
       const mlCell = document.createElement('td');
       mlCell.textContent = row.ml;
+      mlCell.classList.add('editable')
       mlCell.setAttribute('data-row', i+1);
       mlCell.setAttribute('data-col', 5);
       const degCell = document.createElement('td');
       degCell.textContent = row.degrees;
+      degCell.classList.add('editable')
       degCell.setAttribute('data-row', i+1);
       degCell.setAttribute('data-col', 6);
       const recCell = document.createElement('td');
       recCell.textContent = row.recipe;
+      recCell.classList.add('editable')
       recCell.setAttribute('data-row', i+1);
       recCell.setAttribute('data-col', 7);
       const ratCell = document.createElement('td');
       ratCell.textContent = row.rating;
+      ratCell.classList.add('editable')
       ratCell.setAttribute('data-row', i+1);
       ratCell.setAttribute('data-col', 8);
       ratCell.classList.add('rating-cell');
       const drawCell = document.createElement('td');
       drawCell.textContent = row.drawdown;
+      drawCell.classList.add('editable')
       drawCell.setAttribute('data-row', i+1);
       drawCell.setAttribute('data-col', 9);
       tableRow.appendChild(dateCell);
@@ -1131,44 +1194,6 @@ cancelButton.addEventListener('click', function() {
 });
 }, 100);
 // ====== END RATING =====
-
-//function confirmDeleteRow(row) {
-  // Get the table row element
-  //var tableRow = row.parentNode.parentNode;
-  
-  // Save the original background color of the row
-  //var originalColor = tableRow.style.backgroundColor;
-  
-  // Set the background color of the row to red
-  
-  // Ask the user if they want to delete the row
-  //tableRow.classList.add('confirmDelete');
-//setTimeout(() => {
-  //var confirmation = confirm("Delete this log entry?");
-  //}, 50);
-  
-  // If the user clicked "OK", delete the row
-  //if (confirmation) {
-    // Get the index of the row
-    //var rowIndex = tableRow.rowIndex;
-    
-    // Get the table body element
-    //var tableBody = tableRow.parentNode.tBodies[0];
-    
-    // Delete the row from the table body
-    //tableBody.deleteRow(rowIndex);
-  //} else {
-    // If the user clicked "Cancel", restore the original background color of the row
-//setTimeout(() => {
-    //tableRow.classList.remove('confirmDelete');
-//    },10);
-  //}
-//}
-
-
-
-
-
 // ========= popup =====
 function showPopup() {
   const backgroundPopup = document.body.querySelector('#popupBackground')
@@ -1191,9 +1216,9 @@ function showPopup() {
     if (setGrinder2.value!==""){
     localStorage.setItem('grinderName2',setGrinder2.value);
     }
-    const inputKey = document.querySelector('[name="iftttKeyInput"]');
-    if (inputKey.value!==""){
-    localStorage.setItem('iftttKey', inputKey.value);
+    const gSheetsId = document.querySelector('[name="iftttKeyInput"]');
+    if (gSheetsId.value!==""){
+    localStorage.setItem('sheetsID', gSheetsId.value);
     }
 
     backgroundPopup.classList.remove('fade-in');
@@ -1322,12 +1347,12 @@ function checkStoredLog() {
 
 checkStoredLog()
 
-function sendPostRequest(value, apiKey) {
-  const script = document.createElement('script');
-  const url = 'https://maker.ifttt.com/trigger/coffeeLogBackup/with/key/' + apiKey;
-  script.src = `${url}?value1=${encodeURIComponent(value)}`;
-  document.body.appendChild(script);
-}
+// function sendPostRequest(value, apiKey) {
+ // const script = document.createElement('script');
+ // const url = 'https://maker.ifttt.com/trigger/coffeeLogBackup/with/key/' + apiKey;
+ // script.src = `${url}?value1=${encodeURIComponent(value)}`;
+ // document.body.appendChild(script);
+//}
 
 function clearLocalStorage() {
   localStorage.clear();
@@ -1349,56 +1374,6 @@ function clearLocalStorage() {
 //   script.src = url;
 //   document.body.appendChild(script);
 // }
-
-
-function sendPostRequestGSheets() {
-  const table1 = document.querySelector('#grinder1 tbody');
-  const rows = Array.from(table1.querySelectorAll('tr'));
-  const data = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()));
-  const sheetId = 'sheetKey';
-  const range = 'Sheet1';
-
-  const jsonKey = localStorage.getItem('google_json_key');
-  const keyObject = JSON.parse(jsonKey);
-
-  gapi.client.init({
-    apiKey: keyObject.private_key,
-    clientId: keyObject.client_id,
-    discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-    scope: 'https://www.googleapis.com/auth/spreadsheets',
-  }).then(() => {
-    return gapi.auth2.getAuthInstance().signIn();
-  }).then(() => {
-    return gapi.client.sheets.spreadsheets.values.update({
-      spreadsheetId: sheetId,
-      range: range,
-      valueInputOption: 'RAW',
-      resource: { values: data },
-    });
-  }).then(() => {
-    console.log('Data written to sheet successfully');
-  }).catch(error => {
-    console.error('Error writing data to sheet:', error);
-  });
-}
-
-// //Get the JSON key from local storage
- //const jsonKey = JSON.parse(localStorage.getItem('google_json_key'));
-
-// // Load the Google API client with the JSON key
- //gapi.load('client', () => {
-   //gapi.client.init({
-     //apiKey: jsonKey.api_key,
-     //clientId: jsonKey.client_id,
-     //discoveryDocs: jsonKey.discovery_docs,
-     //scope: jsonKey.scope,
-   //}).then(() => {
-     //console.log('Google API client loaded');
-     //sendPostRequestGSheets(jsonKey.sheet_id, jsonKey.sheet_range);
-   //}).catch(error => {
-     //console.error('Error loading Google API client:', error);
-   //});
- //});
 
 
 
