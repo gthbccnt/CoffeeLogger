@@ -451,7 +451,7 @@ input, select {
   position: fixed;
   top: 28vh;
   left: 21vw;
-  box-shadow: 0px 0px 200px 40px #70707035;
+  box-shadow: 0px 0px 100px 40px #70707035;
   border-radius: 10px;
 }
 
@@ -703,7 +703,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 }
   </style>
 </head>
-<body onload="init()">
+<body>
 <button id="menuButton" onclick="showPopup()">Menu</button>
 
 <div id="grinder1Title" class="grinders">Grinder 1</div>
@@ -881,7 +881,6 @@ function saveDataToLocalStorage(userGrinder, userLog) {
   localStorage.setItem(userLog, JSON.stringify(data));
 }
 
-
 function loadSelectedFont() {
   const fontData = localStorage.getItem('selectedFont');
   if (fontData) {
@@ -925,8 +924,6 @@ const addButtonIcon = document.querySelector('#addBrew')
 const cancelButtonIcon = document.querySelector('#ratingCancelButton')
   cancelButtonIcon.textContent = '\u{100060}'
 
-
-
 const resetButtonIcon = document.querySelector('#resetButton')
   resetButtonIcon.textContent = '\u{100060}';
   
@@ -969,9 +966,9 @@ window.addEventListener('load', () => {
       const popupIftttInput = document.getElementById('formInput3')
       popupIftttInput.setAttribute('placeholder', 'IFTTT Key found!')
     }
+    backupTableToCSV()
   }, 10);
 });
-
 
 function loadLogs(userGrinder, selectedTable) {
   const data = JSON.parse(localStorage.getItem(userGrinder));
@@ -1263,7 +1260,6 @@ function showPopup() {
   });
 }
 
-
 function reloadPage() {
   setTimeout(() => {
     location.reload();
@@ -1345,7 +1341,6 @@ function openCsvOrFont() {
   fileInput.click();
 }
 
-
 function addCsvToTable(csvData, fileName) {
   const fileNameString = fileName;
   let tbodyTemp = document.querySelector('#grinder1 tbody');
@@ -1362,7 +1357,6 @@ function addCsvToTable(csvData, fileName) {
     });
   });
 }
-
 
 function checkStoredLog() {
   if (!localStorage.getItem('coffeeLog1')) {
@@ -1437,6 +1431,38 @@ function scaleForLandscapeiPad() {
     body.style.width = bodyWidth + 'px';
     body.style.height = newBodyHeight + 'px';
   }
+}
+
+function backupTableToCSV() {
+  const lastBackupStr = localStorage.getItem('lastBackup');
+  // if (!lastBackupStr) {
+  //   return;
+  // }
+  const lastBackupDate = new Date(lastBackupStr);
+  const currentDate = new Date();
+  const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
+  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  if (daysDiff < 3) {
+    return;
+  }
+  
+  const tableRows = document.querySelectorAll('tbody tr');
+  const csvRows = Array.from(tableRows)
+    .map(row => Array.from(row.querySelectorAll('td'))
+      .map(cell => cell.textContent.replace(/;/g, '\;'))
+      .join(';')
+    );
+  
+  const csvStr = csvRows.join('\n');
+  const dateString = currentDate.toISOString().replace(/[:T]/g, '-').slice(0, -5); // Remove the seconds and timezone offset
+  const fileName = `${dateString}-backup.csv`;
+  const blob = new Blob([csvStr], {type: 'text/csv;charset=utf-8;'});
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = fileName;
+  link.click();
+  
+  localStorage.setItem('lastBackup', currentDate.toISOString());
 }
 
 
