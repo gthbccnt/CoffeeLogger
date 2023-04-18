@@ -375,7 +375,7 @@ input, select {
   background-color: #00000020;
   border-radius: 20px;
   -webkit-backdrop-filter: blur(40px);
-  box-shadow: 0px 0px 20px 30px #ffffff05;
+  box-shadow: 0px 0px 200px 30px #00000035;
 }
 
 #rating-container ul {
@@ -419,12 +419,12 @@ input, select {
 
 .markDelete, .editingMode {
   background-color: #7F000090 !important;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .dark-theme .markDelete, .dark-theme .editingMode {
   background-color: #ff000027 !important;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 #editingContainer {
@@ -434,10 +434,12 @@ input, select {
   position: fixed;
   top: 50vh;
   left: 27.5vw;
+  box-shadow: 0px 0px 200px 30px #00000035;
 }
 
 #editingContainer button {
   margin: 0;
+  height: 14vw;
 }
 
 #editingButtonContainer {
@@ -447,7 +449,7 @@ input, select {
 
 #editingInput {
   width: 100%;
-  height: 10vw;
+  height: 14vw;
   padding-left: 5%;
   margin-bottom: 2vw;
 
@@ -801,13 +803,13 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 <!-- </div> -->
 
 <div id='editingContainer'>
-	<input id='editingInput'><br>
+  <input id='editingInput'><br>
   <div id="editingButtonContainer">
-  	<button id='editingSave'>Save</button>
-  	<button id='editingCancel'>Cancel</button>
+    <button id='editingSave'>Save</button>
+    <button id='editingCancel'>Cancel</button>
   </div>
 </div>
-	
+  
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
