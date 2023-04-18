@@ -94,7 +94,7 @@ tbody td:nth-child(-n+2) {
 }
 .dark-theme {
   background-color: #353935;
-  background: linear-gradient(0deg, #171717 0%, #212426 100%);
+  background: linear-gradient(0deg, #171717 0%, #2b2e30 100%);
 /*   background: linear-gradient(0deg, #121212 0%, #1c1f21 100%);*/
   color: #ffffff87;/*#b5b4b2ee;*/
 }
@@ -177,7 +177,7 @@ tbody td:nth-child(-n+2) {
   color: #000000;
 }
 
-.dark-theme #rating-item, .dark-theme #cancelButton {
+.dark-theme #rating-item, .dark-theme #ratingCancelButton {
   color: #000000;
   background-color: #ffffff10;
 }
@@ -201,7 +201,7 @@ button {
 
 #resetButton {
   margin-left: auto;
-  height: 13.5vw;
+  height: 13vw;
   min-width: 20vw;
   padding: 0;
   text-align: center;
@@ -212,6 +212,13 @@ button {
   backdrop-filter: blur(55px);
   border: none;
   border-radius: 10px;
+}
+
+#closeButton {
+  margin-left: 3vw;
+  margin-right: 0vw;
+  height: 13vw;
+  min-width: 20vw;
 }
 
 #menuButton {
@@ -337,13 +344,6 @@ input, select {
   align-items: center;
 }
 
-#closeButton {
-  margin-left: 3vw;
-  margin-right: 0vw;
-  height: 13.5vw;
-  min-width: 20vw;
-}
-
 #firstRow, #secondRow, #thirdRow {
       vertical-align: middle;
       justify-content: space-evenly;
@@ -376,19 +376,19 @@ input, select {
   position: fixed;
   display: none;
   top: 20%;
-  right: 22%;
+  right: 21%;
   background-color: #00000020;
   border-radius: 20px;
   -webkit-backdrop-filter: blur(40px);
-  box-shadow: 0px 0px 200px 30px #00000035;
+  box-shadow: 0px 0px 200px 40px #70707045;
 }
 
 #rating-container ul {
   justify-content: space-evenly;
   align-items: center;
   padding: 0;
-  margin-top: 8vw;
-  margin-bottom: 3vw;
+  margin-top: 0vw;
+  margin-bottom: 0vw;
 }
 
 #rating-item {
@@ -398,7 +398,7 @@ input, select {
   width: 15vw;
   height: 15vw;
   margin: 3vw;
-  border-radius: 20%;
+  border-radius: 15px;
   -webkit-backdrop-filter: blur(25px);
   background-color: #ffffff60;
   color: black;
@@ -407,19 +407,19 @@ input, select {
   font-size: 9vw;
 }
 
-#cancelButton {
+#ratingCancelButton {
   position: fixed;
   padding:0;
-  top: -2.8vw;
-  right: -2.8vw;
+  top: -5vw;
+  right: -5vw;
   display: flex;
   justify-content: center;
   width: 10vw;
   height: 10vw;
   font-size: 8vw;
-  box-shadow: 0px 0px 10px -5px;
+/*  box-shadow: 0px 0px 10px -5px;*/
   border-radius: 50%;
-  -webkit-backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(40px);
 }
 
 .markDelete, .editingMode {
@@ -439,7 +439,7 @@ input, select {
   position: fixed;
   top: 28vh;
   left: 21vw;
-  box-shadow: 0px 0px 200px 30px #70707045;
+  box-shadow: 0px 0px 200px 40px #70707055;
   border-radius: 10px;
 }
 
@@ -798,7 +798,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
   </div>
 <!-- <div id="rating-popup"> -->
   <div id="rating-container">
-        <li id="cancelButton">X</li>
+        <li id="ratingCancelButton">X</li>
     <ul id="rating-list">
       <li id="rating-item">1</li>
       <li id="rating-item">2</li>
@@ -905,7 +905,7 @@ const addButtonIcon = document.querySelector('#addBrew')
   addButtonIcon.style.width = '15vw';
   addButtonIcon.style.borderRadius = '50%';
   
-const cancelButtonIcon = document.querySelector('#cancelButton')
+const cancelButtonIcon = document.querySelector('#ratingCancelButton')
   cancelButtonIcon.textContent = '\u{100060}'
 
 
@@ -1158,7 +1158,7 @@ const ratingCells = document.querySelectorAll('.rating-cell');
 const ratingPopup = document.getElementById('rating-popup');
 const ratingContainer = document.getElementById('rating-container');
 const ratingItems = document.querySelectorAll('#rating-list li');
-const cancelButton = document.getElementById('cancelButton');
+const cancelButton = document.getElementById('ratingCancelButton');
 
 ratingCells.forEach(cell => {
   cell.addEventListener('click', function() {
