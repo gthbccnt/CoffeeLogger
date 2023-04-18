@@ -1476,14 +1476,6 @@ function backupTableToCSV() {
   localStorage.setItem('lastBackup', currentDate.toISOString());
 }
 
-window.addEventListener('resize', function(){
-  if(document.activeElement.tagName=="INPUT" || document.activeElement.tagName=="TEXTAREA") {
-    document.activeElement.scrollIntoView();
-    document.activeElement.blur();
-  }
-});
-
-
 // function sendPostRequest(apiKey) {
 //   const table1 = document.querySelector('#grinder1 tbody');
 //   const rows = Array.from(table1.querySelectorAll('tr'));
