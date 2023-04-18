@@ -178,8 +178,9 @@ tbody td:nth-child(-n+2) {
 }
 
 .dark-theme #rating-container {
-   background-color: #ffffff20; /*#d2b48c30;*/
-   -webkit-backdrop-filter: blur(45px);
+  background-color: #ffffff20; /*#d2b48c30;*/
+  -webkit-backdrop-filter: blur(45px);
+  box-shadow: 0px 0px 100px 30px #ffffff10;
 }
 
 .dark-theme #ratingCancelButton {
@@ -194,6 +195,10 @@ tbody td:nth-child(-n+2) {
 }
 .dark-theme ::placeholder {
   color: #000000;
+}
+
+.dark-theme #editingContainer {
+    box-shadow: 0px 0px 55px 30px #ffffff09;
 }
 
 button {
@@ -451,7 +456,7 @@ input, select {
   position: fixed;
   top: 28vh;
   left: 21vw;
-  box-shadow: 0px 0px 100px 40px #70707035;
+  box-shadow: 0px 0px 55px 40px #00000015;
   border-radius: 10px;
 }
 
@@ -881,6 +886,7 @@ function saveDataToLocalStorage(userGrinder, userLog) {
   localStorage.setItem(userLog, JSON.stringify(data));
 }
 
+
 function loadSelectedFont() {
   const fontData = localStorage.getItem('selectedFont');
   if (fontData) {
@@ -923,6 +929,8 @@ const addButtonIcon = document.querySelector('#addBrew')
   
 const cancelButtonIcon = document.querySelector('#ratingCancelButton')
   cancelButtonIcon.textContent = '\u{100060}'
+
+
 
 const resetButtonIcon = document.querySelector('#resetButton')
   resetButtonIcon.textContent = '\u{100060}';
@@ -969,6 +977,7 @@ window.addEventListener('load', () => {
     backupTableToCSV()
   }, 10);
 });
+
 
 function loadLogs(userGrinder, selectedTable) {
   const data = JSON.parse(localStorage.getItem(userGrinder));
@@ -1260,6 +1269,7 @@ function showPopup() {
   });
 }
 
+
 function reloadPage() {
   setTimeout(() => {
     location.reload();
@@ -1341,6 +1351,7 @@ function openCsvOrFont() {
   fileInput.click();
 }
 
+
 function addCsvToTable(csvData, fileName) {
   const fileNameString = fileName;
   let tbodyTemp = document.querySelector('#grinder1 tbody');
@@ -1357,6 +1368,7 @@ function addCsvToTable(csvData, fileName) {
     });
   });
 }
+
 
 function checkStoredLog() {
   if (!localStorage.getItem('coffeeLog1')) {
@@ -1433,11 +1445,37 @@ function scaleForLandscapeiPad() {
   }
 }
 
+// function backupTableToCSV() {
+//   const lastBackupStr = localStorage.getItem('lastBackup');
+//   const lastBackupDate = new Date(lastBackupStr);
+//   const currentDate = new Date();
+//   const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
+//   const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+//   if (daysDiff < 3) {
+//     return;
+//   }
+  
+//   const tableRows = document.querySelectorAll('tbody tr');
+//   const csvRows = Array.from(tableRows)
+//     .map(row => Array.from(row.querySelectorAll('td'))
+//       .map(cell => cell.textContent.replace(/;/g, '\;'))
+//       .join(';')
+//     );
+  
+//   const csvStr = csvRows.join('\n');
+//   const dateString = currentDate.toISOString().replace(/[:T]/g, '-').slice(0, -5); // Remove the seconds and timezone offset
+//   const fileName = `${dateString}-backup.csv`;
+//   const blob = new Blob([csvStr], {type: 'text/csv;charset=utf-8;'});
+//   const link = document.createElement('a');
+//   link.href = window.URL.createObjectURL(blob);
+//   link.download = fileName;
+//   link.click();
+  
+//   localStorage.setItem('lastBackup', currentDate.toISOString());
+// }
+
 function backupTableToCSV() {
   const lastBackupStr = localStorage.getItem('lastBackup');
-  // if (!lastBackupStr) {
-  //   return;
-  // }
   const lastBackupDate = new Date(lastBackupStr);
   const currentDate = new Date();
   const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
@@ -1445,14 +1483,16 @@ function backupTableToCSV() {
   if (daysDiff < 3) {
     return;
   }
-  
-  const tableRows = document.querySelectorAll('tbody tr');
+  const tbody = document.querySelector('tbody');
+  if (!tbody || !tbody.querySelectorAll('td').length) {
+    return;
+  }
+  const tableRows = tbody.querySelectorAll('tr');
   const csvRows = Array.from(tableRows)
     .map(row => Array.from(row.querySelectorAll('td'))
       .map(cell => cell.textContent.replace(/;/g, '\;'))
       .join(';')
     );
-  
   const csvStr = csvRows.join('\n');
   const dateString = currentDate.toISOString().replace(/[:T]/g, '-').slice(0, -5); // Remove the seconds and timezone offset
   const fileName = `${dateString}-backup.csv`;
@@ -1461,7 +1501,6 @@ function backupTableToCSV() {
   link.href = window.URL.createObjectURL(blob);
   link.download = fileName;
   link.click();
-  
   localStorage.setItem('lastBackup', currentDate.toISOString());
 }
 
