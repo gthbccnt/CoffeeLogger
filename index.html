@@ -136,6 +136,7 @@ tbody td:nth-child(-n+2) {
 .dark-theme #formInput2,
 .dark-theme #formInput3,
 .dark-theme #selectList,
+.dark-theme #editingInput,
 .dark-theme input {
   background-color: #00000030;
   color: #A9A9A987;
@@ -144,10 +145,10 @@ tbody td:nth-child(-n+2) {
 .dark-theme #selectList {
   color: #000000bb;
 }
-.dark-theme .form-container, .dark-theme #popup, .dark-theme #rating-container {
+.dark-theme .form-container, .dark-theme #popup, .dark-theme #rating-container, .dark-theme #editingContainer {
    background-color: #ffffff20; /*#d2b48c30;*/
-   -webkit-backdrop-filter: blur(15px);
-   backdrop-filter: blur(15px);
+   -webkit-backdrop-filter: blur(20px);
+   backdrop-filter: blur(20px);
 }
 .dark-theme .form-popup, .dark-theme #popupBackground, .dark-theme #rating-popup {
   background-color: #ffffff00;
@@ -235,7 +236,7 @@ button {
   box-shadow: 0px 0px 30px 30px #40404020;
 }
 
-input, select{
+input, select {
   padding-left: 4vw;
   min-width: 18vw;
 }
@@ -254,21 +255,21 @@ input, select{
   padding: 0;
   border: none;
   background-color: #ffffff00;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
   width: 100vw;
   height:100vh;
 }
 
 /* Add styles to the form container */
-.form-container, #popup {
+.form-container, #popup, #editingContainer {
  width: 89.6vw;
  left: 5vw;
  top: 35vw;
  position: fixed;
  background-color: #00000025;
- -webkit-backdrop-filter: blur(35px);
- backdrop-filter: blur(35px);
+ -webkit-backdrop-filter: blur(45px);
+ backdrop-filter: blur(45px);
  border-radius: 20px;
  padding: 4vw;
 }
@@ -284,7 +285,8 @@ input, select{
 #selectList,
 #formInput1,
 #formInput2,
-#formInput3 {
+#formInput3,
+#editingInput {
   width: 70vw;
   height: 14vw;
   border: none;
@@ -294,10 +296,6 @@ input, select{
   color: black;
   margin-left: auto;
   outline: none;
-}
-
-.sheetsIDFound::placeholder {
-  font-size: 2.5vw;
 }
 
 #selectList {
@@ -371,11 +369,13 @@ input, select{
 
 #rating-container {
   position: fixed;
+  display: none;
   top: 20%;
-  right: 10%;
+  right: 23%;
   background-color: #00000020;
   border-radius: 20px;
   -webkit-backdrop-filter: blur(40px);
+  box-shadow: 0px 0px 20px 30px #ffffff05;
 }
 
 #rating-container ul {
@@ -417,12 +417,40 @@ input, select{
   -webkit-backdrop-filter: blur(25px);
 }
 
-.markDelete {
-  background-color: #ff000060 !important;
+.markDelete, .editingMode {
+  background-color: #7F000090 !important;
+  border-radius: 15px;
 }
 
-.dark-theme .markDelete {
-  background-color: #ff000030 !important;
+.dark-theme .markDelete, .dark-theme .editingMode {
+  background-color: #ff000027 !important;
+  border-radius: 15px;
+}
+
+#editingContainer {
+  display: none;
+  width: 45vw;
+  padding: 3vw;
+  position: fixed;
+  top: 50vh;
+  left: 27.5vw;
+}
+
+#editingContainer button {
+  margin: 0;
+}
+
+#editingButtonContainer {
+  display: flex;
+ justify-content: space-between;
+}
+
+#editingInput {
+  width: 100%;
+  height: 10vw;
+  padding-left: 5%;
+  margin-bottom: 2vw;
+
 }
 /* ======== ANIMATIONS ====== */
 
@@ -643,7 +671,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 }
   </style>
 </head>
-<body>
+<body onload="init()">
 <button id="menuButton" onclick="showPopup()">Menu</button>
 
 <div id="grinder1Title" class="grinders">Grinder 1</div>
@@ -699,7 +727,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
     <div id="popInpContainer">
       <input type="text" placeholder="First Grinder" name="firstGrinder" id="formInput1">
         <input type="text" placeholder="Second Grinder" name="secondGrinder" id="formInput2">
-      <input type="text" placeholder="Enter Sheets ID" name="gSheetInput" id="formInput3">
+      <input type="text" placeholder="Enter IFTTT Key" name="iftttKey" id="formInput3">
     </div>
     <div id=popBtnContainer>
       <button onclick="clearLocalStorage(); reloadPage()" id="csvBtn">Wipe</button>
@@ -758,7 +786,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
       </div>
     </form>
   </div>
-<div id="rating-popup">
+<!-- <div id="rating-popup"> -->
   <div id="rating-container">
         <li id="cancelButton">X</li>
     <ul id="rating-list">
@@ -770,85 +798,17 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
       <li id="rating-item">6</li>
     </ul>
   </div>
+<!-- </div> -->
+
+<div id='editingContainer'>
+	<input id='editingInput'><br>
+  <div id="editingButtonContainer">
+  	<button id='editingSave'>Save</button>
+  	<button id='editingCancel'>Cancel</button>
+  </div>
 </div>
-<script src="https://apis.google.com/js/api.js"></script>
-
+	
 <script>
-function sendTableToGoogleSheets(apiKey, clientId, sheetId) {
-  gapi.load('client:auth2', function() {
-    gapi.client.init({
-      apiKey: apiKey,
-      clientId: clientId,
-      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-      scope: 'https://www.googleapis.com/auth/spreadsheets',
-      cookie_policy: 'none'
-    }).then(function() {
-      gapi.auth2.getAuthInstance().signIn().then(function() {
-        var tableData = getTableData('grinder1');
-        var sheetName = 'Table';
-        var spreadsheetId = sheetId;
-        createSheet(spreadsheetId, sheetName);
-        var range = sheetName + '!A1';
-        writeData(spreadsheetId, range, tableData);
-      });
-    });
-  });
-
-  function getTableData(tableId) {
-    var table = document.getElementById(tableId);
-    var rows = table.rows;
-    var data = [];
-    for (var i = 0; i < rows.length; i++) {
-      var row = [];
-      for (var j = 0; j < rows[i].cells.length; j++) {
-        row.push(rows[i].cells[j].innerHTML);
-      }
-      data.push(row);
-    }
-    return data;
-  }
-
-  function createSheet(spreadsheetId, sheetName) {
-    var request = {
-      'requests': [
-        {
-          'addSheet': {
-            'properties': {
-              'title': sheetName,
-            }
-          }
-        }
-      ]
-    };
-    gapi.client.sheets.spreadsheets.batchUpdate({
-      spreadsheetId: spreadsheetId,
-      resource: request,
-    }).then(function(response) {
-      console.log('Sheet created');
-    }, function(reason) {
-      console.error('Error: ' + reason.result.error.message);
-    });
-  }
-
-  function writeData(spreadsheetId, range, data) {
-    var valueRange = {
-      'values': data
-    };
-    gapi.client.sheets.spreadsheets.values.update({
-      spreadsheetId: spreadsheetId,
-      range: range,
-      valueInputOption: 'RAW',
-      resource: valueRange,
-    }).then(function(response) {
-      console.log('Data written to sheet');
-    }, function(reason) {
-      console.error('Error: ' + reason.result.error.message);
-    });
-  }
-
-}
-
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
@@ -977,11 +937,10 @@ window.addEventListener('load', () => {
       document.querySelector('#grinder2Title').textContent = grinderTitle2
       document.querySelector('#formInput2').setAttribute('placeholder', 'Current: ' + grinderTitle2)
     }
-    const gSheetID = localStorage.getItem('sheetsID')
-    if (gSheetID){
+    const storedIftttKey = localStorage.getItem('iftttKey')
+    if (storedIftttKey){
       const popupIftttInput = document.getElementById('formInput3')
-      popupIftttInput.classList.add('sheetsIDFound')
-      popupIftttInput.setAttribute('placeholder', 'ID: ' + gSheetID)
+      popupIftttInput.setAttribute('placeholder', 'IFTTT Key found!')
     }
   }, 10);
 });
@@ -1000,46 +959,64 @@ function loadLogs(userGrinder, selectedTable) {
       dateCell.setAttribute('data-row', i+1);
       dateCell.setAttribute('data-col', 1);
       dateCell.onclick = function() {
-      handleClick(this);
+      deleteRow(this);
       };
       const timeCell = document.createElement('td');
       timeCell.textContent = row.time;
       timeCell.setAttribute('data-row', i+1);
       timeCell.setAttribute('data-col', 2);
+      
       const setCell = document.createElement('td');
       setCell.textContent = row.setting;
-      setCell.classList.add('editable')
+      setCell.onclick = function() {
+      editTableCell(this, 'setCell' + i); // add unique ID to setCell
+      };
       setCell.setAttribute('data-row', i+1);
       setCell.setAttribute('data-col', 3);
+      
       const grCell = document.createElement('td');
       grCell.textContent = row.gr;
-      grCell.classList.add('editable')
+      grCell.onclick = function() {
+      editTableCell(this, 'grCell' + i); // add unique ID to setCell
+      };
       grCell.setAttribute('data-row', i+1);
       grCell.setAttribute('data-col', 4);
+      
       const mlCell = document.createElement('td');
       mlCell.textContent = row.ml;
-      mlCell.classList.add('editable')
+      mlCell.onclick = function() {
+      editTableCell(this, 'mlCell' + i); // add unique ID to setCell
+      };
       mlCell.setAttribute('data-row', i+1);
       mlCell.setAttribute('data-col', 5);
+      
       const degCell = document.createElement('td');
       degCell.textContent = row.degrees;
-      degCell.classList.add('editable')
+      degCell.onclick = function() {
+      editTableCell(this, 'degCell' + i); // add unique ID to setCell
+      };
       degCell.setAttribute('data-row', i+1);
       degCell.setAttribute('data-col', 6);
+      
       const recCell = document.createElement('td');
       recCell.textContent = row.recipe;
-      recCell.classList.add('editable')
+      recCell.onclick = function() {
+      editTableCell(this, 'recCell' + i); // add unique ID to setCell
+      };
       recCell.setAttribute('data-row', i+1);
       recCell.setAttribute('data-col', 7);
+      
       const ratCell = document.createElement('td');
       ratCell.textContent = row.rating;
-      ratCell.classList.add('editable')
       ratCell.setAttribute('data-row', i+1);
       ratCell.setAttribute('data-col', 8);
       ratCell.classList.add('rating-cell');
+      
       const drawCell = document.createElement('td');
       drawCell.textContent = row.drawdown;
-      drawCell.classList.add('editable')
+      drawCell.onclick = function() {
+      editTableCell(this, 'drawCell' + i); // add unique ID to setCell
+      };
       drawCell.setAttribute('data-row', i+1);
       drawCell.setAttribute('data-col', 9);
       tableRow.appendChild(dateCell);
@@ -1057,7 +1034,7 @@ function loadLogs(userGrinder, selectedTable) {
 }
 
 
-function handleClick(cell) {
+function deleteRow(cell) {
   const row = cell.parentNode;
   row.classList.add('markDelete');
   setTimeout(() => {
@@ -1069,10 +1046,6 @@ function handleClick(cell) {
   }
   }, 100);
 }
-
-//const rowNumber = 8;
-//let useSlice1 = false;
-//let useSlice2 = false;
     
 const bodyDarkMode = document.querySelector('body');
   var metaTag = document.querySelector('meta[name="theme-color"]');
@@ -1179,17 +1152,16 @@ const cancelButton = document.getElementById('cancelButton');
 
 ratingCells.forEach(cell => {
   cell.addEventListener('click', function() {
-    ratingPopup.classList.add('fade-in'); 
+    //ratingPopup.classList.add('fade-in'); 
     ratingContainer.classList.add('slide-in-blurred-right'); 
     const row = this.getAttribute('data-row');
     const col = this.getAttribute('data-col');
     const cellRect = this.getBoundingClientRect();
 
-    //ratingPopup.style.top = cellRect.top + window.pageYOffset + 'px';
-    //ratingPopup.style.left = cellRect.left + window.pageXOffset + 'px';
-    ratingPopup.style.display = 'flex';
-    ratingPopup.classList.add('active');
+    ratingContainer.style.display = 'flex';
+    ratingContainer.classList.add('active');
     this.classList.add('selected-cell');
+    this.classList.add('editingMode');
   });
 });
 
@@ -1198,23 +1170,27 @@ ratingItems.forEach(item => {
     const selectedRating = this.innerText;
     const selectedCell = document.querySelector('.selected-cell');
     selectedCell.innerText = selectedRating;
+    selectedCell.classList.remove('editingMode');
     selectedCell.classList.remove('selected-cell');
-    ratingPopup.classList.replace('fade-in', 'fade-out'); 
+    //ratingPopup.classList.replace('fade-in', 'fade-out'); 
     ratingContainer.classList.replace('slide-in-blurred-right', 'slide-out-blurred-right'); 
     setTimeout(() => {
-      ratingPopup.style.display = 'none';
-      ratingPopup.classList.replace('fade-out', 'fade-in');
+      ratingContainer.style.display = 'none';
+      //ratingPopup.classList.replace('fade-out', 'fade-in');
       ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
     }, 250);
   });
 });
 
 cancelButton.addEventListener('click', function() {
-  ratingPopup.classList.replace('fade-in', 'fade-out');
+  const selectedCell = document.querySelector('.selected-cell');
+  selectedCell.classList.remove('editingMode');
+  selectedCell.classList.remove('selected-cell');
+  //ratingPopup.classList.replace('fade-in', 'fade-out');
   ratingContainer.classList.replace('slide-in-blurred-right', 'slide-out-blurred-right'); 
   setTimeout(() => {
-    ratingPopup.style.display = 'none';
-    ratingPopup.classList.replace('fade-out', 'fade-in'); 
+    ratingContainer.style.display = 'none';
+    //ratingPopup.classList.replace('fade-out', 'fade-in'); 
     ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
   }, 250);
 });
@@ -1242,9 +1218,9 @@ function showPopup() {
     if (setGrinder2.value!==""){
     localStorage.setItem('grinderName2',setGrinder2.value);
     }
-    const gSheetsId = document.querySelector('[name="gSheetInput"]');
-    if (gSheetsId.value!==""){
-    localStorage.setItem('sheetsID', gSheetsId.value);
+    const setIftttKey = document.querySelector('[name="iftttKey"]');
+    if (setIftttKey.value!==""){
+    localStorage.setItem('iftttKey', setIftttKey.value);
     }
 
     backgroundPopup.classList.remove('fade-in');
@@ -1388,6 +1364,40 @@ function clearLocalStorage() {
   tbody2.innerHTML = '';
 }
 
+function editTableCell(cell) {
+  cell.classList.add('editingMode');
+  const editingContainer = document.querySelector('#editingContainer');
+  editingContainer.classList.add('slide-in-blurred-top');
+  editingContainer.style.display = 'block';
+  const editingInput = document.querySelector('#editingInput');
+  editingInput.value = cell.textContent;
+
+  const saveButton = document.querySelector('#editingSave');
+  const cancelButton = document.querySelector('#editingCancel');
+
+  function onSaveClick() {
+    cell.classList.remove('editingMode');
+    cell.textContent = editingInput.value;
+    editingContainer.classList.remove('slide-in-blurred-top');
+    editingContainer.classList.add('slide-out-blurred-top');
+    saveButton.removeEventListener('click', onSaveClick);
+    cancelButton.removeEventListener('click', onCancelClick);
+  }
+
+  function onCancelClick() {
+    cell.classList.remove('editingMode');
+    editingContainer.classList.remove('slide-in-blurred-top');
+    editingContainer.classList.add('slide-out-blurred-top');
+    saveButton.removeEventListener('click', onSaveClick);
+    cancelButton.removeEventListener('click', onCancelClick);
+  }
+
+  saveButton.addEventListener('click', onSaveClick);
+  cancelButton.addEventListener('click', onCancelClick);
+}
+
+
+
 // function sendPostRequest(apiKey) {
 //   const table1 = document.querySelector('#grinder1 tbody');
 //   const rows = Array.from(table1.querySelectorAll('tr'));
@@ -1402,8 +1412,6 @@ function clearLocalStorage() {
 // }
 
 
-
-
 // setTimeout(() => {
 // if (localStorage.getItem('iftttKey')){
 //  const key = localStorage.getItem('iftttKey')
@@ -1411,21 +1419,7 @@ function clearLocalStorage() {
 // }
 // }, 500);
 
-// sheetId, apikey, clientid, tableId
-
-var storedSheetsId = localStorage.getItem('sheetsID');
-console.log('sheetID: ' + storedSheetsId);
-var storedGoogleKey = localStorage.getItem('google_json_key');
-var storedGoogleJSONKey = JSON.parse(storedGoogleKey);
-var storedApiKey = storedGoogleJSONKey.web.api_key;
-var storedClientID = storedGoogleJSONKey.web.client_id
-console.log('api: ' + storedApiKey);
-console.log('clientid: ' + storedClientID);
-
-setTimeout(() => {
-sendTableToGoogleSheets(storedApiKey, storedClientID, storedSheetsId)
-//sendTableToGoogleSheets(storedSheetsId, storedApiKey, storedClientID, 'grinder1')
-}, 1000);
+// ================
 </script>
 </body>
 </html>
