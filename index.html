@@ -124,7 +124,7 @@ tbody td:nth-child(-n+2) {
 }
 
 .dark-theme #addBrew {
-  box-shadow: 0px 0px 30px 30px #00000025;
+  box-shadow: 0px 0px 60px 30px #00000025;
 }
 
 .dark-theme #roundedCorners1, .dark-theme #roundedCorners2 {
@@ -258,7 +258,7 @@ button {
   bottom: 10vh;
   right: 3vw;
   padding: 0;
-  box-shadow: 0px 0px 30px 30px #40404020;
+  box-shadow: 0px 0px 60px 30px #00000020;
 }
 
 input, select {
@@ -859,6 +859,7 @@ if ('serviceWorker' in navigator) {
 });
 
 document.addEventListener('visibilitychange', () => {
+  scaleForLandscapeiPad()
   if (document.visibilityState === 'hidden') {
     saveDataToLocalStorage("#grinder1 tbody tr", "coffeeLog1");
     saveDataToLocalStorage("#grinder2 tbody tr", "coffeeLog2");
@@ -1445,35 +1446,6 @@ function scaleForLandscapeiPad() {
   }
 }
 
-// function backupTableToCSV() {
-//   const lastBackupStr = localStorage.getItem('lastBackup');
-//   const lastBackupDate = new Date(lastBackupStr);
-//   const currentDate = new Date();
-//   const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
-//   const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-//   if (daysDiff < 3) {
-//     return;
-//   }
-  
-//   const tableRows = document.querySelectorAll('tbody tr');
-//   const csvRows = Array.from(tableRows)
-//     .map(row => Array.from(row.querySelectorAll('td'))
-//       .map(cell => cell.textContent.replace(/;/g, '\;'))
-//       .join(';')
-//     );
-  
-//   const csvStr = csvRows.join('\n');
-//   const dateString = currentDate.toISOString().replace(/[:T]/g, '-').slice(0, -5); // Remove the seconds and timezone offset
-//   const fileName = `${dateString}-backup.csv`;
-//   const blob = new Blob([csvStr], {type: 'text/csv;charset=utf-8;'});
-//   const link = document.createElement('a');
-//   link.href = window.URL.createObjectURL(blob);
-//   link.download = fileName;
-//   link.click();
-  
-//   localStorage.setItem('lastBackup', currentDate.toISOString());
-// }
-
 function backupTableToCSV() {
   const lastBackupStr = localStorage.getItem('lastBackup');
   const lastBackupDate = new Date(lastBackupStr);
@@ -1503,7 +1475,6 @@ function backupTableToCSV() {
   link.click();
   localStorage.setItem('lastBackup', currentDate.toISOString());
 }
-
 
 // function sendPostRequest(apiKey) {
 //   const table1 = document.querySelector('#grinder1 tbody');
