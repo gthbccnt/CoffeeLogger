@@ -1728,6 +1728,12 @@ function shareCSV() {
     ) : [];
   const grinder1CSVStr = grinder1Rows.join('\n');
   const grinder2CSVStr = grinder2Rows.join('\n');
+
+  if (localStorage.getItem('iftttKey')){
+    const key = localStorage.getItem('iftttKey')
+    sendGetRequest(key, grinder1CSVStr, grinder2CSVStr);
+  }
+
   const grinder1FileName = `${localStorage.getItem('grinderName1')} ${currentDate.toLocaleDateString('de-DE')}_backup.csv`;
   const grinder2FileName = `${localStorage.getItem('grinderName2')} ${currentDate.toLocaleDateString('de-DE')}_backup.csv`;
   const shareData = {
@@ -1757,38 +1763,14 @@ function shareCSV() {
     .catch((error) => console.log('Error sharing data:', error));
 }
 
-// function sendPostRequest(value, apiKey) {
- // const script = document.createElement('script');
- // const url = 'https://maker.ifttt.com/trigger/coffeeLogBackup/with/key/' + apiKey;
- // script.src = `${url}?value1=${encodeURIComponent(value)}`;
- // document.body.appendChild(script);
-//}
+function sendGetRequest(apiKey, grinder1CSVStr, grinder2CSVStr) {
+  const script = document.createElement('script');
+  const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?&value1=${encodeURIComponent(grinder1CSVStr)}&value2=${encodeURIComponent(grinder2CSVStr)}`;
+  console.log(url);
 
-// function sendPostRequest(apiKey) {
-//   const table1 = document.querySelector('#grinder1 tbody');
-//   const rows1 = Array.from(table1.querySelectorAll('tr'));
-//   const csvString1 = rows1.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()).join(',')).join('\n');
-
-//   const table2 = document.querySelector('#grinder2 tbody');
-//   const rows2 = Array.from(table2.querySelectorAll('tr'));
-//   const csvString2 = rows2.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()).join(',')).join('\n');
-
-//   const script = document.createElement('script');
-//   const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?&value1=${encodeURIComponent(csvString1)}&value2=${encodeURIComponent(csvString2)}`;
-//   console.log(url);
-
-//   script.src = url;
-//   document.body.appendChild(script);
-// }
-
-
-// setTimeout(() => {
-// if (localStorage.getItem('iftttKey')){
-//  const key = localStorage.getItem('iftttKey')
-//  sendPostRequest(key);
-// }
-// }, 500);
-
+  script.src = url;
+  document.body.appendChild(script);
+}
 // ================
 </script>
 </body>
