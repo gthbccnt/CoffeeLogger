@@ -16,12 +16,57 @@ body {
   margin:0;
   background-color: #D1B888;
   background: linear-gradient(0deg, rgba(222,179,103,.8) 0%, rgba(209,184,136,1) 90%);
-  text-align: right;
   touch-action: none;
   background-attachment: fixed;
   height: 100vh;
   width: 100vw;
   overflow:hidden;
+}
+
+#appTitle {
+  margin-left: 4vw;
+  margin-top: 0vw;
+  font-size: 10vw;
+}
+
+.grinders {
+  font-weight: light;
+  font-size: 5vw;
+  text-align: right;
+	left: 5vw;
+}
+
+#headerButtonContainer {
+  display: flex;
+  position: fixed;
+  top: 5.2vw;
+  right: 0vw;
+}
+
+#exportButton {
+	display: none;
+  z-index: 0;
+	height: 12vw;
+	max-width: 20vw;
+  min-width: 12vw;
+	/*position: fixed;
+	right: 16vw;*/
+  padding: 0;
+  font-size: 3vw; /* 7vw */
+  top: 0vw;
+  box-shadow: 0px 0px 10px -2px #00000020;
+}
+
+#menuButton {
+  z-index: 0;
+  padding: 0vw;
+  /*position: fixed;
+  right: 0.5vw;*/
+  font-size: 3vw;
+  height: 12vw;
+  max-width:18vw;
+  min-width: 12vw;
+  box-shadow: 0px 0px 10px -2px #00000020;
 }
 
 ::-webkit-scrollbar {
@@ -43,15 +88,24 @@ body {
 
 #roundedCorners1 {
   max-height: 85vw;
+  position: fixed;
+  top: 19vw;
 }
 
-.grinders {
-  font-weight: light;
-  font-size: 7vw;
-  text-align: left;
-  margin-bottom: 3vw;
-  margin-left: 4vw;
+#roundedCorners2 {
+  position: fixed;
+  max-height: 75vw;
+  top: 114vw;;
 }
+
+ #grinder1Title {
+  position: fixed;
+  top: 12vw;
+ }
+ #grinder2Title {
+  position: fixed;
+  top: 107vw;
+ }
 
 table {
   border-collapse: collapse;
@@ -94,9 +148,9 @@ tbody td:nth-child(-n+2) {
 }
 .dark-theme {
   background-color: #353935;
-  background: linear-gradient(0deg, #171717 0%, #2b2e30 100%);
+  background: linear-gradient(0deg, #192124 0%, #2b2e30 100%);
 /*   background: linear-gradient(0deg, #121212 0%, #1c1f21 100%);*/
-  color: #ffffff87;/*#b5b4b2ee;*/
+  color: #ffffff99;/*#b5b4b2ee;*/
 }
 
 .dark-theme tbody tr:nth-child(even) {
@@ -110,7 +164,7 @@ tbody td:nth-child(-n+2) {
 }
 
 .dark-theme thead tr td{
-    color: #ffffff87;
+    color: #ffffff90;
 }
 
 .dark-theme button,
@@ -119,7 +173,7 @@ tbody td:nth-child(-n+2) {
   color: #000000;
 }
 
-.dark-theme #addBrew, .dark-theme #menuButton {
+.dark-theme #addBrew, .dark-theme #menuButton, .dark-theme #exportButton {
   background-color: #ffffff20;
 }
 
@@ -169,8 +223,8 @@ tbody td:nth-child(-n+2) {
   color: #000000;
 }
 
-.dark-theme #grinder1Title, .dark-theme #grinder2Title {
-  color: #ebebeb40;
+.dark-theme #grinder1Title, .dark-theme #grinder2Title, .dark-theme #appTitle {
+  color: #ebebeb87;
 }
 
 .dark-theme #inputIcon {
@@ -178,9 +232,9 @@ tbody td:nth-child(-n+2) {
 }
 
 .dark-theme #rating-container {
-  background-color: #ffffff20; /*#d2b48c30;*/
+  background-color: #ffffff10; /*#d2b48c30;*/
   -webkit-backdrop-filter: blur(45px);
-  box-shadow: 0px 0px 100px 30px #ffffff10;
+  box-shadow: 0px 0px 100px 30px #00000020;
 }
 
 .dark-theme #ratingCancelButton {
@@ -198,7 +252,8 @@ tbody td:nth-child(-n+2) {
 }
 
 .dark-theme #editingContainer {
-    box-shadow: 0px 0px 55px 30px #ffffff09;
+    box-shadow: 0px 0px 45px 30px #00000025;
+    background-color: #ffffff15;
 }
 
 button {
@@ -237,20 +292,9 @@ button {
   min-width: 20vw;
 }
 
-#menuButton {
-  z-index: 0;
-  padding: 2.5vw;
-  position: relative;
-  right: 0.5vw;
-  max-width:18vw;
-  min-width: 5vw;
-  margin-top: 1.5vh;
-  margin-bottom: -6vh;
-  box-shadow: 0px 0px 10px -2px #00000020;
-}
-
 #addBrew {
   position: fixed;
+  z-index: 1;
   background-color: #ffffff30;
   max-width:18vw;
   min-width: 15vw;
@@ -275,6 +319,7 @@ input, select {
 .form-popup, #popupBackground, #rating-popup {
   display: none;
   position: fixed;
+  z-index: 1;
   top: 0px;
   left: 0px;
   padding: 0;
@@ -394,7 +439,7 @@ input, select {
   top: 20%;
   right: 21%;
   background-color: #00000020;
-  border-radius: 20px;
+  border-radius: 15px;
   -webkit-backdrop-filter: blur(45px);
   box-shadow: 0px 0px 100px 40px #70707025;
 }
@@ -414,7 +459,7 @@ input, select {
   width: 15vw;
   height: 15vw;
   margin: 3vw;
-  border-radius: 15px;
+  border-radius: 10px;
   -webkit-backdrop-filter: blur(25px);
   background-color: #ffffff60;
   color: black;
@@ -477,8 +522,8 @@ input, select {
   height: 14vw;
   padding-left: 5%;
   margin-bottom: 3vw;
-
 }
+
 /* ======== ANIMATIONS ====== */
 .spaceOutUp {
   animation: spaceOutUp 0.25s;
@@ -709,8 +754,11 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
   </style>
 </head>
 <body>
-<button id="menuButton" onclick="showPopup()">Menu</button>
-
+<h1 id="appTitle">Coffee Log</h1>
+<div id="headerButtonContainer">
+  <button id="exportButton" onclick="shareCSV()">Export</button>
+  <button id="menuButton" onclick="showPopup()">Menu</button>
+</div>
 <div id="grinder1Title" class="grinders">Grinder 1</div>
 <div id="roundedCorners1">
   <table id="grinder1">
@@ -859,7 +907,6 @@ if ('serviceWorker' in navigator) {
 });
 
 document.addEventListener('visibilitychange', () => {
-  scaleForLandscapeiPad()
   if (document.visibilityState === 'hidden') {
     saveDataToLocalStorage("#grinder1 tbody tr", "coffeeLog1");
     saveDataToLocalStorage("#grinder2 tbody tr", "coffeeLog2");
@@ -940,6 +987,10 @@ const inputIcons = document.querySelectorAll('#inputIcon')
     inputIcons[0].textContent ='\u{1007f2}';
     inputIcons[1].textContent ='\u{10155c}';
     inputIcons[2].textContent ='\u{10042f}';
+    
+const exportButtonIcon = document.querySelector("#exportButton")
+  exportButtonIcon.textContent = "\u{100202}"
+  exportButtonIcon.style.fontSize = "6vw";
 
 const css = `@font-face {
       font-family: 'iconMode';
@@ -959,6 +1010,7 @@ window.addEventListener('load', () => {
 
     loadLogs('coffeeLog1', '#grinder1 tbody');
     loadLogs('coffeeLog2', '#grinder2 tbody');
+    showExportButton()
 
     const grinderTitle1 = localStorage.getItem('grinderName1')
     if (grinderTitle1) {
@@ -975,7 +1027,6 @@ window.addEventListener('load', () => {
       const popupIftttInput = document.getElementById('formInput3')
       popupIftttInput.setAttribute('placeholder', 'IFTTT Key found!')
     }
-    backupTableToCSV()
   }, 10);
 });
 
@@ -1107,11 +1158,17 @@ window.matchMedia('(prefers-color-scheme: dark)').addListener((event) => {
 
 const formPopup = document.getElementById("myForm")
 const formContainer = formPopup.querySelector(".form-container");
+const menuButtonTemp = document.querySelector('#menuButton')
+const tempExportButton = document.querySelector('#exportButton')
+const appTitle = document.querySelector('#appTitle')
 
 function openForm() {
   formContainer.classList.add("slide-in-blurred-br");
   formPopup.classList.add("fade-in")
   formPopup.style.display = "block";
+  menuButtonTemp.style.display = 'none'
+  tempExportButton.style.display = 'none'
+  appTitle.style.display = 'none'
   setTimeout(function() {
     formContainer.classList.remove("slide-in-blurred-br");
     formPopup.classList.remove("fade-in");
@@ -1121,6 +1178,9 @@ function openForm() {
 function closeForm() {
   formContainer.classList.add("slide-out-blurred-br");
   formPopup.classList.add("fade-out");
+  menuButtonTemp.style.display = 'block'
+  tempExportButton.style.display = 'block'
+  appTitle.style.display = 'block'
   setTimeout(function() {
     formPopup.style.display = "none";
     formContainer.classList.remove("slide-out-blurred-br");
@@ -1235,6 +1295,9 @@ function showPopup() {
 
   backgroundPopup.classList.add('fade-in');
   popup.classList.add('slide-in-blurred-top');
+  menuButtonTemp.style.display = 'none'
+  tempExportButton.style.display = 'none'
+  appTitle.style.display = 'none'
   backgroundPopup.style.display= 'block';
   popup.style.display= 'block';
   
@@ -1260,7 +1323,9 @@ function showPopup() {
 
     backgroundPopup.classList.add('fade-out');
     popup.classList.add('slide-out-blurred-top');
-    
+    menuButtonTemp.style.display = 'block'
+    tempExportButton.style.display = 'block'
+    appTitle.style.display = 'block'
     setTimeout(() => {
       backgroundPopup.classList.remove('fade-out');
       popup.classList.remove('slide-out-blurred-top');
@@ -1269,7 +1334,6 @@ function showPopup() {
     }, 200);
   });
 }
-
 
 function reloadPage() {
   setTimeout(() => {
@@ -1399,8 +1463,24 @@ function clearLocalStorage() {
 function editTableCell(cell) {
   cell.classList.add('editingMode');
   const editingContainer = document.querySelector('#editingContainer');
-  // editingContainer.classList.add('slide-in-blurred-top');
   editingContainer.classList.add('spaceInUp');
+
+  const cellRect = cell.getBoundingClientRect();
+  const topOffset = cellRect.top + cellRect.height + window.pageYOffset + 5; // add 1vw
+
+  // Check if the cell's bottom is above or below the middle of the viewport
+  const isAboveMiddle = (cellRect.bottom < window.innerHeight / 2);
+
+  if (isAboveMiddle) {
+    editingContainer.style.top = `${topOffset}px`;
+    editingContainer.style.zIndex = '1';
+  } else {
+    const editingContainerHeight = editingContainer.offsetHeight;
+    const topOffset = cellRect.top - 5 - 138; // subtract 5vw
+    editingContainer.style.top = `${topOffset - editingContainerHeight}px`;
+    editingContainer.style.zIndex = '2';
+  }
+
   editingContainer.style.display = 'block';
   const editingInput = document.querySelector('#editingInput');
   editingInput.value = cell.textContent;
@@ -1416,7 +1496,7 @@ function editTableCell(cell) {
       editingContainer.style.display = 'none'
       saveButton.removeEventListener('click', onSaveClick);
       cancelButton.removeEventListener('click', onCancelClick);
-   }, 240); 
+    }, 240); 
   }
   function onCancelClick() {
     editingContainer.classList.remove('spaceInUp');
@@ -1426,54 +1506,112 @@ function editTableCell(cell) {
       editingContainer.style.display = 'none'
       saveButton.removeEventListener('click', onSaveClick);
       cancelButton.removeEventListener('click', onCancelClick);
-   }, 240); 
+    }, 240); 
   }
   saveButton.addEventListener('click', onSaveClick);
   cancelButton.addEventListener('click', onCancelClick);
 }
 
-function scaleForLandscapeiPad() {
-  if (navigator.userAgent.match(/iPad/i) && window.innerWidth > window.innerHeight) {
-    var body = document.getElementsByTagName('body')[0];
-    var bodyWidth = body.offsetWidth;
-    var miniAspectRatio = 375 / 812; // aspect ratio of iPhone mini
-    var newBodyHeight = bodyWidth / miniAspectRatio;
-    var scale = window.innerHeight / newBodyHeight;
-    body.style.transform = 'scale(' + scale + ')';
-    body.style.transformOrigin = 'top left';
-    body.style.width = bodyWidth + 'px';
-    body.style.height = newBodyHeight + 'px';
-  }
-}
+// ===== export as csv every three days
+const lastBackupStr = localStorage.getItem('lastBackup');
+const lastBackupDate = new Date(lastBackupStr);
+const currentDate = new Date();
 
-function backupTableToCSV() {
-  const lastBackupStr = localStorage.getItem('lastBackup');
-  const lastBackupDate = new Date(lastBackupStr);
-  const currentDate = new Date();
-  const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
-  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-  if (daysDiff < 3) {
+function shareCSV() {
+  const grinder1Tbody = document.querySelector('#grinder1 tbody');
+  const grinder2Tbody = document.querySelector('#grinder2 tbody');
+  const hasGrinder1Data = grinder1Tbody && grinder1Tbody.querySelectorAll('td').length;
+  const hasGrinder2Data = grinder2Tbody && grinder2Tbody.querySelectorAll('td').length;
+  if (!hasGrinder1Data && !hasGrinder2Data) {
     return;
   }
-  const tbody = document.querySelector('tbody');
-  if (!tbody || !tbody.querySelectorAll('td').length) {
-    return;
-  }
-  const tableRows = tbody.querySelectorAll('tr');
-  const csvRows = Array.from(tableRows)
+  const grinder1Rows = hasGrinder1Data ? Array.from(grinder1Tbody.querySelectorAll('tr'))
     .map(row => Array.from(row.querySelectorAll('td'))
       .map(cell => cell.textContent.replace(/;/g, '\;'))
       .join(';')
-    );
-  const csvStr = csvRows.join('\n');
-  const dateString = currentDate.toISOString().replace(/[:T]/g, '-').slice(0, -5); // Remove the seconds and timezone offset
-  const fileName = `${dateString}-backup.csv`;
-  const blob = new Blob([csvStr], {type: 'text/csv;charset=utf-8;'});
-  const link = document.createElement('a');
-  link.href = window.URL.createObjectURL(blob);
-  link.download = fileName;
-  link.click();
-  localStorage.setItem('lastBackup', currentDate.toISOString());
+    ) : [];
+  const grinder2Rows = hasGrinder2Data ? Array.from(grinder2Tbody.querySelectorAll('tr'))
+    .map(row => Array.from(row.querySelectorAll('td'))
+      .map(cell => cell.textContent.replace(/;/g, '\;'))
+      .join(';')
+    ) : [];
+  const grinder1CSVStr = grinder1Rows.join('\n');
+  const grinder2CSVStr = grinder2Rows.join('\n');
+  const grinder1FileName = `${localStorage.getItem('grinderName1')} ${currentDate.toLocaleDateString('de-DE')}_backup.csv`;
+  const grinder2FileName = `${localStorage.getItem('grinderName2')} ${currentDate.toLocaleDateString('de-DE')}_backup.csv`;
+  const shareData = {
+    files: []
+  };
+  if (hasGrinder1Data) {
+    const grinder1File = new File([grinder1CSVStr], grinder1FileName, {type: 'text/csv'});
+    shareData.files.push(grinder1File);
+  }
+  if (hasGrinder2Data) {
+    const grinder2File = new File([grinder2CSVStr], grinder2FileName, {type: 'text/csv'});
+    shareData.files.push(grinder2File);
+  }
+  //setTimeout(() => {
+   navigator.share(shareData)
+//}, 100)
+    .then(() => {
+      const grinder1ExportButton = document.querySelector("#grinder1 #exportButton");
+      const grinder2ExportButton = document.querySelector("#grinder2 #exportButton");
+      if (grinder1ExportButton) {
+        grinder1ExportButton.style.display = "none";
+      }
+      if (grinder2ExportButton) {
+        grinder2ExportButton.style.display = "none";
+      }
+      localStorage.setItem('lastBackup', currentDate.toISOString());
+      console.log('Data shared successfully.');
+    })
+    .catch((error) => console.log('Error sharing data:', error));
+}
+
+
+
+// const lastBackupStr = localStorage.getItem('lastBackup');
+// const lastBackupDate = new Date(lastBackupStr);
+// const currentDate = new Date();
+
+// function shareCSV() {
+//   const tbody = document.querySelector('#grinder1 tbody');
+//   if (!tbody || !tbody.querySelectorAll('td').length) {
+//     return;
+//   }
+//   const tableRows = tbody.querySelectorAll('tr');
+//   const csvRows = Array.from(tableRows)
+//     .map(row => Array.from(row.querySelectorAll('td'))
+//       .map(cell => cell.textContent.replace(/;/g, '\;'))
+//       .join(';')
+//     );
+//   const csvStr = csvRows.join('\n');
+//   const shareData = {
+//     title: 'CSV data',
+//     text: csvStr,
+//     files: [
+//       new File([csvStr], 'data.csv', {type: 'text/csv'})
+//     ]
+//   };
+//   navigator.share(shareData)
+//     const exportButton = document.querySelector("#exportButton");
+//   exportButton.style.display = "none";
+//   localStorage.setItem('lastBackup', currentDate.toISOString())
+//     .then(() => console.log('Data shared successfully.'))
+//     .catch((error) => console.log('Error sharing data:', error));
+// }
+
+function showExportButton() {
+  const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
+  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  if (daysDiff < 3) {return}
+  const tbody = document.querySelector('tbody');
+  if (!tbody || !tbody.querySelectorAll('td').length) {
+    return}
+  
+  const exportButtontemp= document.querySelector("#exportButton");
+  exportButtontemp.style.display = "block";
+  //sendTableData();
 }
 
 // function sendPostRequest(apiKey) {
