@@ -1445,13 +1445,6 @@ function checkStoredLog() {
 
 checkStoredLog()
 
-// function sendPostRequest(value, apiKey) {
- // const script = document.createElement('script');
- // const url = 'https://maker.ifttt.com/trigger/coffeeLogBackup/with/key/' + apiKey;
- // script.src = `${url}?value1=${encodeURIComponent(value)}`;
- // document.body.appendChild(script);
-//}
-
 function clearLocalStorage() {
   localStorage.clear();
   const tbody1 = document.querySelector('#grinder1 tbody');
@@ -1568,39 +1561,6 @@ function shareCSV() {
     .catch((error) => console.log('Error sharing data:', error));
 }
 
-
-
-// const lastBackupStr = localStorage.getItem('lastBackup');
-// const lastBackupDate = new Date(lastBackupStr);
-// const currentDate = new Date();
-
-// function shareCSV() {
-//   const tbody = document.querySelector('#grinder1 tbody');
-//   if (!tbody || !tbody.querySelectorAll('td').length) {
-//     return;
-//   }
-//   const tableRows = tbody.querySelectorAll('tr');
-//   const csvRows = Array.from(tableRows)
-//     .map(row => Array.from(row.querySelectorAll('td'))
-//       .map(cell => cell.textContent.replace(/;/g, '\;'))
-//       .join(';')
-//     );
-//   const csvStr = csvRows.join('\n');
-//   const shareData = {
-//     title: 'CSV data',
-//     text: csvStr,
-//     files: [
-//       new File([csvStr], 'data.csv', {type: 'text/csv'})
-//     ]
-//   };
-//   navigator.share(shareData)
-//     const exportButton = document.querySelector("#exportButton");
-//   exportButton.style.display = "none";
-//   localStorage.setItem('lastBackup', currentDate.toISOString())
-//     .then(() => console.log('Data shared successfully.'))
-//     .catch((error) => console.log('Error sharing data:', error));
-// }
-
 function showExportButton() {
   const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
   const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
@@ -1613,6 +1573,13 @@ function showExportButton() {
   exportButtontemp.style.display = "block";
   //sendTableData();
 }
+
+// function sendPostRequest(value, apiKey) {
+ // const script = document.createElement('script');
+ // const url = 'https://maker.ifttt.com/trigger/coffeeLogBackup/with/key/' + apiKey;
+ // script.src = `${url}?value1=${encodeURIComponent(value)}`;
+ // document.body.appendChild(script);
+//}
 
 // function sendPostRequest(apiKey) {
 //   const table1 = document.querySelector('#grinder1 tbody');
