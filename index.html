@@ -237,11 +237,11 @@ tbody td:nth-child(-n+2) {
   box-shadow: 0px 0px 100px 30px #00000020;
 }
 
-.dark-theme #ratingCancelButton {
-   background-color: #ffffff10; /*#d2b48c30;*/
+/*.dark-theme #ratingCancelButton {
+   background-color: #ffffff10;
    -webkit-backdrop-filter: blur(20px);
    color: black;
-}
+}*/
 
 .dark-theme #rating-item {
   color: #000000;
@@ -441,7 +441,7 @@ input, select {
   background-color: #00000020;
   border-radius: 15px;
   -webkit-backdrop-filter: blur(45px);
-  box-shadow: 0px 0px 100px 40px #70707025;
+  box-shadow: 0px 0px 100px 40px #00000025;
 }
 
 #rating-container ul {
@@ -468,25 +468,24 @@ input, select {
   font-size: 9vw;
 }
 
-#ratingCancelButton {
+/*#ratingCancelButton {
   position: fixed;
   padding:0;
+  display: none;
   top: -5vw;
   right: -5vw;
-  display: flex;
   justify-content: center;
   background-color: #00000010;
   width: 10vw;
   height: 10vw;
   font-size: 8vw;
-/*  box-shadow: 0px 0px 10px -5px;*/
   border-radius: 50%;
   -webkit-backdrop-filter: blur(25px);
-}
+}*/
 
 .markDelete, .editingMode {
   background-color: #7F000090 !important;
-  border-radius: 5px;
+  border-radius: 5px;;
 }
 
 .dark-theme .markDelete, .dark-theme .editingMode {
@@ -501,7 +500,8 @@ input, select {
   position: fixed;
   top: 40vh;
   left: 21vw;
-  box-shadow: 0px 0px 55px 40px #00000015;
+/*  box-shadow: 0px 0px 45px 30px #00000025;*/
+  box-shadow: 0px 0px 100px 40px #00000025;
   border-radius: 10px;
 }
 
@@ -524,12 +524,101 @@ input, select {
   margin-bottom: 3vw;
 }
 
+#deleteRowContainer {
+  position: fixed;
+  padding: 2vw;
+  padding-left: 3.5vw;
+  padding-right: 3.5vw;
+  top: 10vh;
+  width: 96vw;
+  left: 2vw;
+  height: 17vh;
+  background-color: #610202aa;
+  -webkit-backdrop-filter: blur(100px);
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px -2px #000000ee;
+}
+
+#deleteRowConfirmButton {
+  background-color: #ffffff15;
+  margin: 0;
+  height: 14vw;
+  }
+
+#deleteRowContainerPopup {
+  z-index: 3;
+  background-color: #00000050;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  position: fixed;
+  display: none;
+}
+
+#deleteRowButtonBox {
+  display: flex;
+  justify-content: space-between;
+  bottom: 0;
+}
+
+#deleteMessage {
+  font-size: 9vw;
+  font-weight: bold;
+  margin-bottom: 3vw;
+  margin-top: 0vw;
+  }
+
+#deleteRowCancelButton {
+  font-weight: bold;
+  background-color: #ffffff15;
+    <align-items: ;margin: 0;
+  height: 14vw;
+}
 /* ======== ANIMATIONS ====== */
 .spaceOutUp {
   animation: spaceOutUp 0.25s;
 }
 .spaceInUp {
   animation: spaceInUp 0.25s;
+}
+
+.pulseSize {
+  animation: pulseSize 2s infinite;
+}
+
+.pulseShadow {
+  animation: pulseShadow 2s infinite;
+}
+
+@keyframes pulseSize {
+  0% {
+    transform: scale(1);
+/*    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);*/
+  }
+
+  50% {
+    transform: scale(1.015);
+/*    box-shadow: 0 0 0 8px rgba(0, 0, 0, 0);*/
+  }
+
+  100% {
+    transform: scale(1);
+/*    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);*/
+  }
+}
+
+@keyframes pulseShadow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 6px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
 }
 
 @keyframes spaceOutUp {
@@ -868,7 +957,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
   </div>
 <!-- <div id="rating-popup"> -->
   <div id="rating-container">
-        <li id="ratingCancelButton">X</li>
+        <!-- <li id="ratingCancelButton">X</li> -->
     <ul id="rating-list">
       <li id="rating-item">1</li>
       <li id="rating-item">2</li>
@@ -887,7 +976,17 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
     <button id='editingCancel'>Cancel</button>
   </div>
 </div>
-  
+
+<div id="deleteRowContainerPopup">
+  <div id="deleteRowContainer">
+    <div id="deleteMessage">Delete this brew log?</div>
+    <div id="deleteRowButtonBox">
+      <button id="deleteRowConfirmButton">OK</button>
+      <button id="deleteRowCancelButton">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
@@ -975,8 +1074,8 @@ const addButtonIcon = document.querySelector('#addBrew')
   addButtonIcon.style.width = '15vw';
   addButtonIcon.style.borderRadius = '50%';
   
-const cancelButtonIcon = document.querySelector('#ratingCancelButton')
-  cancelButtonIcon.textContent = '\u{100060}'
+// const cancelButtonIcon = document.querySelector('#ratingCancelButton')
+//   cancelButtonIcon.textContent = '\u{100060}'
 
 
 
@@ -1118,17 +1217,81 @@ function loadLogs(userGrinder, selectedTable) {
   }
 }
 
+// function deleteRow(cell) {
+//   const row = cell.parentNode;
+//   row.classList.add('markDelete');
+//   setTimeout(() => {
+//   const confirmDelete = confirm('Delete this brew log?');
+//   if (confirmDelete) {
+//     row.parentNode.removeChild(row);
+//   } else {
+//     row.classList.remove('markDelete');
+//   }
+//   }, 100);
+// }
+
 function deleteRow(cell) {
   const row = cell.parentNode;
   row.classList.add('markDelete');
-  setTimeout(() => {
-  const confirmDelete = confirm('Delete this brew log?');
-  if (confirmDelete) {
-    row.parentNode.removeChild(row);
+  const confirmContainerPopup = document.querySelector('#deleteRowContainerPopup');
+  const confirmContainer = document.querySelector('#deleteRowContainer');
+  const confirmCancelButton = document.querySelector('#deleteRowCancelButton')
+  var metaTag = document.querySelector('meta[name="theme-color"]');
+
+  const cellRect = cell.getBoundingClientRect();
+  const topOffset = cellRect.top + cellRect.height + window.pageYOffset + 10; // add 1vw
+  const isAboveMiddle = (cellRect.bottom < window.innerHeight / 2);
+
+  if (isAboveMiddle) {
+    confirmContainer.style.top = `${topOffset}px`;
+    confirmContainer.style.zIndex = '1';
   } else {
-    row.classList.remove('markDelete');
+    const confirmContainerHeight = confirmContainer.offsetHeight;
+    const topOffset = cellRect.top - 5 - 138; // subtract 5vw
+    confirmContainer.style.top = `${topOffset - confirmContainerHeight}px`;
+    confirmContainer.style.zIndex = '2';
   }
-  }, 100);
+
+  metaTag.setAttribute('content', '#8f7e5d');
+  confirmContainer.classList.add('spaceInUp');
+  confirmContainerPopup.classList.add('fade-in');
+  confirmContainerPopup.style.display = "block";
+  setTimeout(() => {
+  confirmContainer.classList.add('pulseSize')
+  confirmCancelButton.classList.add('pulseShadow')
+  confirmContainer.classList.remove('spaceInUp');
+  confirmContainerPopup.classList.remove('fade-in');
+  }, 300);
+  const confirmButton = confirmContainer.querySelector('#deleteRowConfirmButton');
+  const cancelButton = confirmContainer.querySelector('#deleteRowCancelButton');
+
+  confirmButton.addEventListener('click', () => {
+    row.parentNode.removeChild(row);
+    confirmContainer.classList.add('spaceOutUp');
+    confirmContainerPopup.classList.add('fade-out');
+    confirmContainer.classList.remove('pulseSize')
+    confirmCancelButton.classList.remove('pulseShadow')
+    metaTag.setAttribute('content', '#D1B888')
+    setTimeout(() => {
+    confirmContainerPopup.style.display = "none";
+    confirmContainer.classList.remove('spaceOutUp');
+    confirmContainerPopup.classList.remove('fade-out');
+  }, 250);
+  });
+
+  cancelButton.addEventListener('click', () => {
+    row.classList.remove('markDelete');
+    confirmContainer.classList.add('spaceOutUp');
+    confirmContainerPopup.classList.add('fade-out');
+    confirmContainer.classList.remove('pulseSize')
+    confirmCancelButton.classList.remove('pulseShadow')
+    metaTag.setAttribute('content', '#D1B888')
+    setTimeout(() => {
+    confirmContainerPopup.style.display = "none";
+    confirmContainer.classList.remove('spaceOutUp');
+    confirmContainerPopup.classList.remove('fade-out');
+  }, 250);
+  });
 }
     
 const bodyDarkMode = document.querySelector('body');
@@ -1179,7 +1342,8 @@ function closeForm() {
   formContainer.classList.add("slide-out-blurred-br");
   formPopup.classList.add("fade-out");
   menuButtonTemp.style.display = 'block'
-  tempExportButton.style.display = 'block'
+  //tempExportButton.style.display = 'block'
+  showExportButton()
   appTitle.style.display = 'block'
   setTimeout(function() {
     formPopup.style.display = "none";
@@ -1240,7 +1404,7 @@ const ratingCells = document.querySelectorAll('.rating-cell');
 const ratingPopup = document.getElementById('rating-popup');
 const ratingContainer = document.getElementById('rating-container');
 const ratingItems = document.querySelectorAll('#rating-list li');
-const cancelButton = document.getElementById('ratingCancelButton');
+//const cancelButton = document.getElementById('ratingCancelButton');
 
 ratingCells.forEach(cell => {
   cell.addEventListener('click', function() {
@@ -1273,19 +1437,37 @@ ratingItems.forEach(item => {
     }, 250);
   });
 });
+  let startX, startY, distX, distY;
 
-cancelButton.addEventListener('click', function() {
-  const selectedCell = document.querySelector('.selected-cell');
-  selectedCell.classList.remove('editingMode');
-  selectedCell.classList.remove('selected-cell');
-  //ratingPopup.classList.replace('fade-in', 'fade-out');
-  ratingContainer.classList.replace('slide-in-blurred-right', 'slide-out-blurred-right'); 
-  setTimeout(() => {
-    ratingContainer.style.display = 'none';
-    //ratingPopup.classList.replace('fade-out', 'fade-in'); 
-    ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
-  }, 250);
-});
+  ratingContainer.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].pageX;
+    startY = e.touches[0].pageY;
+  });
+
+  ratingContainer.addEventListener('touchmove', function(e) {
+    distX = e.touches[0].pageX - startX;
+    distY = e.touches[0].pageY - startY;
+
+    // check if user is swiping to the right
+    if (Math.abs(distX) > Math.abs(distY) && distX > 0) {
+      const selectedCell = document.querySelector('.selected-cell');
+      selectedCell.classList.remove('editingMode');
+      selectedCell.classList.remove('selected-cell');
+      ratingContainer.classList.replace('slide-in-blurred-right', 'slide-out-blurred-right'); 
+      setTimeout(() => {
+        ratingContainer.style.display = 'none';
+        ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
+      }, 250);
+    }
+  });
+
+  ratingContainer.addEventListener('touchend', function(e) {
+    startX = null;
+    startY = null;
+    distX = null;
+    distY = null;
+  });
+
 }, 100);
 // ====== END RATING =====
 // ========= popup =====
@@ -1324,7 +1506,8 @@ function showPopup() {
     backgroundPopup.classList.add('fade-out');
     popup.classList.add('slide-out-blurred-top');
     menuButtonTemp.style.display = 'block'
-    tempExportButton.style.display = 'block'
+    //tempExportButton.style.display = 'block'
+    showExportButton()
     appTitle.style.display = 'block'
     setTimeout(() => {
       backgroundPopup.classList.remove('fade-out');
@@ -1341,43 +1524,10 @@ function reloadPage() {
   }, 200)
 }
 
-// function openCsvOrFont() {
-//   const fileInput = document.createElement('input');
-//   fileInput.type = 'file';
-//   fileInput.accept = '.csv,.ttf,.otf';
-//   fileInput.onchange = () => {
-//     const file = fileInput.files[0];
-//     const reader = new FileReader();
-//     reader.onload = () => {
-//       const fileData = reader.result;
-//       if (file.type === 'text/csv') {
-//         console.log(file.name)
-//         addCsvToTable(fileData, file.name);
-//         reloadPage();
-//       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
-//         const reader = new FileReader();
-//         reader.onload = () => {
-//           const fontData = reader.result.split(',')[1];
-//           try {
-//             localStorage.setItem('selectedFont', fontData);
-//             alert('Selected font saved to local storage!');
-//             reloadPage();
-//           } catch (e) {
-//             alert('Error saving font to local storage: ' + e.message);
-//           }
-//         };
-//         reader.readAsDataURL(file);
-//       }
-//     };
-//     reader.readAsText(file);
-//   };
-//   fileInput.click();
-// }
-
 function openCsvOrFont() {
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
-  fileInput.accept = '.csv,.ttf,.otf,.json';
+  fileInput.accept = '.csv,.ttf,.otf';
   fileInput.onchange = () => {
     const file = fileInput.files[0];
     const reader = new FileReader();
@@ -1400,21 +1550,54 @@ function openCsvOrFont() {
           }
         };
         reader.readAsDataURL(file);
-      } else if (file.type === 'application/json') {
-        try {
-          const json = JSON.parse(fileData);
-          localStorage.setItem('google_json_key', JSON.stringify(json));
-          alert('Google JSON key saved to local storage!');
-          reloadPage();
-        } catch (e) {
-          alert('Error saving Google JSON key to local storage: ' + e.message);
-        }
       }
     };
     reader.readAsText(file);
   };
   fileInput.click();
 }
+
+// function openCsvOrFont() {
+//   const fileInput = document.createElement('input');
+//   fileInput.type = 'file';
+//   fileInput.accept = '.csv,.ttf,.otf,.json';
+//   fileInput.onchange = () => {
+//     const file = fileInput.files[0];
+//     const reader = new FileReader();
+//     reader.onload = () => {
+//       const fileData = reader.result;
+//       if (file.type === 'text/csv') {
+//         console.log(file.name)
+//         addCsvToTable(fileData, file.name);
+//         reloadPage();
+//       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
+//         const reader = new FileReader();
+//         reader.onload = () => {
+//           const fontData = reader.result.split(',')[1];
+//           try {
+//             localStorage.setItem('selectedFont', fontData);
+//             alert('Selected font saved to local storage!');
+//             reloadPage();
+//           } catch (e) {
+//             alert('Error saving font to local storage: ' + e.message);
+//           }
+//         };
+//         reader.readAsDataURL(file);
+//       } else if (file.type === 'application/json') {
+//         try {
+//           const json = JSON.parse(fileData);
+//           localStorage.setItem('google_json_key', JSON.stringify(json));
+//           alert('Google JSON key saved to local storage!');
+//           reloadPage();
+//         } catch (e) {
+//           alert('Error saving Google JSON key to local storage: ' + e.message);
+//         }
+//       }
+//     };
+//     reader.readAsText(file);
+//   };
+//   fileInput.click();
+// }
 
 
 function addCsvToTable(csvData, fileName) {
@@ -1510,6 +1693,21 @@ const lastBackupStr = localStorage.getItem('lastBackup');
 const lastBackupDate = new Date(lastBackupStr);
 const currentDate = new Date();
 
+function showExportButton() {
+  const exportButtontemp= document.querySelector("#exportButton");
+  const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
+  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  if (daysDiff < 3) {
+    exportButtontemp.style.display = "none";
+    return
+  }
+  const tbody = document.querySelector('tbody');
+  if (!tbody || !tbody.querySelectorAll('td').length) {
+    return}
+  exportButtontemp.style.display = "block";
+  //sendTableData();
+}
+
 function shareCSV() {
   const grinder1Tbody = document.querySelector('#grinder1 tbody');
   const grinder2Tbody = document.querySelector('#grinder2 tbody');
@@ -1543,9 +1741,7 @@ function shareCSV() {
     const grinder2File = new File([grinder2CSVStr], grinder2FileName, {type: 'text/csv'});
     shareData.files.push(grinder2File);
   }
-  //setTimeout(() => {
    navigator.share(shareData)
-//}, 100)
     .then(() => {
       const grinder1ExportButton = document.querySelector("#grinder1 #exportButton");
       const grinder2ExportButton = document.querySelector("#grinder2 #exportButton");
@@ -1561,19 +1757,6 @@ function shareCSV() {
     .catch((error) => console.log('Error sharing data:', error));
 }
 
-function showExportButton() {
-  const timeDiff = currentDate.getTime() - lastBackupDate.getTime();
-  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-  if (daysDiff < 3) {return}
-  const tbody = document.querySelector('tbody');
-  if (!tbody || !tbody.querySelectorAll('td').length) {
-    return}
-  
-  const exportButtontemp= document.querySelector("#exportButton");
-  exportButtontemp.style.display = "block";
-  //sendTableData();
-}
-
 // function sendPostRequest(value, apiKey) {
  // const script = document.createElement('script');
  // const url = 'https://maker.ifttt.com/trigger/coffeeLogBackup/with/key/' + apiKey;
@@ -1583,11 +1766,15 @@ function showExportButton() {
 
 // function sendPostRequest(apiKey) {
 //   const table1 = document.querySelector('#grinder1 tbody');
-//   const rows = Array.from(table1.querySelectorAll('tr'));
-//   const csvString = rows.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()).join(',')).join('\n');
+//   const rows1 = Array.from(table1.querySelectorAll('tr'));
+//   const csvString1 = rows1.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()).join(',')).join('\n');
+
+//   const table2 = document.querySelector('#grinder2 tbody');
+//   const rows2 = Array.from(table2.querySelectorAll('tr'));
+//   const csvString2 = rows2.map(row => Array.from(row.cells).map(cell => cell.textContent.trim()).join(',')).join('\n');
 
 //   const script = document.createElement('script');
-//   const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?&value1=${encodeURIComponent(csvString)}`;
+//   const url = `https://maker.ifttt.com/trigger/CoffeeLog/with/key/${apiKey}?&value1=${encodeURIComponent(csvString1)}&value2=${encodeURIComponent(csvString2)}`;
 //   console.log(url);
 
 //   script.src = url;
