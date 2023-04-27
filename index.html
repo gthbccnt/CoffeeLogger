@@ -1918,10 +1918,10 @@ row.addEventListener("touchstart", function(event) {
 row.addEventListener("touchmove", function(event) {
   deleteB.style.top = `${row.offsetTop}px`;
   details.style.top = `${row.offsetTop}px`;
+  rC1.style.overflowY = hidden;
   touchMoveX = event.touches[0].clientX;
   const distance = touchMoveX - touchStartX;
 
-rC1.style.overflowY = hidden;
   tBodyRows.forEach((r) => {
     if (r !== row) {
       r.style.transform = 'translateX(0px)';
@@ -1931,10 +1931,10 @@ if (swiped=== true) {
           row.style.transform = 'translateX(0px)';
           deleteB.style.transform = 'translateX(0px)';
           details.style.transform = 'translateX(0px)';
+            rC1.style.overflowY = scroll;
           setTimeout(() => {
             deleteB.style.display = "none";
             details.style.display = "none";
-            rC1.style.overflowY = scroll;
           },300);
 } else if (distance > 0 && distance <= 100) {// === Details init
       details.style.display = "flex";
