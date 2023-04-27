@@ -1918,7 +1918,7 @@ row.addEventListener("touchstart", function(event) {
 row.addEventListener("touchmove", function(event) {
   deleteB.style.top = `${row.offsetTop}px`;
   details.style.top = `${row.offsetTop}px`;
-  rC1.style.overflowY = hidden;
+  rC1.style.overflowY = "hidden";
   touchMoveX = event.touches[0].clientX;
   const distance = touchMoveX - touchStartX;
 
@@ -1931,7 +1931,7 @@ if (swiped=== true) {
           row.style.transform = 'translateX(0px)';
           deleteB.style.transform = 'translateX(0px)';
           details.style.transform = 'translateX(0px)';
-            rC1.style.overflowY = scroll;
+            rC1.style.overflowY = "scroll";
           setTimeout(() => {
             deleteB.style.display = "none";
             details.style.display = "none";
