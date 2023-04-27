@@ -1948,11 +1948,9 @@ if (swiped=== true) {
   } else if (distance > 100) {// ==== Details
       details.style.transform = `translateX(14.4vw)`;
       row.style.transform = `translateX(17%)`;
-  rC1.style.overflowY = "hidden";
   } else if (distance < -100) {// ==== Delete
       deleteB.style.transform = 'translateX(-14.4vw)';
       row.style.transform = `translateX(-17%)`;
-  rC1.style.overflowY = "hidden";
   }
 });
 
@@ -1968,6 +1966,7 @@ if (swiped=== true) {
             details.style.display = "none";
           },300);
   } else if (distance > 100) {// ==== Details
+rC1.style.overflowY = "hidden";
       details.style.transform = `translateX(14.4vw)`;
       row.style.transform = `translateX(17%)`;
       const cells = event.currentTarget.querySelectorAll('td');
@@ -1979,6 +1978,7 @@ if (swiped=== true) {
       swiped = true;
     
     } else if (distance < -100) {// ==== Delete
+rC1.style.overflowY = "hidden";
       deleteB.style.transform = 'translateX(-14.4vw)';
       row.style.transform = `translateX(-17%)`;
       
