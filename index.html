@@ -1918,7 +1918,6 @@ row.addEventListener("touchstart", function(event) {
 row.addEventListener("touchmove", function(event) {
   deleteB.style.top = `${row.offsetTop}px`;
   details.style.top = `${row.offsetTop}px`;
-  rC1.style.overflowY = "hidden";
   touchMoveX = event.touches[0].clientX;
   const distance = touchMoveX - touchStartX;
 
@@ -1949,10 +1948,11 @@ if (swiped=== true) {
   } else if (distance > 100) {// ==== Details
       details.style.transform = `translateX(14.4vw)`;
       row.style.transform = `translateX(17%)`;
-  
+  rC1.style.overflowY = "hidden";
   } else if (distance < -100) {// ==== Delete
       deleteB.style.transform = 'translateX(-14.4vw)';
       row.style.transform = `translateX(-17%)`;
+  rC1.style.overflowY = "hidden";
   }
 });
 
