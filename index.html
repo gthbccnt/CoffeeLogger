@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
-  <meta name="apple-mobile-web-app-title" content="CoffeeLogger">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#D1B888">
-  <meta name="viewport" content="width=device-width">
-  <link rel="apple-touch-icon" href="icon.png">
+<html lang="de">
   <head>
+    <link rel="apple-touch-icon" href="icon.png">
+    <title>CoffeeLog</title>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-title" content="CoffeeLogger">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#D1B888">
+    <meta name="viewport" content="width=device-width">
   <style>
 * {
     box-sizing: border-box;
@@ -219,6 +221,7 @@ tbody td:nth-child(-n+2) {
 .dark-theme #formInput2:focus,
 .dark-theme #formInput3:focus {
   -webkit-backdrop-filter: blur(35px);
+  backdrop-filter: blur(35px);
   background-color: #00000050;
   outline: none;
 }
@@ -238,6 +241,7 @@ tbody td:nth-child(-n+2) {
 .dark-theme #rating-container {
   background-color: #ffffff10; /*#d2b48c30;*/
   -webkit-backdrop-filter: blur(45px);
+  backdrop-filter: blur(45px);
   box-shadow: 0px 0px 100px 30px #00000020;
 }
 
@@ -289,7 +293,7 @@ button {
   border-radius: 10px;
 }
 
-#closeButton {
+#saveButtonAdd {
   margin-left: 3vw;
   margin-right: 0vw;
   height: 13vw;
@@ -361,7 +365,7 @@ input, select {
 #formInput2,
 #formInput3,
 #editingInput {
-  width: 70vw;
+  width: 100%;
   height: 14vw;
   border: none;
   border-radius: 10px;
@@ -380,6 +384,7 @@ input, select {
 #idTime:focus,
 #selectList:focus {
   -webkit-backdrop-filter: blur(35px);
+  backdrop-filter: blur(35px);
   background-color: #ffffff85;
   outline: none;
 }
@@ -404,7 +409,7 @@ input, select {
 
 #inputIcon {
   font-size: 8vw;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }
@@ -562,7 +567,7 @@ input, select {
   padding-left: 2vw;
   display: none;
   box-shadow: 0px 0px 8px 0px inset #00000070;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-out;
 }
 
 #details {
@@ -607,10 +612,10 @@ input, select {
 #detailsBG input, #detailsBG select {
   height: 10vw;
   width: 80vw;
-  border-radius: 10px;
-  background-color: #ffffff55;
-  backdrop-filter: blur(25px);
+  border-radius: 7px;
+  background-color: #ffffff65;
   -webkit-backdrop-filter: blur(25px);
+  backdrop-filter: blur(25px);
   outline: none;
   border: none;
   margin-bottom: 1vw;
@@ -635,11 +640,10 @@ input, select {
 #detailsBG button {
   width: 30vw;
   height: 10vw;
-  border-radius: 10px;
+  border-radius: 7px;
   background-color: #ffffff55;
-  backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
-/*  float: right;*/
+  backdrop-filter: blur(25px);
 }
 
 #detailsBts {
@@ -669,7 +673,7 @@ input, select {
   animation: spaceInUp 0.25s;
 }
 
-.pulseSize {
+/*.pulseSize {
   animation: pulseSize 2s infinite;
 }
 
@@ -680,17 +684,14 @@ input, select {
 @keyframes pulseSize {
   0% {
     transform: scale(1);
-/*    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);*/
   }
 
   50% {
     transform: scale(1.015);
-/*    box-shadow: 0 0 0 8px rgba(0, 0, 0, 0);*/
   }
 
   100% {
     transform: scale(1);
-/*    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);*/
   }
 }
 
@@ -706,7 +707,7 @@ input, select {
   100% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
-}
+}*/
 
 @keyframes spaceOutUp {
   0% {
@@ -995,7 +996,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
       <div id=popBtnContainer>
         <button onclick="clearLocalStorage(); reloadPage()" id="csvBtn">Wipe</button>
         <button onclick="openCsvOrFont()" id="fontBtn">Add File</button>
-        <button type="submit" id="saveButton">Save</button>
+        <button type="submit" id="saveButtonMenu">Close</button>
       </div>
     </form>
   </div>
@@ -1008,11 +1009,11 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
     </div>
     <div id="firstRow">
       <div id="inputIcon">S.</div>
-      <input type="text" autocorrect="off" autocapitalize="off" placeholder="Enter measurements" name="log" id="logDetails">
+      <input type="text" placeholder="Enter recipe details" name="log" id="logDetails">
     </div>
     <div id="secondRow">
       <div id="inputIcon">R.</div>
-      <select name="recipe" id="selectList" required>
+      <select name="recipe" id="selectList" title="fix" required>
         <optgroup label="Inverted">
           <option value="TWi">Wendelboe inverted</option>
           <option value="JHi">Hoffmann inverted</option>
@@ -1036,11 +1037,11 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
     </div>
     <div id="thirdRow">
       <div id="inputIcon">T.</div>
-      <input type="number" placeholder="Enter time" name="time" id="idTime">
+      <input type="number" placeholder="Enter draw down" name="time" id="idTime">
     </div>
     <div id=buttonRow>
-      <input type=reset value="Reset" id="resetButton"></input>
-      <button type="button" onclick="closeForm();closeFormEval()" id="closeButton">Close</button>
+      <input type=reset onclick="myFormCloseButton()" value="Reset" id="resetButton">
+      <button type="button" onclick="closeForm();closeFormEval()" id="saveButtonAdd">Close</button>
     </div>
     </form>
   </div>
@@ -1060,7 +1061,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
 
 <div id="editingBG">
 <div id='editingContainer'>
-  <input id='editingInput'><br>
+  <input id='editingInput' title="fix"><br>
   <div id="editingButtonContainer">
     <button id='editingSave'>Save</button>
     <button id='editingCancel'>Cancel</button>
@@ -1072,7 +1073,7 @@ animation: slide-in-blurred-br 0.25s cubic-bezier(0.230, 1.000, 0.320, 1.000) bo
   <div id="detailsContainer">
     <h1 id="detailsTitle">Add Coffee</h1>
     <form id="coffeeForm">
-      <select id="coffeeChoose">
+      <select id="coffeeChoose" title="fix">
         <option value="" disabled selected>Choose Coffee</option>
         <!-- other coffee options go here -->
       </select>
@@ -1189,15 +1190,21 @@ const addButtonIcon = document.querySelector('#addBrew')
 // const cancelButtonIcon = document.querySelector('#ratingCancelButton')
 //   cancelButtonIcon.textContent = '\u{100060}'
 
-
-
 const resetButtonIcon = document.querySelector('#resetButton')
   resetButtonIcon.textContent = '\u{100060}';
   
 const inputIcons = document.querySelectorAll('#inputIcon')
+const inputIcon = document.querySelector('#inputIcon')
+const addbrewForms = document.querySelectorAll('#myForm input, #myForm select')
     inputIcons[0].textContent ='\u{1007f2}';
     inputIcons[1].textContent ='\u{10155c}';
     inputIcons[2].textContent ='\u{10042f}';
+    inputIcons[0].style.display = "flex";
+    inputIcons[1].style.display = "flex";
+    inputIcons[2].style.display = "flex";
+    addbrewForms[0].style.width = "85%";
+    addbrewForms[1].style.width = "85%";
+    addbrewForms[2].style.width = "85%";
     
 const exportButtonIcon = document.querySelector("#exportButton")
   exportButtonIcon.textContent = "\u{100202}"
@@ -1328,83 +1335,7 @@ function loadLogs(userGrinder, selectedTable) {
   }
 }
 
-// function deleteRow(cell) {
-//   const row = cell.parentNode;
-//   row.classList.add('markDelete');
-//   setTimeout(() => {
-//   const confirmDelete = confirm('Delete this brew log?');
-//   if (confirmDelete) {
-//     row.parentNode.removeChild(row);
-//   } else {
-//     row.classList.remove('markDelete');
-//   }
-//   }, 100);
-// }
-
-// function deleteRow(cell) {
-//   const row = cell.parentNode;
-//   row.classList.add('markDelete');
-//   const confirmContainerPopup = document.querySelector('#deleteRowContainerPopup');
-//   const confirmContainer = document.querySelector('#deleteRowContainer');
-//   const confirmCancelButton = document.querySelector('#deleteRowCancelButton')
-//   var metaTag = document.querySelector('meta[name="theme-color"]');
-
-//   const cellRect = cell.getBoundingClientRect();
-//   const topOffset = cellRect.top + cellRect.height + window.pageYOffset + 10; // add 1vw
-//   const isAboveMiddle = (cellRect.bottom < window.innerHeight / 2);
-
-//   if (isAboveMiddle) {
-//     confirmContainer.style.top = `${topOffset}px`;
-//     confirmContainer.style.zIndex = '1';
-//   } else {
-//     const confirmContainerHeight = confirmContainer.offsetHeight;
-//     const topOffset = cellRect.top - 5 - 138; // subtract 5vw
-//     confirmContainer.style.top = `${topOffset - confirmContainerHeight}px`;
-//     confirmContainer.style.zIndex = '2';
-//   }
-
-//   metaTag.setAttribute('content', '#8f7e5d');
-//   confirmContainer.classList.add('spaceInUp');
-//   confirmContainerPopup.classList.add('fade-in');
-//   confirmContainerPopup.style.display = "block";
-//   setTimeout(() => {
-//   confirmContainer.classList.add('pulseSize')
-//   confirmCancelButton.classList.add('pulseShadow')
-//   confirmContainer.classList.remove('spaceInUp');
-//   confirmContainerPopup.classList.remove('fade-in');
-//   }, 300);
-//   const confirmButton = confirmContainer.querySelector('#deleteRowConfirmButton');
-//   const cancelButton = confirmContainer.querySelector('#deleteRowCancelButton');
-
-//   confirmButton.addEventListener('click', () => {
-//     row.parentNode.removeChild(row);
-//     confirmContainer.classList.add('spaceOutUp');
-//     confirmContainerPopup.classList.add('fade-out');
-//     confirmContainer.classList.remove('pulseSize')
-//     confirmCancelButton.classList.remove('pulseShadow')
-//     metaTag.setAttribute('content', '#D1B888')
-//     setTimeout(() => {
-//     confirmContainerPopup.style.display = "none";
-//     confirmContainer.classList.remove('spaceOutUp');
-//     confirmContainerPopup.classList.remove('fade-out');
-//   }, 250);
-//   });
-
-//   cancelButton.addEventListener('click', () => {
-//     row.classList.remove('markDelete');
-//     confirmContainer.classList.add('spaceOutUp');
-//     confirmContainerPopup.classList.add('fade-out');
-//     confirmContainer.classList.remove('pulseSize')
-//     confirmCancelButton.classList.remove('pulseShadow')
-//     metaTag.setAttribute('content', '#D1B888')
-//     setTimeout(() => {
-//     confirmContainerPopup.style.display = "none";
-//     confirmContainer.classList.remove('spaceOutUp');
-//     confirmContainerPopup.classList.remove('fade-out');
-//   }, 250);
-//   });
-// }
-    
+// =====    
 const bodyDarkMode = document.querySelector('body');
   var metaTag = document.querySelector('meta[name="theme-color"]');
 
@@ -1468,10 +1399,10 @@ function closeFormEval() {
   const tbody2 = document.querySelector("#grinder2 tbody");
   const currentDate = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' });
   const currentTime = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-  const logInput = document.getElementById("logDetails").value
-  const logCells = logInput.replaceAll("-",";").split(";");
-  const selectList = document.getElementById("selectList").value;
-  const idTime = document.getElementById("idTime").value.replace(".", ":");
+  var logInput = document.getElementById("logDetails").value
+  var logCells = logInput.replaceAll("-",";").split(";");
+  var selectList = document.getElementById("selectList").value;
+  var idTime = document.getElementById("idTime").value.replace(".", ":");
   let tr;
   let rows;
   if (logInput.length>0) {
@@ -1507,6 +1438,15 @@ function closeFormEval() {
       }
     }
   }
+  setTimeout(() => {
+    var logInputReset = document.getElementById("logDetails");
+    var selectListReset = document.getElementById("selectList");
+    var idTimeReset = document.getElementById("idTime");
+      logInputReset.value = "";
+      selectListReset.selectedIndex = 4;
+      idTimeReset.value = "";
+      myFormCloseButton()
+  }, 50);
 }
 // ====== END brew form
 // ===== RATING =====
@@ -1670,49 +1610,6 @@ function openCsvOrFont() {
   };
   fileInput.click();
 }
-
-// function openCsvOrFont() {
-//   const fileInput = document.createElement('input');
-//   fileInput.type = 'file';
-//   fileInput.accept = '.csv,.ttf,.otf,.json';
-//   fileInput.onchange = () => {
-//     const file = fileInput.files[0];
-//     const reader = new FileReader();
-//     reader.onload = () => {
-//       const fileData = reader.result;
-//       if (file.type === 'text/csv') {
-//         console.log(file.name)
-//         addCsvToTable(fileData, file.name);
-//         reloadPage();
-//       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
-//         const reader = new FileReader();
-//         reader.onload = () => {
-//           const fontData = reader.result.split(',')[1];
-//           try {
-//             localStorage.setItem('selectedFont', fontData);
-//             alert('Selected font saved to local storage!');
-//             reloadPage();
-//           } catch (e) {
-//             alert('Error saving font to local storage: ' + e.message);
-//           }
-//         };
-//         reader.readAsDataURL(file);
-//       } else if (file.type === 'application/json') {
-//         try {
-//           const json = JSON.parse(fileData);
-//           localStorage.setItem('google_json_key', JSON.stringify(json));
-//           alert('Google JSON key saved to local storage!');
-//           reloadPage();
-//         } catch (e) {
-//           alert('Error saving Google JSON key to local storage: ' + e.message);
-//         }
-//       }
-//     };
-//     reader.readAsText(file);
-//   };
-//   fileInput.click();
-// }
-
 
 function addCsvToTable(csvData, fileName) {
   const fileNameString = fileName;
@@ -1890,14 +1787,16 @@ function sendGetRequest(apiKey, grinder1CSVStr, grinder2CSVStr) {
   document.body.appendChild(script);
 }
 // ==== details // delete ====
-  const detailsBG = document.querySelector('#detailsBG');
-  const detailsContainer = document.querySelector('#detailsContainer');
-  let firstTwoCells;
-  let deleteCells;
-  const swipeDetails = document.getElementById('details');
-  const swipeDelete = document.getElementById('deleteB');
-  const coffeeDetailsSV = document.getElementById('coffeeDetailsSV');
-  const coffeeDetailsCL = document.getElementById('coffeeDetailsCL');
+const detailsBG = document.querySelector('#detailsBG');
+const detailsContainer = document.querySelector('#detailsContainer');
+let firstTwoCells;
+let deleteCells;
+const swipeDetails = document.getElementById('details');
+const swipeDelete = document.getElementById('deleteB');
+const coffeeDetailsSV = document.getElementById('coffeeDetailsSV');
+const coffeeDetailsCL = document.getElementById('coffeeDetailsCL');
+var currentRow = null;
+let swiped;
 
 setTimeout(() => {
 const tBodyRows = document.querySelectorAll('#grinder1 tbody tr');
@@ -1905,14 +1804,16 @@ const deleteB = document.querySelector('#delete');
 const details = document.querySelector('#details');
 let touchStartX = null;
 let touchMoveX = null;
-let swiped = false;
+// let swiped = false;
 const rC1 = document.querySelector('#roundedCorners1');
 const rC2 = document.querySelector('#roundedCorners2');
+var cells = null;
 
 tBodyRows.forEach(row => {
 row.addEventListener("touchstart", function(event) {
   touchStartX = event.touches[0].clientX;
   touchMoveX = touchStartX;
+          console.log(swiped)
 });
 
 row.addEventListener("touchmove", function(event) {
@@ -1954,7 +1855,7 @@ if (swiped=== true) {
   }
 });
 
-  row.addEventListener("touchend", function(event) {
+row.addEventListener("touchend", function(event) {
     const distance = touchMoveX - touchStartX;
 if (swiped=== true) {
           row.style.transform = 'translateX(0px)';
@@ -1972,27 +1873,24 @@ rC1.style.overflowY = "hidden";
       const cells = event.currentTarget.querySelectorAll('td');
       firstTwoCells = `${cells[0].textContent} ${cells[1].textContent}`;
       console.log(firstTwoCells)
+      swiped = true;
         swipeDetails.addEventListener('click', () => {
           showDetails(firstTwoCells)
+          swiped = false
+          rC1.style.overflowY = "scroll";
         });
-      swiped = true;
+        currentRow = row;
     
     } else if (distance < -100) {// ==== Delete
-rC1.style.overflowY = "hidden";
-      deleteB.style.transform = 'translateX(-14.4vw)';
-      row.style.transform = `translateX(-17%)`;
+        rC1.style.overflowY = "hidden";
+        deleteB.style.transform = 'translateX(-14.4vw)';
+        row.style.transform = `translateX(-17%)`;
+        swiped = true;
       
-      const cells = event.currentTarget
-      deleteB.addEventListener('click', () => {
-          cells.parentNode.removeChild(cells);
-          deleteB.style.transform = 'translateX(0px)';
-          setTimeout(() => {
-            deleteB.style.display = "none";
-          },300);
-        });
-      console.log(cells)
-
-      swiped = true;
+        rowDelete = event.currentTarget;
+        console.log(rowDelete);
+        console.log(swiped)
+        deleteB.addEventListener('click', clickOnDeleteB)
 
     } else {// === user did not swipe enough or taps anywhere, slide row back
       tBodyRows.forEach((r) => {
@@ -2009,9 +1907,29 @@ rC1.style.overflowY = "hidden";
       },300);
     }// if ende
   });// touchend ende
+
+function clickOnDeleteB() { 
+      deleteB.style.width = "230vw"
+      deleteB.style.transition = "transform 0.3s ease-in-out, opacity 0.3s ease 0.29s";
+      rowDelete.style.transform = "translateX(-100%)";
+      deleteB.style.opacity= "0";
+      deleteB.style.transform = 'translateX(-215vw)';
+      rC1.style.overflowY = "scroll";
+      swiped = false;
+     setTimeout(() => {
+      rowDelete.remove();
+      console.log(rowDelete);
+        deleteB.style.display = "none";
+        deleteB.style.width = "18vw";
+        deleteB.style.opacity="1";
+        deleteB.style.transition = "transform 0.3s ease-out";
+        deleteB.style.transform = "translateX(0px)";
+     }, 590);
+     deleteB.removeEventListener('click', clickOnDeleteB)
+   }
+
 }); //for each row
 }, 400);
-
 
 function closeDetails() {
   detailsBG.classList.add('fade-out');
@@ -2019,12 +1937,15 @@ function closeDetails() {
   menuButtonTemp.style.display = 'block';
   showExportButton();
   appTitle.style.display = 'block';
+  details.style.transform = "translateX(0px)";
+  currentRow.style.transform = "translateX(0px)";
   setTimeout(() => {
     detailsBG.style.display = "none";
     detailsContainer.style.display = "none"
     detailsBG.classList.remove('fade-out');
     detailsContainer.classList.remove('slide-out-blurred-top');
-  }, 400);
+    currentRow = null;
+  }, 245);
 }
 
 function showDetails(input) {
@@ -2044,12 +1965,14 @@ const svButton = document.querySelector('#coffeeDetailsSV')
 const clButton = document.querySelector('#coffeeDetailsCL')
 
   svButton.addEventListener('click', () => {
+    event.preventDefault()
     closeDetails();
     linkLogWithCoffee(firstTwoCells);
     saveCoffee();
   });
 
   clButton.addEventListener('click', () => {
+    event.preventDefault()
     closeDetails();
   });
 
@@ -2071,49 +1994,6 @@ const clButton = document.querySelector('#coffeeDetailsCL')
     document.getElementById('coffeeAltitude').value = selectedCoffee.coffeeAltitude;
   }
 }
-
-// function hideDetails() {
-//   detailsBG.classList.add('fade-out');
-//   detailsContainer.classList.add('slide-out-blurred-top');
-//   menuButtonTemp.style.display = 'block';
-//   showExportButton();
-//   appTitle.style.display = 'block';
-//   setTimeout(() => {
-//     detailsBG.style.display = "none";
-//     detailsContainer.style.display = "none"
-//     detailsBG.classList.remove('fade-out');
-//     detailsContainer.classList.remove('slide-out-blurred-top');
-//   }, 300);
-// }
-
-function populateSelect() {
-  const coffeeSelect = document.getElementById('coffeeChoose');
-  const coffeeData = Object.keys(localStorage)
-    .filter(key => key.startsWith('coffee.'))
-    .map(key => JSON.parse(localStorage.getItem(key)));
-
-  const roasterLookup = {};
-  coffeeData.forEach(coffee => {
-    if (!roasterLookup[coffee.coffeeRoaster]) {
-      roasterLookup[coffee.coffeeRoaster] = [];
-    }
-    roasterLookup[coffee.coffeeRoaster].push(coffee);
-  });
-
-  for (const [roaster, coffees] of Object.entries(roasterLookup)) {
-    const optgroup = document.createElement('optgroup');
-    optgroup.label = roaster;
-    coffees.forEach(coffee => {
-      const option = document.createElement('option');
-      option.value = coffee.coffeeName;
-      option.text = coffee.coffeeName;
-      optgroup.appendChild(option);
-    });
-    coffeeSelect.appendChild(optgroup);
-  }
-}
-
-populateSelect()
 
 const selectElement = document.getElementById('coffeeChoose');
 
@@ -2152,6 +2032,67 @@ function linkLogWithCoffee(input) {
   localStorage.setItem(keyLog, "coffee."+valueCoffee)
 }
 
+
+
+function populateSelect() {
+  const coffeeSelect = document.getElementById('coffeeChoose');
+  const coffeeData = Object.keys(localStorage)
+    .filter(key => key.startsWith('coffee.'))
+    .map(key => JSON.parse(localStorage.getItem(key)));
+
+  const roasterLookup = {};
+  coffeeData.forEach(coffee => {
+    if (!roasterLookup[coffee.coffeeRoaster]) {
+      roasterLookup[coffee.coffeeRoaster] = [];
+    }
+    roasterLookup[coffee.coffeeRoaster].push(coffee);
+  });
+
+  for (const [roaster, coffees] of Object.entries(roasterLookup)) {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = roaster;
+    coffees.forEach(coffee => {
+      const option = document.createElement('option');
+      option.value = coffee.coffeeName;
+      option.text = coffee.coffeeName;
+      optgroup.appendChild(option);
+    });
+    coffeeSelect.appendChild(optgroup);
+  }
+}
+
+populateSelect()
+
+// ==== event listeners input change => button text
+const menuForm = document.querySelector('#menu-form');
+const addForm = document.querySelector('#myForm');
+const addBrewSave = document.querySelector('#saveButtonAdd');
+const menuSave = document.querySelector('#saveButtonMenu');
+
+function myFormCloseButton() {
+  addBrewSave.style.fontWeight = "normal"
+  addBrewSave.textContent = "Close"
+}
+
+menuForm.addEventListener('input', (event) => {
+  if (event.target.value.trim() === '') {
+    menuSave.style.fontWeight = "normal"
+    menuSave.textContent = "Close";
+  } else {
+    menuSave.style.fontWeight = "bold"
+    menuSave.textContent = "Save";
+  }
+});
+
+addForm.addEventListener('input', (event) => {
+  if (event.target.value.trim() === '') {
+    addBrewSave.style.fontWeight = "normal"
+    addBrewSave.textContent = "Close";
+  } else {
+    addBrewSave.style.fontWeight = "bold"
+    addBrewSave.textContent = "Save";
+  }
+});
 // ================
 </script>
 </body>
