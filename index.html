@@ -92,13 +92,13 @@ body {
 #roundedCorners1 {
   max-height: 85vw;
   position: fixed;
-  top: 19vw;
+  top: 19.1vw;
 }
 
 #roundedCorners2 {
   position: fixed;
   max-height: 75vw;
-  top: 114vw;;
+  top: 114.1vw;
 }
 
  #grinder1Title {
@@ -118,15 +118,13 @@ table {
 
 thead tr {
   position: sticky;
-  top: 0;
+  top: -0.1%;
   background-color: #E5D9BE;
   font-size: 3vw;
   border: none;
-  -webkit-backdrop-filter: blur(55px);
-  backdrop-filter: blur(55px);
   height: 12vw;
   z-index: 1;
-  box-shadow: 0px 0px 4px 1px #00000025;
+  box-shadow: 0px 2px 0px 2px black;
 }
 
 tbody tr {
@@ -140,6 +138,7 @@ tbody {
 td {
     border: none;
     height: 10.5vw;
+    min-width: 2vw;
 }
 
 tbody tr:nth-child(even) {
@@ -154,19 +153,21 @@ tbody td:nth-child(-n+2) {
 
 .dark-theme {
   background-color: #353935;
-  background: linear-gradient(0deg, #192124 0%, #2b2e30 100%);
-/*   background: linear-gradient(0deg, #121212 0%, #1c1f21 100%);*/
+  background: linear-gradient(0deg, #151515 0%, #151515 100%);
+/*   background: linear-gradient(0deg, #192124 0%, #2b2e30 100%)282C34
+;*/
   color: #ffffff99;/*#b5b4b2ee;*/
 }
 
 .dark-theme tbody tr:nth-child(even) {
-    background-color: #ffffff09;
+    background-color: #282828;
 }
 .dark-theme tbody tr:nth-child(odd) {
-  background-color: #ffffff03;
+  background-color: #1c1c1c;
 }
 .dark-theme thead tr {
-    background-color: #42494930;
+    background-color: #2C2C2E;
+    box-shadow: 0px 0px 60px 12px red;
 }
 
 .dark-theme thead tr td{
@@ -175,12 +176,12 @@ tbody td:nth-child(-n+2) {
 
 .dark-theme button,
 .dark-theme #resetButton {
-  background-color: #00000025;
+  background-color: #00000030;
   color: #000000;
 }
 
 .dark-theme #addBrew, .dark-theme #menuButton, .dark-theme #exportButton {
-  background-color: #ffffff20;
+  background-color: #ffffff30;
 }
 
 .dark-theme #addBrew {
@@ -239,10 +240,10 @@ tbody td:nth-child(-n+2) {
 }
 
 .dark-theme #rating-container {
-  background-color: #ffffff10; /*#d2b48c30;*/
+  background-color: #ffffff08; /*#d2b48c30;*/
   -webkit-backdrop-filter: blur(45px);
   backdrop-filter: blur(45px);
-  box-shadow: 0px 0px 100px 30px #00000020;
+  box-shadow: 0px 0px 20px 0px #00000090;
 }
 
 /*.dark-theme #ratingCancelButton {
@@ -253,7 +254,7 @@ tbody td:nth-child(-n+2) {
 
 .dark-theme #rating-item {
   color: #000000;
-  background-color: #ffffff10;
+  background-color: #ffffff20;
 }
 .dark-theme ::placeholder {
   color: #000000;
@@ -455,13 +456,13 @@ input, select {
 #rating-container {
   position: fixed;
   display: none;
-  top: 20%;
+  top: 25vh;
   right: 21%;
   background-color: #00000020;
   border-radius: 15px;
   -webkit-backdrop-filter: blur(45px);
   backdrop-filter: blur(45px);
-  box-shadow: 0px 0px 100px 40px #00000025;
+  box-shadow: 0px 0px 50px -5px #00000035;
 }
 
 #rating-container ul {
@@ -476,17 +477,17 @@ input, select {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 15vw;
-  height: 15vw;
+  width: 12vw;
+  height: 12vw;
   margin: 3vw;
-  border-radius: 10px;
+  border-radius:8px;
   -webkit-backdrop-filter: blur(25px);
   backdrop-filter: blur(25px);
   background-color: #ffffff60;
   color: black;
   font-family: system-ui;
-  font-weight: 600;
   font-size: 9vw;
+  font-weight: 500;
 }
 
 /*#ratingCancelButton {
@@ -557,11 +558,12 @@ input, select {
 
 #delete {
   position: absolute;
-  top: 10.1vw;
+  top: 10.15vw;
   left: 94vw;
   width: 18vw;
   height: 10.4vw;
   background-color: #A32D36; /*#AF2F3C; 8b0000;*/
+  color: white;
   justify-content: left;
   align-items: center;
   padding-left: 2vw;
@@ -577,6 +579,7 @@ input, select {
   width: 18vw;
   height: 10.4vw;
   background-color: darkgrey;
+  color: white;
   justify-content: right;
   align-items: center;
   padding-right: 2vw;
@@ -612,7 +615,7 @@ input, select {
 #detailsBG input, #detailsBG select {
   height: 10vw;
   width: 80vw;
-  border-radius: 7px;
+  border-radius: 9px;
   background-color: #ffffff65;
   -webkit-backdrop-filter: blur(25px);
   backdrop-filter: blur(25px);
@@ -640,7 +643,7 @@ input, select {
 #detailsBG button {
   width: 30vw;
   height: 10vw;
-  border-radius: 7px;
+  border-radius: 9px;
   background-color: #ffffff55;
   -webkit-backdrop-filter: blur(25px);
   backdrop-filter: blur(25px);
@@ -1209,6 +1212,15 @@ const addbrewForms = document.querySelectorAll('#myForm input, #myForm select')
 const exportButtonIcon = document.querySelector("#exportButton")
   exportButtonIcon.textContent = "\u{100202}"
   exportButtonIcon.style.fontSize = "6vw";
+  
+//const ratingIconsText = ["\u{1000ca}", "\u{1000cc}", "\u{1000ce}", "\u{1000d0}", "\u{1000d2}","\u{1000d4}"];
+//const ratingIcons = document.querySelectorAll("#rating-item");
+//ratingIcons.forEach((ratingIcon, i) => {
+  //ratingIcon.style.fontWeight = "light";
+//  ratingIcon.style.fontFamily = "iconMode";
+//  ratingIcon.textContent = ratingIconsText[i];
+//});
+
 
 const css = `@font-face {
       font-family: 'iconMode';
@@ -1342,7 +1354,7 @@ const bodyDarkMode = document.querySelector('body');
 // Check if the system's color scheme is light or dark
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     bodyDarkMode.classList.add('dark-theme');
-    metaTag.setAttribute('content', '#2b2e30');// add value for popup
+    metaTag.setAttribute('content', '#151515');// add value for popup
   } else {
     metaTag.setAttribute('content', '#D1B888')
     bodyDarkMode.classList.remove('dark-theme');
@@ -1352,7 +1364,7 @@ const bodyDarkMode = document.querySelector('body');
 window.matchMedia('(prefers-color-scheme: dark)').addListener((event) => {
   if (event.matches) {
     bodyDarkMode.classList.add('dark-theme');
-    metaTag.setAttribute('content', '#2b2e30');// add value for popup
+    metaTag.setAttribute('content', '#151515');// add value for popup
   } else {
     metaTag.setAttribute('content', '#D1B888')
     bodyDarkMode.classList.remove('dark-theme');
@@ -1463,8 +1475,14 @@ ratingCells.forEach(cell => {
     ratingContainer.classList.add('slide-in-blurred-right'); 
     const row = this.getAttribute('data-row');
     const col = this.getAttribute('data-col');
-    const cellRect = this.getBoundingClientRect();
+
+		const cellRect = this.getBoundingClientRect();
+    //const ratingContainerHalf = ratingContainer.getBoundingClientRect().height;
+  		//const topOffset = cellRect.top + cellRect.height + 5; // add 1vw
+		//const ratingContainerLeft = cellRect.left - 10;
 		
+    //ratingContainer.style.top = topOffset+"px";
+    //ratingContainer.style.left = ratingContainerLeft+"px";
     ratingPopup.style.display = "block";
     ratingContainer.style.display = 'flex';
     ratingContainer.classList.add('active');
@@ -1588,8 +1606,8 @@ function openCsvOrFont() {
     reader.onload = () => {
       const fileData = reader.result;
       if (file.type === 'text/csv') {
-        console.log(file.name)
-        addCsvToTable(fileData, file.name);
+        //console.log(file.name)
+        addCsvToTable(fileData);
         reloadPage();
       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
         const reader = new FileReader();
@@ -1611,11 +1629,12 @@ function openCsvOrFont() {
   fileInput.click();
 }
 
-function addCsvToTable(csvData, fileName) {
-  const fileNameString = fileName;
-  let tbodyTemp = document.querySelector('#grinder1 tbody');
-  if (fileNameString.includes("C2")===true) {
-    tbodyTemp = document.querySelector('#grinder2 tbody');
+function addCsvToTable(csvData) {
+  const checkImportGrinder = csvData.split("\n")[0];
+  console.log(checkImportGrinder)
+  let tbodyTemp = document.querySelector('#grinder2 tbody');
+  if (checkImportGrinder.includes(".",8)===true) {
+    tbodyTemp = document.querySelector('#grinder1 tbody');
   }
   console.log(tbodyTemp)
   const rows = csvData.split('\n').map(row => row.split(';'));
@@ -1932,6 +1951,13 @@ function clickOnDeleteB() {
 }, 400);
 
 function closeDetails() {
+  const inputs = document.querySelectorAll('#coffeeForm input');
+  const coffeeSelect = document.querySelector('#coffeeForm select')
+  inputs.forEach(field => {
+    field.value = "";
+  })
+  coffeeSelect.selectedIndex = 0;
+
   detailsBG.classList.add('fade-out');
   detailsContainer.classList.add('slide-out-blurred-top');
   menuButtonTemp.style.display = 'block';
@@ -1966,9 +1992,11 @@ const clButton = document.querySelector('#coffeeDetailsCL')
 
   svButton.addEventListener('click', () => {
     event.preventDefault()
-    closeDetails();
     linkLogWithCoffee(firstTwoCells);
     saveCoffee();
+    setTimeout(() => {
+    closeDetails();
+  },50);
   });
 
   clButton.addEventListener('click', () => {
@@ -2017,6 +2045,7 @@ selectElement.addEventListener('change', (event) => {
 
 function saveCoffee() {
   const inputs = document.querySelectorAll('#coffeeForm input');
+  const coffeeSelect = document.querySelector('#coffeeForm select')
   const coffee = {};
 
   inputs.forEach(input => {
@@ -2024,6 +2053,11 @@ function saveCoffee() {
   });
 
   localStorage.setItem('coffee.'+coffeeName.value, JSON.stringify(coffee));
+
+  // inputs.forEach(field => {
+  //   field.value = "";
+  // })
+  // coffeeSelect.selectedIndex = 0;
 }
 
 function linkLogWithCoffee(input) {
