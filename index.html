@@ -38,7 +38,7 @@ body {
   font-weight: light;
   font-size: 5vw;
   text-align: right;
-	left: 5vw;
+  left: 5vw;
 }
 
 #headerButtonContainer {
@@ -49,13 +49,13 @@ body {
 }
 
 #exportButton {
-	display: none;
+  display: none;
   z-index: 0;
-	height: 13vw;
-	max-width: 20vw;
+  height: 13vw;
+  max-width: 20vw;
   min-width: 13vw;
-	/*position: fixed;
-	right: 16vw;*/
+  /*position: fixed;
+  right: 16vw;*/
   padding: 0;
   font-size: 3vw; /* 7vw */
   top: 0vw;
@@ -118,7 +118,6 @@ table {
   width: 100%;
   text-align: center;
   border: none;
-  background-color: #ffffff;
 }
 
 thead {
@@ -140,8 +139,8 @@ thead tr {
 
 tbody tr {
   transition: transform 0.3s ease-in-out;
-  height: 10.5vw !important;
-    z-index: 2;
+  height: 10.5vw;
+  position: relative;
 }
 
 tbody {
@@ -534,7 +533,7 @@ input, select {
 }*/
 
 #editingBG {
-  background-color: #00000090;
+  background-color: #00000000;
   top:0;
   position: fixed;
   width: 100vw;
@@ -582,8 +581,8 @@ input, select {
   position: absolute;
   left: 92vw;
   width: 21vw;
-  height: 41px;
-  top: 10vw;
+  height: 10.5vw;
+  top: 10.25vw;
   background-color: #A32D36; /*#AF2F3C; 8b0000;*/
   color: white;
   justify-content: left;
@@ -596,10 +595,10 @@ input, select {
 
 #details {
   position: absolute;
-  top: 10vw;
+  top: 10.25vw;
   left: -17vw;
   width: 21vw;
-  height: 10.27vw;
+  height: 10.5vw;
   background-color: darkgrey;
   color: white;
   justify-content: right;
@@ -629,21 +628,26 @@ input, select {
   display: none;
 }
 
+#detailsBG ::placeholder {
+  color: #000000;
+  opacity: 0.6;
+}
+
 #detailsBG h1 {
   margin-top: 0vw;
   margin-bottom: 1vw;
 }
 
-#detailsBG input, #detailsBG select {
+#detailsBG input, #detailsBG select, #coffeeRating {
   height: 10vw;
-  width: 80vw;
+  width: 100%;
   border-radius: 9px;
   background-color: #ffffff65;
   -webkit-backdrop-filter: blur(25px);
   backdrop-filter: blur(25px);
   outline: none;
   border: none;
-  margin-bottom: 1vw;
+  margin-bottom: 3vw;
   font-size: 5vw;
   padding-left: 4vw;
   color: black;
@@ -667,18 +671,20 @@ input, select {
 }
 
 #detailsBG button {
-  width: 30vw;
   height: 10vw;
   border-radius: 9px;
+  font-size: 5.5vw;
+  margin: 0;
   background-color: #ffffff55;
   -webkit-backdrop-filter: blur(25px);
   backdrop-filter: blur(25px);
+  
 }
 
 #detailsBts {
   display: flex;
   justify-content: space-between;
-  margin-top: 2vw;
+/*  margin-top: 2vw;*/
 }
 
 #detailsContainer {
@@ -693,6 +699,20 @@ input, select {
   top: 2vh;
   display: none;
 }
+
+#removeCoffeeFromBrew, #deleteCoffee {
+  color: #00000090;
+}
+
+#coffeeRating {
+  display: flex;
+  align-items: center;
+  font-size: 6vw;
+  color: rgb(0, 0, 0, 0.6);
+  background-color: #ffffff65;
+/*  justify-content: center;*/
+}
+
 /* ================= keyboard*/
 .cursor { 
   position: absolute;
@@ -719,7 +739,6 @@ input, select {
   max-height: 30vh;
   width: 96vw;
   left: 2vw;
-  
 }
 
 .dark-theme #keyboardContainer {
@@ -1242,24 +1261,19 @@ animation: slide-in-blurred-br 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) bot
         <option value="" disabled selected>Choose Coffee</option>
         <!-- other coffee options go here -->
       </select>
-      <label for="coffeeName">Name</label>
-      <input id="coffeeName">
-      <label for="coffeeRoaster">Roaster</label>
-      <input id="coffeeRoaster">
-      <label for="coffeeOrigin">Origin</label>
-      <input id="coffeeOrigin">
-      <label for="coffeeProcess">Process</label>
-      <input id="coffeeProcess">
-      <label for="coffeeVarietal">Varietal</label>
-      <input id="coffeeVarietal">
-      <label for="coffeeNotes">Notes</label>
-      <input id="coffeeNotes">
-      <label for="coffeeFarm">Roast date</label>
-      <input id="coffeeFarm">
-      <label for="coffeeAltitude">Altitude</label>
-      <input id="coffeeAltitude">
+      <input id="coffeeRoaster" placeholder="Roaster">
+      <input id="coffeeName" placeholder="Name">
+      <input id="coffeeOrigin" placeholder="Origin">
+      <input id="coffeeProcess" placeholder="Process">
+      <input id="coffeeVarietal" placeholder="Varietal">
+      <input id="coffeeNotes" placeholder="Notes">
+      <input id="coffeeAltitude" placeholder="Altitude">
+      <input id="coffeeRoastDate" placeholder="Roast date">
+      <div id="coffeeRating">&#x2606; &#x2606; &#x2606; &#x2606; &#x2606;</div>
       <div id="detailsBts">
         <button id="coffeeDetailsSV">Save</button>
+        <button id="removeCoffeeFromBrew">Unlink</button>
+        <button id="deleteCoffee">Delete</button>
         <button id="coffeeDetailsCL">Close</button>
       </div>
     </form>
@@ -1420,7 +1434,7 @@ window.addEventListener('load', () => {
       const popupIftttInput = document.getElementById('formInput3')
       popupIftttInput.setAttribute('placeholder', 'IFTTT Key found!')
     }
-  }, 10);
+  }, 5);
 });
 
 
@@ -2059,11 +2073,11 @@ row.addEventListener("touchstart", function(event) {
 
 row.addEventListener("touchmove", function(event) {
 if (swiped===false){
-  deleteB.style.top = `${row.offsetTop}px`;
-  deleteB.style.height = `${row.offsetHeight+0.5}px`;
+  deleteB.style.top = `${row.offsetTop-1}px`;
+  deleteB.style.height = `${row.offsetHeight+3}px`;
   console.log(row.offsetHeight);
   details.style.top = `${row.offsetTop-1}px`;
-  details.style.height = `${row.offsetHeight+2}px`;
+  details.style.height = `${row.offsetHeight+3}px`;
   //row.style.border = "solid 1pt #D7C29C";
 };
   touchMoveX = event.touches[0].clientX;
@@ -2235,14 +2249,16 @@ function showDetails() {
   if (linkedCoffee) {
     const selectedCoffeeJSON = localStorage.getItem(linkedCoffee);
     const selectedCoffee = JSON.parse(selectedCoffeeJSON);
-    document.getElementById('coffeeName').value = selectedCoffee.coffeeName;
     document.getElementById('coffeeRoaster').value = selectedCoffee.coffeeRoaster;
+    document.getElementById('coffeeName').value = selectedCoffee.coffeeName;
     document.getElementById('coffeeOrigin').value = selectedCoffee.coffeeOrigin;
     document.getElementById('coffeeProcess').value = selectedCoffee.coffeeProcess;
     document.getElementById('coffeeVarietal').value = selectedCoffee.coffeeVarietal;
     document.getElementById('coffeeNotes').value = selectedCoffee.coffeeNotes;
-    document.getElementById('coffeeRoastDate').value = selectedCoffee.coffeeDate;
     document.getElementById('coffeeAltitude').value = selectedCoffee.coffeeAltitude;
+    document.getElementById('coffeeRoastDate').value = selectedCoffee.coffeeDate;
+
+document.getElementById('coffeeRating').value = selectedCoffee.coffeeRating;
   }
 }
 
@@ -2253,14 +2269,16 @@ selectElement.addEventListener('change', (event) => {
   const selectedCoffeeJSON = localStorage.getItem('coffee.'+selectedCoffeeName);
   const selectedCoffee = JSON.parse(selectedCoffeeJSON);
 
-  document.getElementById('coffeeName').value = selectedCoffee.coffeeName;
   document.getElementById('coffeeRoaster').value = selectedCoffee.coffeeRoaster;
+  document.getElementById('coffeeName').value = selectedCoffee.coffeeName;
   document.getElementById('coffeeOrigin').value = selectedCoffee.coffeeOrigin;
   document.getElementById('coffeeProcess').value = selectedCoffee.coffeeProcess;
   document.getElementById('coffeeVarietal').value = selectedCoffee.coffeeVarietal;
   document.getElementById('coffeeNotes').value = selectedCoffee.coffeeNotes;
   document.getElementById('coffeeRoastDate').value = selectedCoffee.coffeeDate;
   document.getElementById('coffeeAltitude').value = selectedCoffee.coffeeAltitude;
+
+document.getElementById('coffeeRating').value = selectedCoffee.coffeeRating;
 });
 
 function saveCoffee() {
