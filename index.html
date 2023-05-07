@@ -2073,11 +2073,11 @@ row.addEventListener("touchstart", function(event) {
 
 row.addEventListener("touchmove", function(event) {
 if (swiped===false){
-  deleteB.style.top = `${row.offsetTop-1}px`;
-  deleteB.style.height = `${row.offsetHeight+3}px`;
+  deleteB.style.top = `${row.offsetTop}px`;
+  deleteB.style.height = `${row.offsetHeight}px`;
   console.log(row.offsetHeight);
-  details.style.top = `${row.offsetTop-1}px`;
-  details.style.height = `${row.offsetHeight+3}px`;
+  details.style.top = `${row.offsetTop}px`;
+  details.style.height = `${row.offsetHeight}px`;
   //row.style.border = "solid 1pt #D7C29C";
 };
   touchMoveX = event.touches[0].clientX;
