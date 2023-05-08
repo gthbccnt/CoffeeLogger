@@ -178,7 +178,6 @@ tbody td:nth-child(-n+2) {
 }
 .dark-theme thead tr {
     background-color: #2C2C2E;
-    box-shadow: 0px 0px 60px 12px red;
 }
 
 .dark-theme thead tr td{
@@ -629,7 +628,12 @@ input, select {
 
 #detailsBG ::placeholder {
   color: #000000;
-  opacity: 0.6;
+  opacity: 0.5;
+}
+
+.dark-theme #detailsBG ::placeholder {
+  color: #ffffff;
+  opacity: 0.3;
 }
 
 #detailsBG h1 {
@@ -652,7 +656,7 @@ input, select {
   color: black;
 }
 
-.dark-theme #detailsBG input, .dark-theme #detailsBG button, .dark-theme #detailsBG select {
+.dark-theme #detailsBG input, .dark-theme #detailsBG button, .dark-theme #detailsBG select, .dark-theme #coffeeRating {
   background-color: #00000040;
   color: #ffffff87;
 }
@@ -700,17 +704,27 @@ input, select {
 }
 
 #removeCoffeeFromBrew, #deleteCoffee {
-  color: #00000090;
+  opacity: 0.7;
 }
 
 #coffeeRating {
   display: flex;
+  font-family: iconMode;
   align-items: center;
-  font-size: 6vw;
+  font-size: 5vw;
   color: rgb(0, 0, 0, 0.6);
   background-color: #ffffff65;
+  padding-left: 3vw;
 /*  justify-content: center;*/
 }
+
+.dark-theme #coffeeRating {
+  color: rgb(255, 255, 255, 0.5);
+}
+
+/*.dark-theme #detailsBG #removeCoffeeFromBrew, .dark-theme #detailsBG #deleteCoffee {
+  color: #ffffff;
+}*/
 
 /* ================= keyboard*/
 .cursor { 
@@ -1268,7 +1282,23 @@ animation: slide-in-blurred-br 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) bot
       <input id="coffeeNotes" placeholder="Notes">
       <input id="coffeeAltitude" placeholder="Altitude">
       <input id="coffeeRoastDate" placeholder="Roast date">
-      <div id="coffeeRating">&#x2606; &#x2606; &#x2606; &#x2606; &#x2606;</div>
+      <div id="coffeeRating">
+        <div>
+        		&#x1002c2;
+        </div>
+        <div>
+        		&#x1002c2;
+        </div>
+        <div>
+        		&#x1002c2;
+        </div>
+        <div>
+        		&#x1002c2;
+        </div>
+        <div>
+        		&#x1002c2;
+        </div>
+      </div>
       <div id="detailsBts">
         <button id="coffeeDetailsSV">Save</button>
         <button id="removeCoffeeFromBrew">Unlink</button>
@@ -2184,6 +2214,7 @@ function closeDetails() {
     field.value = "";
   })
   coffeeSelect.selectedIndex = 0;
+  fillStars(0,false);
 
   detailsBG.classList.add('fade-out');
   detailsContainer.classList.add('slide-out-blurred-top');
@@ -2197,15 +2228,82 @@ function closeDetails() {
   setTimeout(() => {
     detailsBG.style.display = "none";
     detailsContainer.style.display = "none"
+    details.style.display="none";
     detailsBG.classList.remove('fade-out');
     detailsContainer.classList.remove('slide-out-blurred-top');
     currentRow = null;
     firstTwoCells = null
-    details.style.display="none";
     details.removeEventListener('click', showDetails);
     detailsBG.removeEventListener("click", closeDetails);
     swiped = false;
-  }, 250);
+  }, 240);
+}
+
+let currentStars = 0;
+const coffeeRatingDiv = document.getElementById("coffeeRating");
+const starDivs = coffeeRatingDiv.querySelectorAll("div");
+function fillStars(num, half) {
+  starDivs.forEach((starDiv, i) => {
+    if (i < num) {
+      starDiv.innerHTML = "&#x1002c3;";
+    } else if (i == num && half) {
+      starDiv.innerHTML = "&#x1002c4;";
+    } else {
+      starDiv.innerHTML = "&#x1002c2;";
+    }
+  });
+  if (half === true) {
+    currentStars = num + "." + 5
+  } else {
+  currentStars = num + "." + 0
+  }
+}
+
+const unlinkButton = document.querySelector('#removeCoffeeFromBrew')
+const deleteCoffeeButton = document.querySelector('#deleteCoffee')
+
+function unlinkCoffee(inputLog) {
+  localStorage.removeItem(inputLog);
+  const inputs = document.querySelectorAll('#coffeeForm input');
+  const coffeeSelect = document.querySelector('#coffeeForm select')
+  inputs.forEach(field => {
+    field.value = "";
+  })
+  coffeeSelect.selectedIndex = 0;
+  fillStars(0,false);
+  unlinkButton.removeEventListener("click", unlinkCoffee);
+  unlinkButton.style.opacity = "0.7";
+}
+
+function deleteCoffee(inputCoffee) {
+  localStorage.removeItem(inputCoffee);
+  const inputs = document.querySelectorAll('#coffeeForm input');
+  const coffeeSelect = document.querySelector('#coffeeForm select')
+  inputs.forEach(field => {
+    field.value = "";
+  })
+  coffeeSelect.selectedIndex = 0;
+  fillStars(0,false);
+  
+  const itemNames = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (/^\d/.test(key)) {
+      const value = localStorage.getItem(key);
+      if (value === inputCoffee) {
+        itemNames.push(key); // Add the key to the array
+      }
+    }
+  }
+  console.log(itemNames)
+  itemNames.forEach(item => {
+    localStorage.removeItem(item);
+  })
+  console.log("deleted");
+
+  populateSelect();
+  deleteCoffeeButton.removeEventListener("click", deleteCoffee);
+  deleteCoffeeButton.style.opacity = "0.7";
 }
 
 function showDetails() {
@@ -2221,6 +2319,37 @@ function showDetails() {
         closeDetails();
       }
     });
+    
+  const coffeeRatingDiv = document.getElementById("coffeeRating");
+  const starDivs = coffeeRatingDiv.querySelectorAll("div");
+
+  coffeeRatingDiv.addEventListener("touchstart", (event) => {
+    event.preventDefault(); // prevent scrolling
+    handleTouch(event.touches[0], 12);
+  });
+
+  coffeeRatingDiv.addEventListener("touchmove", (event) => {
+    event.preventDefault(); // prevent scrolling
+    handleTouch(event.touches[0], 8);
+  });
+
+  function handleTouch(touch, divisor) {
+    const boundingRect = coffeeRatingDiv.getBoundingClientRect();
+    const touchX = touch.clientX - boundingRect.left;
+    const starWidth = boundingRect.width / divisor; // adjust for half stars
+    const filledStars = Math.floor(touchX / starWidth);
+    const halfStar = touchX - filledStars * starWidth > starWidth / 2;
+    // const rating = filledStars + (halfStar ? 0.5 : 0);
+    // console.log(`Current rating: ${rating}`);
+    if (filledStars < 0) {
+      fillStars(0, false);
+    } else if (filledStars >= 5) {
+      fillStars(5, false);
+    } else {
+      fillStars(filledStars, halfStar);
+    }
+  }
+    
   setTimeout(() => {
     detailsBG.classList.remove('fade-in');
     detailsContainer.classList.remove('slide-in-blurred-top');
@@ -2245,6 +2374,7 @@ function showDetails() {
 
   const selectedLog = firstTwoCells;
   const linkedCoffee = localStorage.getItem(selectedLog);
+
   if (linkedCoffee) {
     const selectedCoffeeJSON = localStorage.getItem(linkedCoffee);
     const selectedCoffee = JSON.parse(selectedCoffeeJSON);
@@ -2255,9 +2385,23 @@ function showDetails() {
     document.getElementById('coffeeVarietal').value = selectedCoffee.coffeeVarietal;
     document.getElementById('coffeeNotes').value = selectedCoffee.coffeeNotes;
     document.getElementById('coffeeAltitude').value = selectedCoffee.coffeeAltitude;
-    document.getElementById('coffeeRoastDate').value = selectedCoffee.coffeeDate;
-
-document.getElementById('coffeeRating').value = selectedCoffee.coffeeRating;
+    document.getElementById('coffeeRoastDate').value = selectedCoffee.coffeeRoastDate;
+    const coffeeRatingJSON = selectedCoffee.coffeeRating.split(".")
+    fillStars(coffeeRatingJSON[0], coffeeRatingJSON[1])
+    
+    unlinkButton.style.opacity = "1";
+    unlinkButton.addEventListener('click', () => {
+      event.preventDefault()
+      unlinkCoffee(selectedLog);
+    });
+    deleteCoffeeButton.style.opacity = "1";
+    deleteCoffeeButton.addEventListener('click', () => {
+      event.preventDefault()
+      deleteCoffee("coffee." + document.getElementById('coffeeName').value);
+    });
+  } else {
+    unlinkButton.style.opacity = "0.7";
+    deleteCoffeeButton.style.opacity = "0.7";
   }
 }
 
@@ -2274,27 +2418,37 @@ selectElement.addEventListener('change', (event) => {
   document.getElementById('coffeeProcess').value = selectedCoffee.coffeeProcess;
   document.getElementById('coffeeVarietal').value = selectedCoffee.coffeeVarietal;
   document.getElementById('coffeeNotes').value = selectedCoffee.coffeeNotes;
-  document.getElementById('coffeeRoastDate').value = selectedCoffee.coffeeDate;
   document.getElementById('coffeeAltitude').value = selectedCoffee.coffeeAltitude;
+  document.getElementById('coffeeRoastDate').value = selectedCoffee.coffeeRoastDate;
+  const coffeeRatingJSON = selectedCoffee.coffeeRating.split(".")
+  fillStars(coffeeRatingJSON[0], coffeeRatingJSON[1])
 
-document.getElementById('coffeeRating').value = selectedCoffee.coffeeRating;
+  deleteCoffeeButton.style.opacity = "1";
+  deleteCoffeeButton.addEventListener('click', () => {
+    event.preventDefault()
+    deleteCoffee("coffee." + document.getElementById('coffeeName').value);
+  });
 });
 
 function saveCoffee() {
   const inputs = document.querySelectorAll('#coffeeForm input');
-  const coffeeSelect = document.querySelector('#coffeeForm select')
+  const coffeeSelect = document.querySelector('#coffeeForm select');
   const coffee = {};
-
+	
+  //alert(currentStars);
   inputs.forEach(input => {
     coffee[input.id] = input.value;
   });
-
+  // =============
+  coffee['coffeeRating'] = currentStars;
+  // ===================================
   localStorage.setItem('coffee.'+coffeeName.value, JSON.stringify(coffee));
+  populateSelect();
 }
 
 function linkLogWithCoffee(input) {
   const keyLog = input;
-  const valueCoffee = document.querySelectorAll('#coffeeForm input')[0].value
+  const valueCoffee = document.querySelectorAll('#coffeeForm input')[1].value
   localStorage.setItem(keyLog, "coffee."+valueCoffee)
 }
 
