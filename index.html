@@ -28,11 +28,14 @@ body {
   overflow: hidden;
 }
 
+
+
 #appTitle {
   margin-left: 4vw;
   margin-top: 0vw;
   font-size: 10vw;
   display: block;
+  touch-action: none;
 }
 
 .grinders {
@@ -574,7 +577,7 @@ input, select {
   justify-content: space-between;
 }
 
-#delete {
+#delete, #delete2 {
   position: absolute;
   left: 92vw;
   width: 21vw;
@@ -590,7 +593,7 @@ input, select {
   transition: transform 0.3s ease-in-out;
 }
 
-#details {
+#details, #details2 {
   position: absolute;
   top: 10.25vw;
   left: -17vw;
@@ -606,11 +609,11 @@ input, select {
   transition: transform 0.3s ease-in-out;
 }
 
-.dark-theme #details {
+.dark-theme #details, .dark-theme #details2 {
   background-color: #505050;
 }
 
-.dark-theme #deleteB {
+.dark-theme #deleteB, .dark-theme #deleteB2 {
   background-color: #8b0000;
 }
 
@@ -1134,11 +1137,11 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   <button id="exportButton" onclick="shareCSV()">Export</button>
   <button id="menuButton" onclick="showPopup()">Menu</button>
 </div>
-
+  
 <div id="grinder1Title" class="grinders">Grinder 1</div>
 <div id="roundedCorners1">
-  <div id="delete">Delete</div>
-  <div id="details">Details</div>
+	<div id="delete">Delete</div> 
+	<div id="details">Details</div> 
   <table id="grinder1">
     <thead id="tableHead1">
       <tr>
@@ -1163,6 +1166,8 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
 
 <div class="grinders" id="grinder2Title">Grinder 2</div>
 <div id="roundedCorners2">
+  	<div id="delete2">Delete</div> 
+	<div id="details2">Details</div> 
   <table id="grinder2">
     <thead id="tableHead2">
       <tr>
@@ -1712,7 +1717,8 @@ function closeFormEval() {
       selectListReset.selectedIndex = 4;
       idTimeReset.value = "";
       myFormCloseButton()
-      initializeTableSwipe()
+      initializeTableSwipe("#grinder1 tbody tr", "#roundedCorners1", "#delete", "#details")
+      initializeTableSwipe("#grinder2 tbody tr", "#roundedCorners2", "#delete2", "#details2")
   }, 50);
 }
 // ====== END brew form
@@ -2146,18 +2152,18 @@ const swipeDetails = document.getElementById('details');
 const swipeDelete = document.getElementById('deleteB');
 const coffeeDetailsSV = document.getElementById('coffeeDetailsSV');
 const coffeeDetailsCL = document.getElementById('coffeeDetailsCL');
-const deleteB = document.querySelector('#delete');
-const details = document.querySelector('#details');
 var currentRow = null;
 let swiped = false;
 
-function initializeTableSwipe() {
-  const tBodyRows = document.querySelectorAll('#grinder1 tbody tr');
+function initializeTableSwipe(grinderTbodyTr, roundedCornersSelect, deleteButton, detailsButton) {
+  const tBodyRows = document.querySelectorAll(grinderTbodyTr);
   let touchStartX = null;
   let touchMoveX = null;
   // let swiped = false;
-  const rC1 = document.querySelector('#roundedCorners1');
-  const rC2 = document.querySelector('#roundedCorners2');
+  const rC = document.querySelector(roundedCornersSelect);
+  const deleteB = document.querySelector(deleteButton);
+	const details = document.querySelector(detailsButton);
+  //const rC2 = document.querySelector('#roundedCorners2');
   var cells = null;
 
 // const table = document.querySelector('#grinder1');
@@ -2207,11 +2213,11 @@ if (swiped===false){
       row.style.transform = `translateX(${distance/1.5}px)`;
   
   } else if (distance > 100 && swiped===false) {// ==== Details
-      rC1.style.overflowY = "hidden";
+      rC.style.overflowY = "hidden";
       details.style.transform = `translateX(17vw)`;
       row.style.transform = `translateX(17%)`;
   } else if (distance < -100 && swiped ===false) {// ==== Delete
-      rC1.style.overflowY = "hidden";
+      rC.style.overflowY = "hidden";
       deleteB.style.transform = 'translateX(-17vw)';
       row.style.transform = `translateX(-17%)`;
       rowDelete = event.currentTarget;
@@ -2222,7 +2228,7 @@ if (swiped===false){
 row.addEventListener("touchend", function(event) {
 const distance = touchMoveX - touchStartX;
  if (distance > 100 && swiped === false) {// ==== Details
-      rC1.style.overflowY = "hidden";
+      rC.style.overflowY = "hidden";
       details.style.transform = `translateX(17vw)`;
       row.style.transform = `translateX(17%)`;
       const cells = event.currentTarget.querySelectorAll('td');
@@ -2233,7 +2239,7 @@ const distance = touchMoveX - touchStartX;
       details.addEventListener('click', showDetails);
     
   } else if (distance < -100 && swiped ===false ) {// ==== Delete
-      rC1.style.overflowY = "hidden";
+      rC.style.overflowY = "hidden";
       deleteB.style.transform = 'translateX(-17vw)';
       row.style.transform = `translateX(-17%)`;
       rowDelete = event.currentTarget;
@@ -2248,7 +2254,7 @@ const distance = touchMoveX - touchStartX;
       });
       deleteB.style.transform = 'translateX(0px)';
       details.style.transform = 'translateX(0px)';
-      rC1.style.overflowY = "scroll";
+      rC.style.overflowY = "scroll";
       setTimeout(() => {
         deleteB.style.display = "none";
         details.style.display = "none";
@@ -2263,7 +2269,7 @@ function clickOnDeleteB() {
   rowDelete.style.transform = "translateX(-100%)";
   deleteB.style.opacity= "0";
   deleteB.style.transform = 'translateX(-215vw)';
-  rC1.style.overflowY = "scroll";
+  rC.style.overflowY = "scroll";
   // swiped = false;
   setTimeout(() => {
     rowDelete.remove();
@@ -2273,16 +2279,17 @@ function clickOnDeleteB() {
     deleteB.style.opacity="1";
     deleteB.style.transform = "translateX(0vw)";
     deleteB.style.left = '92vw';
-    rC1.style.overflowY = "scroll";
+    rC.style.overflowY = "scroll";
     swiped = false;
   }, 590);
     deleteB.removeEventListener('click', clickOnDeleteB)
  }// ende clickonDelete
 }); //for each row
-};// == function initializeTableSwipe
+};// == function Swipe
 
 setTimeout(() => {
-  initializeTableSwipe()
+  initializeTableSwipe("#grinder1 tbody tr", "#roundedCorners1", "#delete", "#details")
+  initializeTableSwipe("#grinder2 tbody tr", "#roundedCorners2", "#delete2", "#details2")
 }, 300);
 
 function closeDetails() {
