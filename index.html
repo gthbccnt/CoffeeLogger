@@ -379,6 +379,7 @@ input, select {
   font-weight: bold;
   margin-left: 1vw;
 }
+
 /* input fields()*/ 
 #logDetails,
 #idTime,
@@ -401,6 +402,7 @@ input, select {
 #selectList {
   appearance: none;
 }
+
 /* When the inputs get focus, do something */
 #logDetails:focus,
 #idTime:focus,
@@ -526,11 +528,6 @@ input, select {
   transition: color 0.5s ease;
 }
 
-/*.parent-class {
-  position: relative;
-  z-index: 9999;
-}*/
-
 #editingBG {
   background-color: #00000000;
   top:0;
@@ -552,7 +549,7 @@ input, select {
   left: 22.5vw;
   background-color: #ffffff05;
 /*  box-shadow: 0px 0px 45px 30px #00000025;*/
-  box-shadow: 0px 0px 80px 30px #70707055;
+  box-shadow: 0px 0px 50px 5px #70707085;
   border-radius: 12px;
 }
 
@@ -824,13 +821,6 @@ input, select {
 }
 
 /* ======== ANIMATIONS ====== */
-.spaceOutUp {
-  animation: spaceOutUp 0.25s;
-}
-.spaceInUp {
-  animation: spaceInUp 0.30s ease-in-out;
-}
-
 /*.pulseSize {
   animation: pulseSize 0.3s infinite;
 }
@@ -867,55 +857,7 @@ input, select {
   }
 }*/
 
-@keyframes spaceOutUp {
-  0% {
-    opacity: 1;
-    -webkit-transform-origin: 50% 0%;
-    transform-origin: 50% 0%;
-    -webkit-transform: scale(1) translate(0%, 0%);
-    transform: scale(1) translate(0%, 0%);
-    -webkit-filter: blur(0);
-    filter: blur(0);
-  }
-
-  100% {
-    opacity: 0;
-    -webkit-transform-origin: 50% 0%;
-    transform-origin: 50% 0%;
-    -webkit-transform: scale(0.2) translate(0%, -200%);
-    transform: scale(0.2) translate(0%, -200%);
-    -webkit-filter: blur(40px);
-    filter: blur(40px);
-  }
-}
-
-@keyframes spaceInUp {
-  0% {
-    opacity: 0;
-    -webkit-transform-origin: 50% 0%;
-    transform-origin: 50% 0%;
-    -webkit-transform: scale(0.2) translate(0%, -200%);
-    transform: scale(0.2) translate(0%, -200%);
-    -webkit-filter: blur(40px);
-    filter: blur(40px);
-  }
-
-  100% {
-    opacity: 1;
-    -webkit-transform-origin: 50% 0%;
-    transform-origin: 50% 0%;
-    -webkit-transform: scale(1) translate(0%, 0%);
-    transform: scale(1) translate(0%, 0%);
-    -webkit-filter: blur(0);
-    filter: blur(0);
-  }
-}
-
-
 /* ====== OLD ==== */
-.visible {
-  opacity: 1;
-}
 .fade-in {
   animation: fade-in 0.5s forwards;
 }
@@ -1758,11 +1700,11 @@ function brewRating() {
   console.log(ratingContainerHalf)
   const topOffset = cellRect.bottom - cellRect.width/2 -5 - ratingContainerHalf;
   
-  const inUpperThird = window.innerHeight/3;
+  const inUpperThird = window.innerHeight/3.3;
   const inLowerThird = (window.innerHeight/2.5)*2;
 
   if (cellRect.bottom < inUpperThird) {
-    ratingContainer.style.top = vwToPx(30)+"px";
+    ratingContainer.style.top = vwToPx(10)+"px";
   } else if (cellRect.bottom > inLowerThird) {
     ratingContainer.style.top = vwToPx(106)+"px";
   } else {
@@ -2134,13 +2076,25 @@ function getCoffeeDataAsCSV() {
       headers.map((header) => JSON.stringify(item[header])).join(";")
     ),
   ].join("\n");
-  console.log(csv);
+  
   if (navigator.share) {
-    navigator.share(csv);
+    const file = new File([csv], "saved_coffees.csv", {
+      type: "text/csv",
+    });
+    
+    navigator.share({
+      files: [file],
+      title: 'Coffee Data',
+      text: 'Here is the CSV data for coffee',
+    }).then(() => {
+      console.log('Thanks for sharing!');
+    })
+    .catch(console.error);
   } else {
     console.log("Sharing is not supported on this browser.");
   }
 }
+
 
 
 // ==== details // delete ====
