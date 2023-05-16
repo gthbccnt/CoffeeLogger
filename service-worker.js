@@ -8,6 +8,30 @@ self.addEventListener('install', function(event) {
   );
 });
 
+// self.addEventListener('fetch', function(event) {
+//   // Check if the request is for a font file
+//   if (event.request.headers.get('Accept').indexOf('font') !== -1) {
+//     event.respondWith(
+//       caches.match(event.request).then(function(response) {
+//         if (response) {
+//           // Font is found in the cache, return it
+//           return response;
+//         }
+
+//         // Font is not in the cache, return empty response
+//         return new Response(null, { status: 404 });
+//       })
+//     );
+//   } else {
+//     // For other requests, follow the default caching behavior
+//     event.respondWith(
+//       caches.match(event.request).then(function(response) {
+//         return response || fetch(event.request);
+//       })
+//     );
+//   }
+// });
+
 self.addEventListener('fetch', function(event) {
   // Check if the request is for a font file
   if (event.request.headers.get('Accept').indexOf('font') !== -1) {
@@ -18,7 +42,29 @@ self.addEventListener('fetch', function(event) {
           return response;
         }
 
-        // Font is not in the cache, return empty response
+        // Font is not in the cache, try to retrieve it from localStorage
+        var fontData = localStorage.getItem('selectedFont');
+        if (fontData) {
+          // Font data is found in localStorage, convert it to a Blob object
+          var blob = base64ToBlob(fontData);
+
+          // Create a new response with the font data
+          var fontResponse = new Response(blob, {
+            headers: {
+              'Content-Type': 'font/opentype',
+            },
+          });
+
+          // Cache the font for future use
+          caches.open('fontCache').then(function(cache) {
+            cache.put('iconMode.otf', fontResponse);
+          });
+
+          // Return the font response
+          return fontResponse;
+        }
+
+        // Font is not in the cache or localStorage, return empty response
         return new Response(null, { status: 404 });
       })
     );
@@ -32,3 +78,13 @@ self.addEventListener('fetch', function(event) {
   }
 });
 
+// Helper function to convert a base64 string to a Blob object
+function base64ToBlob(base64) {
+  var binaryString = window.atob(base64);
+  var arrayBuffer = new ArrayBuffer(binaryString.length);
+  var uint8Array = new Uint8Array(arrayBuffer);
+  for (var i = 0; i < binaryString.length; i++) {
+    uint8Array[i] = binaryString.charCodeAt(i);
+  }
+  return new Blob([uint8Array]);
+}
