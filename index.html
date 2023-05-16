@@ -1886,41 +1886,6 @@ function openCsvOrFont() {
   fileInput.click();
 }
 
-
-
-// function openCsvOrFont() {
-//   const fileInput = document.createElement('input');
-//   fileInput.type = 'file';
-//   fileInput.accept = '.csv,.ttf,.otf';
-//   fileInput.onchange = () => {
-//     const file = fileInput.files[0];
-//     const reader = new FileReader();
-//     reader.onload = () => {
-//       const fileData = reader.result;
-//       if (file.type === 'text/csv') {
-//         //console.log(file.name)
-//         addCsvToTable(fileData);
-//         reloadPage();
-//       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
-//         const reader = new FileReader();
-//         reader.onload = () => {
-//           const fontData = reader.result.split(',')[1];
-//           try {
-//             localStorage.setItem('selectedFont', fontData);
-//             alert('Selected font saved to local storage!');
-//             reloadPage();
-//           } catch (e) {
-//             alert('Error saving font to local storage: ' + e.message);
-//           }
-//         };
-//         reader.readAsDataURL(file);
-//       }
-//     };
-//     reader.readAsText(file);
-//   };
-//   fileInput.click();
-// }
-
 function addCsvToTable(csvData) {
   const checkImportGrinder = csvData.split("\n")[0];
   //console.log(checkImportGrinder)
@@ -2729,10 +2694,10 @@ function moveCursor() {
       calcText.remove();
   });
   //console.log(document.activeElement.id);
-  if (input.value > 0 ) {
-    myFormSaveButton() 
-  } else {
+  if (input.value == "" ) {
     myFormCloseButton() 
+  } else {
+    myFormSaveButton() 
   }
 }
 
