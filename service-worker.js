@@ -3,39 +3,32 @@ self.addEventListener('install', function(event) {
     caches.open('v1').then(function(cache) {
       return cache.addAll([
         'index.html',
-        'styles.css',
-        'app.js'
       ]);
     })
   );
 });
 
 self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      // Cache hit - return response
-      if (response) {
-        return response;
-      }
-
-      // Clone the request
-      var fetchRequest = event.request.clone();
-
-      return fetch(fetchRequest).then(function(response) {
-        // Check if we received a valid response
-        if(!response || response.status !== 200 || response.type !== 'basic') {
+  // Check if the request is for a font file
+  if (event.request.headers.get('Accept').indexOf('font') !== -1) {
+    event.respondWith(
+      caches.match(event.request).then(function(response) {
+        if (response) {
+          // Font is found in the cache, return it
           return response;
         }
 
-        // Clone the response
-        var responseToCache = response.clone();
-
-        caches.open('v1').then(function(cache) {
-          cache.put(event.request, responseToCache);
-        });
-
-        return response;
-      });
-    })
-  );
+        // Font is not in the cache, return empty response
+        return new Response(null, { status: 404 });
+      })
+    );
+  } else {
+    // For other requests, follow the default caching behavior
+    event.respondWith(
+      caches.match(event.request).then(function(response) {
+        return response || fetch(event.request);
+      })
+    );
+  }
 });
+
