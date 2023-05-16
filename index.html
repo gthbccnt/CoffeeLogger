@@ -146,7 +146,7 @@ thead tr {
 }
 
 tbody tr {
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, filter .6s ease;
   height: 12vw;
 }
 
@@ -332,7 +332,7 @@ button {
 }
 
 #addBrew {
-  position: fixed;
+  position: absolute;
   z-index: 1;
   background-color: #ffffff30;
   max-width:18vw;
@@ -522,29 +522,33 @@ input, select {
   font-weight: 500;
 }
 
-.dark-theme .markDelete, .dark-theme .editingMode {
+.dark-theme .editingMode {
   background-color: #ff000027 !important;
   color: #ffffff87;
 }
 
-.markDelete, .editingMode {
+.editingMode {
   background-color: #A32D36dd !important;
   border-radius: 5px;
   color: #e8dbc4;
-  /*transition: background-color 1.9s ease;*/
-  transition: color 0.25s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
+
+.darkenEditingMode {
+  filter: brightness(0.8);
+}
+
 
 #editingBG {
   background-color: #00000000;
-  top:0;
-  position: fixed;
+  top: 0;
   width: 100vw;
   height: 100vh;
   display: none;
 /*  -webkit-backdrop-filter: blur(0px);
   backdrop-filter: blur(0px);*/
-/*  z-index: 0;*/
+  z-index: 2;
+  position: relative;
 }
 
 #editingContainer {
@@ -554,9 +558,8 @@ input, select {
   position: fixed;
   top: 40vh;
   left: 22.5vw;
-  background-color: #ffffff05;
-/*  box-shadow: 0px 0px 45px 30px #00000025;*/
-  box-shadow: 0px 0px 50px 5px #70707085;
+  background-color: #00000010;
+/*  box-shadow: 0px 0px 00px 0px #00000055;*/
   border-radius: 12px;
 }
 
@@ -1875,7 +1878,7 @@ function openCsvOrFont() {
         }
       }
     };
-    reader.readAsArrayBuffer(file);
+    reader.readAsText(file);
   };
   fileInput.click();
 }
@@ -1969,6 +1972,12 @@ function closeEditCell() {
   editingContainer.classList.remove('slide-in-edit');
     editingContainer.classList.add('slide-out-edit');
     currentCell.classList.remove('editingMode');
+
+    const allRows = Array.from(document.querySelectorAll('tbody tr'));
+    allRows.forEach((otherRow) => {
+      otherRow.style.filter = 'blur(0px)';
+    });
+
     setTimeout(() => {
       //editingContainer.style.display = 'none'
       editingBG.style.display = 'none';
@@ -2010,7 +2019,7 @@ function editTableCell(cell) {
     });
 
     currentCell = cell;
-    cell.classList.add('editingMode');
+    // cell.classList.add('editingMode');
     editingContainer.classList.add('slide-in-edit');
     const cellRect = cell.getBoundingClientRect();
     const editingContainerWidth = vwToPx(54);
@@ -2027,14 +2036,29 @@ function editTableCell(cell) {
       console.log("no boundary")
     }
 
-    const topOffset = cellRect.top + cellRect.height + 8;
+    const topOffset = cellRect.top + cellRect.height + 10;
     const isAboveMiddle = (cellRect.bottom < window.innerHeight / 2);
     if (isAboveMiddle) {
       editingContainer.style.top = `${topOffset}px`;
     } else {
-      editingContainer.style.top = `${cellRect.top - 70}px`;
+      editingContainer.style.top = `${cellRect.top - 72}px`;
     }
     editingBG.style.display = 'block';
+    cell.classList.add('editingMode');
+
+    const row = cell.parentNode;
+    const allRows = Array.from(document.querySelectorAll('tbody tr'));
+    const rowsToDarken = allRows.filter((otherRow) => {
+      return otherRow !== row;
+    });
+    rowsToDarken.forEach((otherRow) => {
+      otherRow.style.filter = 'blur(3px)';
+    });
+    
+    // row.style.filter = 'blur(1px)';
+    // cell.style.filter = "brightness(1.15"
+    
+    // console.log(cell.parentNode.parentNode.parentNode.parentNode)
     editingInput.value = cell.textContent;
     saveButton.addEventListener('click', onSaveClick);
   }
