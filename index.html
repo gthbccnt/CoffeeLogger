@@ -10,6 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <style>
+@font-face {
+  font-family: 'iconMode';
+  src: local('selectedFont'); /* Replace 'Font Name' and 'Font-Name' with the actual names of the cached font on the user's system */
+  font-display: swap;
+}
+
 * {
     box-sizing: border-box;
     font-family: system-ui, iconMode;
@@ -1424,14 +1430,16 @@ if (hasCoffeeKey) {
   // No key starting with 'coffee.' exists in localStorage
 }
 
-const css = `@font-face {
-      font-family: 'iconMode';
-      src: url('data:font/opentype;charset=utf-8;base64,${fontData}');
-      font-display: swap;
-    }`;
-const style = document.createElement('style');
-style.appendChild(document.createTextNode(css));
-    document.head.appendChild(style);
+// ===== if font not in cache then load from localStorage
+//
+// const css = `@font-face {
+//       font-family: 'iconMode';
+//       src: url('data:font/opentype;charset=utf-8;base64,${fontData}');
+//       font-display: swap;
+//  }`;
+//  const style = document.createElement('style');
+//  style.appendChild(document.createTextNode(css));
+//  document.head.appendChild(style);
   }
 }
 
