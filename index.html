@@ -1858,7 +1858,7 @@ function openCsvOrFont() {
           if ('caches' in window) {
             caches.open('v1').then(cache => {
               // Cache the font file
-              cache.put('iconMode', new Response(file));
+              cache.put('iconMode.otf', new Response(file));
             });
           }
 
