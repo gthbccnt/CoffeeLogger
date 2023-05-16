@@ -1845,29 +1845,32 @@ function openCsvOrFont() {
         addCsvToTable(fileData);
         reloadPage();
       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const fontData = reader.result.split(',')[1];
-          try {
-            localStorage.setItem('selectedFont', fontData);
-            if ('caches' in window) {
-              caches.open('iconMode').then(cache => {
-                cache.put('selectedFont', new Response(fontData));
-              });
-            }
-            alert('Selected font saved to local storage and cache as "iconMode"!');
-            reloadPage();
-          } catch (e) {
-            alert('Error saving font to local storage and cache: ' + e.message);
+        try {
+          if ('caches' in window) {
+            caches.open('iconMode').then(cache => {
+              // Cache the font file
+              cache.put('selectedFont', new Response(file));
+            });
           }
-        };
-        reader.readAsDataURL(file);
+
+          const dataURLReader = new FileReader();
+          dataURLReader.onload = () => {
+            const fontData = dataURLReader.result.split(',')[1];
+            localStorage.setItem('selectedFont', fontData);
+            alert('Selected font saved to local storage and cached as "iconMode"!');
+            reloadPage();
+          };
+          dataURLReader.readAsDataURL(file);
+        } catch (e) {
+          alert('Error saving font to local storage and cache: ' + e.message);
+        }
       }
     };
-    reader.readAsText(file);
+    reader.readAsArrayBuffer(file);
   };
   fileInput.click();
 }
+
 
 
 // function openCsvOrFont() {
