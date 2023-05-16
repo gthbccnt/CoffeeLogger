@@ -1847,9 +1847,9 @@ function openCsvOrFont() {
       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
         try {
           if ('caches' in window) {
-            caches.open('iconMode').then(cache => {
+            caches.open('v1').then(cache => {
               // Cache the font file
-              cache.put('selectedFont', new Response(file));
+              cache.put('iconMode', new Response(file));
             });
           }
 
