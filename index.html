@@ -11,11 +11,11 @@
 
   <style>
 
-@font-face {
+/*@font-face {
   font-family: 'iconMode';
   src: url('iconMode.otf');
   font-display: swap;
-}
+}*/
 
 * {
     box-sizing: border-box;
@@ -807,11 +807,13 @@ input, select {
   border-radius: 7px;
   color: black;
   font-size: 6vw;
-  box-shadow: 0px 0px 5px -2px #00000040;
+  box-shadow: 
+  0px 0px 5px -2px #00000040,
+  0px 1px 1px 0px #00000040;
 }
 
  #keyboardContainer div div.pressed {
-  background-color: #ffffff80;
+  background-color: #ffffff90;
   box-shadow: none;
 }
 
@@ -1436,14 +1438,15 @@ if (hasCoffeeKey) {
 
 // ===== if font not in cache then load from localStorage
 //
-// const css = `@font-face {
-//       font-family: 'iconMode';
-//       src: url('data:font/opentype;charset=utf-8;base64,${fontData}');
-//       font-display: swap;
-//  }`;
-//  const style = document.createElement('style');
-//  style.appendChild(document.createTextNode(css));
-//  document.head.appendChild(style);
+const css = `@font-face {
+              font-family: 'iconMode';
+              src: url('iconMode.otf');
+              font-display: swap;
+            }`;
+const style = document.createElement('style');
+ style.appendChild(document.createTextNode(css));
+ document.head.appendChild(style);
+
   }
 }
 
@@ -1625,7 +1628,7 @@ function closeForm() {
   menuButtonTemp.style.display = 'block';
   appTitle.style.display = "block";
   showExportButton();
-  }, 40);
+  }, 50);
   
   setTimeout(function() {
     formPopup.style.display = "none";
@@ -1797,7 +1800,7 @@ function closePopup() {
   		menuButtonTemp.style.display = 'block';
   		appTitle.style.display = "block";
   		showExportButton();
-  		}, 40);
+  		}, 50);
   
     setTimeout(() => {
       backgroundPopup.classList.remove('blur-out');
@@ -2357,7 +2360,7 @@ function closeDetails() {
   		menuButtonTemp.style.display = 'block';
   		appTitle.style.display = "block";
   		showExportButton();
-  		}, 40);
+  		}, 50);
 
   details.style.transform = "translateX(0px)";
   currentRow.style.transform = "translateX(0px)";
@@ -2671,7 +2674,7 @@ function setInputValueOnClick() {
       keyboardButton.classList.add('pressed');
       setTimeout(() => {
         keyboardButton.classList.remove('pressed');
-      }, 150);
+      }, 200);
       event.preventDefault();
 
       var input = document.activeElement;
