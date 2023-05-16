@@ -28,8 +28,6 @@ body {
   overflow: hidden;
 }
 
-
-
 #appTitle {
   margin-left: 4vw;
   margin-top: 0vw;
@@ -519,7 +517,6 @@ input, select {
 
 .dark-theme .markDelete, .dark-theme .editingMode {
   background-color: #ff000027 !important;
-  border-radius: 5px;
   color: #ffffff87;
 }
 
@@ -528,7 +525,7 @@ input, select {
   border-radius: 5px;
   color: #e8dbc4;
   /*transition: background-color 1.9s ease;*/
-  transition: color 0.5s ease;
+  transition: color 0.25s ease;
 }
 
 #editingBG {
@@ -647,7 +644,7 @@ input, select {
 }
 
 #coffeeExport {
-  background-color: #ffffff20;
+  background-color: #ffffff35;
   border-radius: 8px;
   height: 10vw;
   padding: 1.5vw;
@@ -656,6 +653,7 @@ input, select {
   text-align: center;
   align-items: center;
   margin-bottom: 0;
+  display: none;
 }
 
 #detailsBG h1 {
@@ -1312,6 +1310,15 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
+const hasCoffeeKey = Object.keys(localStorage).some(key => key.startsWith('coffee.'));
+if (hasCoffeeKey) {
+  console.log("a coffee is stored")
+  const exportCoffeeIcon = document.querySelector('#coffeeExport');
+  exportCoffeeIcon.style.display = "block";
+} else {
+  // No key starting with 'coffee.' exists in localStorage
+}
+
 function saveDataToLocalStorage(userGrinder, userLog) {
   const rows = document.querySelectorAll(userGrinder);
   const data = [];
@@ -1341,6 +1348,7 @@ function loadSelectedFont() {
     const tableHeaderFontsize1 = document.querySelector('#grinder1 thead tr');
     const tableHeaderFontsize2 = document.querySelector('#grinder2 thead tr');
     const tableHeaders2 = document.querySelectorAll('#grinder2 thead tr td');
+    const exportCoffeeIcon = document.querySelector('#coffeeExport');
 tableHeaderFontsize1.style.fontSize = '5vw'; 
 tableHeaderFontsize2.style.fontSize = '5vw'; 
 
@@ -1374,11 +1382,13 @@ const addButtonIcon = document.querySelector('#addBrew')
   addButtonIcon.style.width = '18vw';
   addButtonIcon.style.borderRadius = '50%';
   
-// const cancelButtonIcon = document.querySelector('#ratingCancelButton')
+// const resetButtonIcon = document.querySelector('#ratingCancelButton')
 //   cancelButtonIcon.textContent = '\u{100060}'
 
 const resetButtonIcon = document.querySelector('#resetButton')
-  resetButtonIcon.textContent = '\u{100060}';
+  resetButtonIcon.value = '\u{100199}';
+  resetButtonIcon.style.fontSize = "6.5vw";
+  resetButtonIcon.style.minWidth = "14vw";
   
 const inputIcons = document.querySelectorAll('#inputIcon')
 const inputIcon = document.querySelector('#inputIcon')
@@ -1396,15 +1406,23 @@ const addbrewForms = document.querySelectorAll('#myForm input, #myForm select')
 const exportButtonIcon = document.querySelector("#exportButton")
   exportButtonIcon.textContent = "\u{100202}"
   exportButtonIcon.style.fontSize = "6vw";
-  
-//const ratingIconsText = ["\u{1000ca}", "\u{1000cc}", "\u{1000ce}", "\u{1000d0}", "\u{1000d2}","\u{1000d4}"];
-//const ratingIcons = document.querySelectorAll("#rating-item");
-//ratingIcons.forEach((ratingIcon, i) => {
-  //ratingIcon.style.fontWeight = "light";
-//  ratingIcon.style.fontFamily = "iconMode";
-//  ratingIcon.textContent = ratingIconsText[i];
-//});
 
+const kbDelete = document.querySelector('#kbDelete');
+  kbDelete.textContent = "\u{10019b}"
+
+const kbSpacebar = document.querySelector('#kbSpacebar');
+  kbSpacebar.textContent = "\u{10107a}"
+
+// const hasCoffeeKey = Object.keys(localStorage).some(key => key.startsWith('coffee.'));
+
+if (hasCoffeeKey) {
+  console.log("a coffee is stored")
+  // const exportCoffeeIcon = document.querySelector('#coffeeExport');
+  exportCoffeeIcon.textContent = "\u{100206}"
+  // exportCoffeeIcon.style.display = "block";
+} else {
+  // No key starting with 'coffee.' exists in localStorage
+}
 
 const css = `@font-face {
       font-family: 'iconMode';
@@ -1443,7 +1461,6 @@ window.addEventListener('load', () => {
     }
   }, 5);
 });
-
 
 function loadLogs(userGrinder, selectedTable) {
   const data = JSON.parse(localStorage.getItem(userGrinder));
@@ -1814,6 +1831,7 @@ function showPopup() {
   });
 }
 // === import 
+
 function openCsvOrFont() {
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
@@ -1824,7 +1842,6 @@ function openCsvOrFont() {
     reader.onload = () => {
       const fileData = reader.result;
       if (file.type === 'text/csv') {
-        //console.log(file.name)
         addCsvToTable(fileData);
         reloadPage();
       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
@@ -1833,10 +1850,15 @@ function openCsvOrFont() {
           const fontData = reader.result.split(',')[1];
           try {
             localStorage.setItem('selectedFont', fontData);
-            alert('Selected font saved to local storage!');
+            if ('caches' in window) {
+              caches.open('iconMode').then(cache => {
+                cache.put('selectedFont', new Response(fontData));
+              });
+            }
+            alert('Selected font saved to local storage and cache as "iconMode"!');
             reloadPage();
           } catch (e) {
-            alert('Error saving font to local storage: ' + e.message);
+            alert('Error saving font to local storage and cache: ' + e.message);
           }
         };
         reader.readAsDataURL(file);
@@ -1846,6 +1868,40 @@ function openCsvOrFont() {
   };
   fileInput.click();
 }
+
+
+// function openCsvOrFont() {
+//   const fileInput = document.createElement('input');
+//   fileInput.type = 'file';
+//   fileInput.accept = '.csv,.ttf,.otf';
+//   fileInput.onchange = () => {
+//     const file = fileInput.files[0];
+//     const reader = new FileReader();
+//     reader.onload = () => {
+//       const fileData = reader.result;
+//       if (file.type === 'text/csv') {
+//         //console.log(file.name)
+//         addCsvToTable(fileData);
+//         reloadPage();
+//       } else if (file.type === 'font/ttf' || file.type === 'font/otf') {
+//         const reader = new FileReader();
+//         reader.onload = () => {
+//           const fontData = reader.result.split(',')[1];
+//           try {
+//             localStorage.setItem('selectedFont', fontData);
+//             alert('Selected font saved to local storage!');
+//             reloadPage();
+//           } catch (e) {
+//             alert('Error saving font to local storage: ' + e.message);
+//           }
+//         };
+//         reader.readAsDataURL(file);
+//       }
+//     };
+//     reader.readAsText(file);
+//   };
+//   fileInput.click();
+// }
 
 function addCsvToTable(csvData) {
   const checkImportGrinder = csvData.split("\n")[0];
@@ -2500,6 +2556,8 @@ function saveCoffee() {
   localStorage.setItem('coffee.'+coffeeName.value, JSON.stringify(coffee));
   coffeeSelect.selectedIndex = 0;
   populateSelect();
+  const exportCoffeeIcon = document.querySelector("coffeeExport");
+  exportCoffeeIcon.style.display = "block";
 }
 
 
@@ -2583,11 +2641,14 @@ function setInputValueOnClick() {
       var input = document.activeElement;
       if (input.tagName === 'INPUT') {
 
-        if (keyboardButton.textContent === "Del") {
+        if (keyboardButton.textContent === "Del" || keyboardButton.textContent === "\u{10019b}") {
           input.value = input.value.slice(0, -1);
           setTimeout(() => {
             moveCursor();
           }, 10);
+        } else if (keyboardButton.textContent === "\u{10107a}") {
+          input.value += "\u00A0";
+          moveCursor();
         } else {
           input.value += keyboardButton.textContent;
           setTimeout(() => {
