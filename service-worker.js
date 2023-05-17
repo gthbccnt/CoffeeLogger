@@ -8,33 +8,34 @@ self.addEventListener('install', function(event) {
   );
 });
 
-// self.addEventListener('fetch', function(event) {
-//   // Check if the request is for a font file
-//   if (event.request.headers.get('Accept').indexOf('font') !== -1) {
-//     event.respondWith(
-//       caches.match(event.request).then(function(response) {
-//         if (response) {
-//           // Font is found in the cache, return it
-//           return response;
-//         }
-
-//         // Font is not in the cache, return empty response
-//         return new Response(null, { status: 404 });
-//       })
-//     );
-//   } else {
-//     // For other requests, follow the default caching behavior
-//     event.respondWith(
-//       caches.match(event.request).then(function(response) {
-//         return response || fetch(event.request);
-//       })
-//     );
-//   }
-// });
-
 self.addEventListener('fetch', function(event) {
-  // Check if the request is for a font file
-  if (event.request.headers.get('Accept').indexOf('font') !== -1) {
+  // Check if the request is for index.html
+  if (event.request.url.endsWith('index.html')) {
+    event.respondWith(
+      caches.open('v1').then(function(cache) {
+        return Promise.all([
+          fetch(event.request).then(function(networkResponse) {
+            // Cache the fetched version of index.html
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          }).catch(function() {
+            // If fetching fails, serve the cached version of index.html
+            return cache.match(event.request);
+          }),
+          cache.match(event.request).then(function(response) {
+            // Serve the cached version of index.html
+            return response;
+          })
+        ]).then(function(responses) {
+          // Return the first available response (either from fetch or cache)
+          return responses.find(function(response) {
+            return response;
+          });
+        });
+      })
+    );
+  } else if (event.request.headers.get('Accept').indexOf('font') !== -1) {
+    // Check if the request is for a font file
     event.respondWith(
       caches.match(event.request).then(function(response) {
         if (response) {
@@ -59,6 +60,7 @@ self.addEventListener('fetch', function(event) {
           caches.open('fontCache').then(function(cache) {
             cache.put('iconMode.otf', fontResponse);
           });
+          console.log("font cached from localStorage");
 
           // Return the font response
           return fontResponse;
