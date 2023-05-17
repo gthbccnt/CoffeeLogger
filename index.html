@@ -146,7 +146,7 @@ thead tr {
 }
 
 tbody tr {
-  transition: transform 0.3s ease-in-out, filter .6s ease;
+  transition: transform 0.3s ease-in-out, filter 0.6s ease;
   height: 12vw;
 }
 
@@ -161,10 +161,10 @@ td {
 }
 
 tbody tr:nth-child(even) {
-  background-color: #E2D0AD;
+  background-color: #E2D0AD/*#E2D0AD;*/
 }
 tbody tr:nth-child(odd) {
-  background-color: #D7C29C;
+  background-color: #D7C29C; /*#D7C29C;*/
 }
 tbody td:nth-child(-n+2) {
   font-size: 3vw;
@@ -374,7 +374,7 @@ input, select {
  left: 5vw;
  top: 25vw;
  position: fixed;
- background-color: #00000025;
+ background-color: #00000018;
  -webkit-backdrop-filter: blur(45px);
  backdrop-filter: blur(45px);
  border-radius: 20px;
@@ -399,7 +399,7 @@ input, select {
   width: 100%;
   height: 14vw;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #ffffff50;
   font-size: 5vw;
   color: black;
@@ -475,34 +475,31 @@ input, select {
 }
 
 #rating-popup {
-  -webkit-backdrop-filter: blur(0px);
-  backdrop-filter: blur(0px);
   top:0;
   position: fixed;
   height: 100vh;
   width: 100vw;
   display: none;
+  z-index: 999;
 }
 
 #rating-container {
   position: fixed;
+  background-color: #00000010;
   display: none;
   top: 25vh;
-  right: 22%;
-  height: 93vw;
-  background-color: #00000020;
-  border-radius: 15px;
-  -webkit-backdrop-filter: blur(45px);
-  backdrop-filter: blur(45px);
-  box-shadow: 0px 0px 50px -5px #00000035;
-}
-
-#rating-container ul {
-  justify-content: space-evenly;
+  right: 5vw;
+  height: 18vw;
+  width: 90vw;
+  justify-content: space-between;
   align-items: center;
-  padding: 0;
+  padding: 2.5vw;
   margin-top: 0vw;
   margin-bottom: 0vw;
+  border-radius: 12px;
+  -webkit-backdrop-filter: blur(45px);
+  backdrop-filter: blur(45px);
+/*  box-shadow: 0px 0px 50px -5px #00000035;*/
 }
 
 #rating-item {
@@ -511,11 +508,10 @@ input, select {
   align-items: center;
   width: 12vw;
   height: 12vw;
-  margin: 3vw;
   border-radius:8px;
   -webkit-backdrop-filter: blur(25px);
   backdrop-filter: blur(25px);
-  background-color: #ffffff60;
+  background-color: #ffffff50;
   color: black;
   font-family: system-ui;
   font-size: 9vw;
@@ -879,7 +875,7 @@ input, select {
 }
 
 .blur-in {
-  animation: blur-in 0.5s forwards;
+  animation: blur-in 1s forwards;
 }
 
 .blur-out {
@@ -892,15 +888,6 @@ animation: slide-in-blurred-top 0.50s cubic-bezier(0.230, 1.000, 0.320, 1.000) b
 
 .slide-out-blurred-top {
 animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-}
-
-.slide-in-blurred-right {
-  animation: slide-in-blurred-right 0.35s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-}
-
-/* cubic-bezier(0.755, 0.050, 0.855, 0.060) both */
-.slide-out-blurred-right {
-  animation: slide-out-blurred-right 0.25s cubic-bezier(0.4, 0.050, 0.4, 0.060) both;
 }
 
 .slide-in-blurred-bottom {
@@ -918,6 +905,10 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   animation: slide-out-edit 0.30s ease-in-out;
 }
 
+/*.slide-out-edit-right {
+  animation: slide-out-edit-right 0.30s ease-in-out;
+}
+*/
 @keyframes slide-in-blurred-top {
   0% {
       		transform: translateY(-150px) scaleY(0.9) scaleX(0.1);
@@ -945,48 +936,6 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
           transform-origin: 50% 50%;
           -webkit-filter: blur(100px);
     				opacity: 0;
-  }
-}
-
-@keyframes slide-in-blurred-right {
-  0% {
-    -webkit-transform: translateX(200px) scaleX(1) scaleY(0.2);
-            transform: translateX(200px) scaleX(1) scaleY(0.2);
-    -webkit-transform-origin: 0% 50%;
-            transform-origin: 0% 50%;
-    -webkit-filter: blur(0px);
-            filter: blur(0px);
-    opacity: 0.5;
-  }
-  100% {
-    -webkit-transform: translateX(0) scaleY(1) scaleX(1);
-            transform: translateX(0) scaleY(1) scaleX(1);
-    -webkit-transform-origin: 50% 50%;
-            transform-origin: 50% 50%;
-    -webkit-filter: blur(0);
-            filter: blur(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-out-blurred-right {
-  0% {
-    -webkit-transform: translateX(0) scaleY(1) scaleX(1);
-            transform: translateX(0) scaleY(1) scaleX(1);
-    -webkit-transform-origin: 50% 50%;
-            transform-origin: 50% 50%;
-    -webkit-filter: blur(10px);
-            filter: blur(10px);
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: translateX(200px) scaleX(1) scaleY(0.2);
-            transform: translateX(200px) scaleX(1) scaleY(0.2);
-    -webkit-transform-origin: 0% 50%;
-            transform-origin: 0% 50%;
-    -webkit-filter: blur(40px);
-            filter: blur(40px);
-    opacity: 0;
   }
 }
 
@@ -1020,6 +969,44 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   }
 }
 
+/*.slide-in-edit-right {
+  animation: slide-in-edit 0.30s;
+}
+
+@keyframes slide-in-edit-right {
+  0% {
+          transform: translateY(-15vw) translateX(-7vw);
+          transform-origin: 100% 0%;
+          width: 0vw;
+          height: 0vw;
+          -webkit-backdrop-filter: blur(0px);
+          backdrop-filter: blur(0px);
+  }
+  100% {
+          transform: translateY(0) translateX(0vw);
+          transform-origin: 70% 100%;
+          width: 90vw;
+          height: 18vw;
+          -webkit-backdrop-filter: blur(45px);
+          backdrop-filter: blur(45px);
+  }
+}
+
+@keyframes slide-out-edit-right {
+  0% {
+        transform: translateY(0) scaleY(1) scaleX(1);
+        transform-origin: 50% 0%;
+        -webkit-filter: blur(1px);
+        opacity: 1;
+  }
+  100% {
+          transform: translateY(-20px) scaleY(0.9) scaleX(0.1);
+          transform-origin: 100% 50%;
+          -webkit-filter: blur(40px);
+          opacity: 0;
+  }
+}*/
+
 @keyframes slide-in-blurred-bottom {
   0% {
     transform: translateY(250px) scaleY(0.9) scaleX(0.2);
@@ -1052,17 +1039,21 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
 
 @keyframes blur-out {
   0% {
-    -webkit-backdrop-filter: blur(20px)
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
   100% {
+    backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px)
   }
 }
 @keyframes blur-in {
   0% {
+    backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px)
   }
   100% {
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px)
   }
 }
@@ -1231,14 +1222,20 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
 <div id="rating-popup">
   <div id="rating-container">
         <!-- <li id="ratingCancelButton">X</li> -->
-    <ul id="rating-list">
       <li id="rating-item">1</li>
       <li id="rating-item">2</li>
       <li id="rating-item">3</li>
       <li id="rating-item">4</li>
       <li id="rating-item">5</li>
       <li id="rating-item">6</li>
-    </ul>
+<!--     <ul id="rating-list">
+      <li id="rating-item">1</li>
+      <li id="rating-item">2</li>
+      <li id="rating-item">3</li>
+      <li id="rating-item">4</li>
+      <li id="rating-item">5</li>
+      <li id="rating-item">6</li>
+    </ul> -->
   </div>
 </div>
 
@@ -1352,9 +1349,39 @@ function saveDataToLocalStorage(userGrinder, userLog) {
   localStorage.setItem(userLog, JSON.stringify(data));
 }
 
+function isRunningLocally() {
+  const hostname = window.location.hostname.toLowerCase();
+  return hostname.includes("local") || window.location.protocol === "file:";
+}
+
+if (isRunningLocally()) {
+  console.log("The web app is running locally.");
+} else {
+  console.log("The web app is not running locally.");
+}
+
 
 function loadSelectedFont() {
-  const fontData = localStorage.getItem('selectedFont');
+const fontData = localStorage.getItem('selectedFont');
+  var css = `@font-face {
+                font-family: 'iconMode';
+                src: url('iconMode.otf');
+                font-display: swap;
+              }`;
+
+  if (isRunningLocally()) {
+    console.log("The web app is running locally.");
+      css = `@font-face {
+        font-family: 'iconMode';
+        src: url('data:font/opentype;charset=utf-8;base64,${fontData}');
+        font-display: swap;
+      }`;
+  }
+
+const style = document.createElement('style');
+ style.appendChild(document.createTextNode(css));
+ document.head.appendChild(style);
+
   if (fontData) {
     const tableHeaders = document.querySelectorAll('thead tr td');
     const tableHeaderFontsize1 = document.querySelector('#grinder1 thead tr');
@@ -1438,15 +1465,6 @@ if (hasCoffeeKey) {
 
 // ===== if font not in cache then load from localStorage
 //
-const css = `@font-face {
-              font-family: 'iconMode';
-              src: url('iconMode.otf');
-              font-display: swap;
-            }`;
-const style = document.createElement('style');
- style.appendChild(document.createTextNode(css));
- document.head.appendChild(style);
-
   }
 }
 
@@ -1703,20 +1721,32 @@ function closeFormEval() {
 const ratingCells = document.querySelectorAll('.rating-cell');
 const ratingPopup = document.getElementById('rating-popup');
 const ratingContainer = document.getElementById('rating-container');
-const ratingItems = document.querySelectorAll('#rating-list li');
+const ratingItems = document.querySelectorAll('#rating-container li');
+const addBrewButtonTemp = document.querySelector('#addBrew');
+var currentRating;
 
 function closeRating() {
   const selectedCell = document.querySelector('.selected-cell');
-    ratingContainer.classList.replace('slide-in-blurred-right', 'slide-out-blurred-right'); 
+    ratingContainer.classList.replace('slide-in-edit', 'slide-out-edit'); 
+
+    const currentTable = currentRating.parentNode.parentNode.parentNode
+    const allRows = Array.from(currentTable.querySelectorAll('tbody tr'));
+    allRows.forEach((otherRow) => {
+      otherRow.style.filter = 'blur(0px) opacity(1) brightness(1) saturate(1)';;
+    });
+    selectedCell.classList.remove('editingMode');
+    addBrewButtonTemp.classList.remove('fade-out');
+    addBrewButtonTemp.classList.add('fade-in');
+
     setTimeout(() => {
       ratingContainer.style.display = 'none';
       ratingPopup.style.display = "none";
-      ratingContainer.classList.replace('slide-out-blurred-right', 'slide-in-blurred-right');
-      selectedCell.classList.remove('editingMode');
+      ratingContainer.classList.remove('slide-out-edit');
       selectedCell.classList.remove('selected-cell');
       ratingPopup.removeEventListener('click', closeRating)
     }, 250);
 }
+
 
 function brewRating() {
   if(swiped===true){} else {
@@ -1726,28 +1756,44 @@ function brewRating() {
     }
   });
 
-  ratingContainer.classList.add('slide-in-blurred-right'); 
+  ratingContainer.classList.add('slide-in-edit'); 
   const row = this.getAttribute('data-row');
   const col = this.getAttribute('data-col');
+  const currentTable = this.parentNode.parentNode.parentNode
+  currentRating = this;
 
   const cellRect = this.getBoundingClientRect();
-  const ratingContainerHalf = vwToPx(93)/2;
-  console.log(ratingContainerHalf)
-  const topOffset = cellRect.bottom - cellRect.width/2 -5 - ratingContainerHalf;
+  const topOffset = cellRect.bottom + 10;
   
-  const inUpperThird = window.innerHeight/3.3;
-  const inLowerThird = (window.innerHeight/2.5)*2;
+    ratingContainer.style.top = `${topOffset}px`;
+    //const isAboveMiddle = (cellRect.bottom < window.innerHeight / 2);
+    if (currentTable.id=== "grinder1") {
+    } else {
+      addBrewButtonTemp.classList.add('fade-out');
+      //ratingContainer.style.top = `${cellRect.top - 10 - 63}px`;
+    }
 
-  if (cellRect.bottom < inUpperThird) {
-    ratingContainer.style.top = vwToPx(10)+"px";
-  } else if (cellRect.bottom > inLowerThird) {
-    ratingContainer.style.top = vwToPx(106)+"px";
-  } else {
-  ratingContainer.style.top = topOffset+"px";
- } 
   ratingPopup.style.display = "block";
   ratingContainer.style.display = 'flex';
   ratingContainer.classList.add('active');
+
+    const currentRow = this.parentNode;
+    const allRows = Array.from(currentTable.querySelectorAll('tbody tr'));
+    const rowsToDarken = allRows.filter((otherRow) => {
+      return otherRow !== currentRow;
+    });
+    rowsToDarken.forEach((otherRow) => {
+      otherRow.style.filter = 'blur(2px) opacity(0.3)';
+    });
+    
+    console.log("color: " + getComputedStyle(currentRow).backgroundColor)
+    if (getComputedStyle(currentRow).backgroundColor === 'rgb(215, 194, 156)') {
+        currentRow.style.filter = 'brightness(1.06) saturate(0.80)'
+     };
+
+     // ratingContainer.style.backgroundColor = "#00000010";
+     // ratingContainer.style.height = "18vw";
+     // ratingContainer.style.width = "90vw";
 
   const selectedCell = this;
     selectedCell.classList.add('editingMode');
@@ -1761,27 +1807,9 @@ function brewRating() {
         ratingItems.forEach(item => item.removeEventListener('click', selectRating));
       });
     });
-  // quit with swipes
-  let startX, startY, distX, distY;
-  ratingContainer.addEventListener('touchstart', function(e) {
-    startX = e.touches[0].pageX;
-    startY = e.touches[0].pageY;
-  });
-  ratingContainer.addEventListener('touchmove', function(e) {
-    distX = e.touches[0].pageX - startX;
-    distY = e.touches[0].pageY - startY;
-    if (Math.abs(distX) > Math.abs(distY) && distX > 0) {
-      closeRating();
-    }
-  });
-  ratingContainer.addEventListener('touchend', function(e) {
-    startX = null;
-    startY = null;
-    distX = null;
-    distY = null;
-  });
 }// if swiped
 }
+
 // ====== END RATING =====
 // ========= popup =====
 const backgroundPopup = document.body.querySelector('#popupBackground')
@@ -1941,11 +1969,16 @@ function closeEditCell() {
     editingContainer.classList.add('slide-out-edit');
     currentCell.classList.remove('editingMode');
 
-    const allRows = Array.from(document.querySelectorAll('tbody tr'));
+    const currentTable = currentCell.parentNode.parentNode.parentNode
+    const allRows = Array.from(currentTable.querySelectorAll('tbody tr'));
     allRows.forEach((otherRow) => {
-      otherRow.style.filter = 'blur(0px)';
+      otherRow.style.filter = 'blur(0px) opacity(1) brightness(1) saturate(1)';;
     });
-
+    
+    if(currentTable.id === "grinder1") {} else {
+    addBrewButtonTemp.classList.remove('fade-out');
+    addBrewButtonTemp.classList.add('fade-in');
+  }
     setTimeout(() => {
       //editingContainer.style.display = 'none'
       editingBG.style.display = 'none';
@@ -2005,7 +2038,7 @@ function editTableCell(cell) {
     }
 
     const topOffset = cellRect.top + cellRect.height + 10;
-    const isAboveMiddle = (cellRect.bottom < window.innerHeight / 2);
+    const isAboveMiddle = (cellRect.bottom < 4.5*window.innerHeight / 5);
     if (isAboveMiddle) {
       editingContainer.style.top = `${topOffset}px`;
     } else {
@@ -2015,18 +2048,27 @@ function editTableCell(cell) {
     cell.classList.add('editingMode');
 
     const row = cell.parentNode;
-    const allRows = Array.from(document.querySelectorAll('tbody tr'));
+    const currentTable = cell.parentNode.parentNode.parentNode
+    const allRows = Array.from(currentTable.querySelectorAll('tbody tr'));
     const rowsToDarken = allRows.filter((otherRow) => {
       return otherRow !== row;
     });
     rowsToDarken.forEach((otherRow) => {
-      otherRow.style.filter = 'blur(3px)';
+      otherRow.style.filter = 'blur(2px) opacity(0.3)';
     });
+
+  const addBrewButtonTemp = document.querySelector('#addBrew');
+    if (currentTable.id=== "grinder1") {
+    } else {
+      addBrewButtonTemp.classList.add('fade-out');
+      //ratingContainer.style.top = `${cellRect.top - 10 - 63}px`;
+    }
     
-    // row.style.filter = 'blur(1px)';
-    // cell.style.filter = "brightness(1.15"
-    
-    // console.log(cell.parentNode.parentNode.parentNode.parentNode)
+    console.log("color: " + getComputedStyle(row).backgroundColor)
+    if (getComputedStyle(row).backgroundColor === 'rgb(215, 194, 156)') {
+        row.style.filter = 'brightness(1.06) saturate(0.80)'
+      };
+
     editingInput.value = cell.textContent;
     saveButton.addEventListener('click', onSaveClick);
   }
@@ -2643,7 +2685,7 @@ function setInputValueOnClick() {
       event.preventDefault();
 
       var input = document.activeElement;
-      if (input.tagName === 'INPUT') {
+      if (input.tagName === 'INPUT' && input.type === "text") {
 
         if (keyboardButton.textContent === "Del" || keyboardButton.textContent === "\u{10019b}") {
           input.value = input.value.slice(0, -1);
