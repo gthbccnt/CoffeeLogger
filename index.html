@@ -146,7 +146,7 @@ thead tr {
 }
 
 tbody tr {
-  transition: transform 0.3s ease-in-out, filter 0.6s ease;
+  transition: transform 0.3s ease-in-out, filter 0.6s ease, color 0.6s ease;
   height: 12vw;
 }
 
@@ -520,11 +520,11 @@ input, select {
 
 .dark-theme .editingMode {
   background-color: #ff000027 !important;
-  color: #ffffff87;
+  color: #ffffff77;
 }
 
 .editingMode {
-  background-color: #A32D36dd !important;
+  background-color: #A32D36 !important;
   border-radius: 5px;
   color: #e8dbc4;
   transition: background-color 0.4s ease, color 0.4s ease;
@@ -828,6 +828,27 @@ input, select {
 #kbFirstRow, #kbSecondRow {
   margin-bottom: 3vw;
 }
+
+.unfocusOther {
+  filter: blur(2px) opacity(0.3);
+}
+
+.dark-theme .unfocusOther {
+  filter: blur(5px) opacity(0.3);
+}
+
+.focusOnRow {
+  filter: brightness(1.06) saturate(0.80);
+}
+
+.dark-theme .focusOnRow {
+  filter: brightness(1.4);
+  color: #ffffff60;
+/*  backdrop-filter: brightness(4);
+  -webkit-backdrop-filter: brightness(4);*/
+}
+
+
 
 /* ======== ANIMATIONS ====== */
 /*.pulseSize {
@@ -1732,7 +1753,9 @@ function closeRating() {
     const currentTable = currentRating.parentNode.parentNode.parentNode
     const allRows = Array.from(currentTable.querySelectorAll('tbody tr'));
     allRows.forEach((otherRow) => {
-      otherRow.style.filter = 'blur(0px) opacity(1) brightness(1) saturate(1)';;
+      otherRow.classList.remove('unfocusOther');
+      otherRow.classList.remove('focusOnRow');
+      //otherRow.style.filter = 'blur(0px) opacity(1) brightness(1) saturate(1)';;
     });
     selectedCell.classList.remove('editingMode');
     addBrewButtonTemp.classList.remove('fade-out');
@@ -1783,12 +1806,12 @@ function brewRating() {
       return otherRow !== currentRow;
     });
     rowsToDarken.forEach((otherRow) => {
-      otherRow.style.filter = 'blur(2px) opacity(0.3)';
+      otherRow.classList.add('unfocusOther');
     });
     
     console.log("color: " + getComputedStyle(currentRow).backgroundColor)
-    if (getComputedStyle(currentRow).backgroundColor === 'rgb(215, 194, 156)') {
-        currentRow.style.filter = 'brightness(1.06) saturate(0.80)'
+    if (getComputedStyle(currentRow).backgroundColor === 'rgb(215, 194, 156)' || getComputedStyle(currentRow).backgroundColor === 'rgb(28, 28, 28)') {
+        currentRow.classList.add('focusOnRow');
      };
 
      // ratingContainer.style.backgroundColor = "#00000010";
@@ -1972,7 +1995,8 @@ function closeEditCell() {
     const currentTable = currentCell.parentNode.parentNode.parentNode
     const allRows = Array.from(currentTable.querySelectorAll('tbody tr'));
     allRows.forEach((otherRow) => {
-      otherRow.style.filter = 'blur(0px) opacity(1) brightness(1) saturate(1)';;
+      otherRow.classList.remove('unfocusOther');
+      otherRow.classList.remove('focusOnRow');
     });
     
     if(currentTable.id === "grinder1") {} else {
@@ -2054,7 +2078,7 @@ function editTableCell(cell) {
       return otherRow !== row;
     });
     rowsToDarken.forEach((otherRow) => {
-      otherRow.style.filter = 'blur(2px) opacity(0.3)';
+      otherRow.classList.add('unfocusOther')
     });
 
   const addBrewButtonTemp = document.querySelector('#addBrew');
@@ -2065,8 +2089,8 @@ function editTableCell(cell) {
     }
     
     console.log("color: " + getComputedStyle(row).backgroundColor)
-    if (getComputedStyle(row).backgroundColor === 'rgb(215, 194, 156)') {
-        row.style.filter = 'brightness(1.06) saturate(0.80)'
+    if (getComputedStyle(row).backgroundColor === 'rgb(215, 194, 156)' || getComputedStyle(row).backgroundColor === 'rgb(28, 28, 28)') {
+        row.classList.add('focusOnRow');
       };
 
     editingInput.value = cell.textContent;
