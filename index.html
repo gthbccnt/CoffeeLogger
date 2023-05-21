@@ -11,12 +11,6 @@
 
   <style>
 
-/*@font-face {
-  font-family: 'iconMode';
-  src: url('iconMode.otf');
-  font-display: swap;
-}*/
-
 * {
     box-sizing: border-box;
     font-family: system-ui, iconMode;
@@ -485,15 +479,15 @@ input, select {
 
 #rating-container {
   position: fixed;
-  background-color: #00000010;
+  background-color: #00000015;
   display: none;
   top: 25vh;
-  right: 5vw;
-  height: 18vw;
-  width: 90vw;
+  right: 8vw;
+  height: 16vw;
+  width: 84vw;
   justify-content: space-between;
   align-items: center;
-  padding: 2.5vw;
+  padding: 2vw;
   margin-top: 0vw;
   margin-bottom: 0vw;
   border-radius: 12px;
@@ -549,25 +543,25 @@ input, select {
 
 #editingContainer {
   display: block;
-  width: 54vw;
-  padding: 2.5vw;
+  width: 52.5vw;
+  padding: 2vw;
   position: fixed;
   top: 40vh;
   left: 22.5vw;
-  background-color: #00000010;
+  background-color: #00000015;
 /*  box-shadow: 0px 0px 00px 0px #00000055;*/
   border-radius: 12px;
 }
 
 #editingContainer button {
-  height: 12vw;
+  height: 11vw;
   border-radius: 8px;
   max-width: 16vw;
   margin: 0;
 }
 
 #editingContainer input {
-  height: 12vw;
+  height: 11vw;
   border-radius: 8px;
   width: 28.5vw;
   padding-left: 5%;
@@ -749,10 +743,6 @@ input, select {
   color: rgb(255, 255, 255, 0.5);
 }
 
-/*.dark-theme #detailsBG #removeCoffeeFromBrew, .dark-theme #detailsBG #deleteCoffee {
-  color: #ffffff;
-}*/
-
 /* ================= keyboard*/
 .cursor { 
   position: absolute;
@@ -813,14 +803,6 @@ input, select {
   box-shadow: none;
 }
 
-/*#kbSpacebar {
-  min-width: 35vw;
-}
-
-#kbDelete {
-  width: 16vw;
-}*/
-
 #kbFirstRow, #kbSecondRow, #kbThirdRow {
   display: flex;
   justify-content: space-between;
@@ -844,8 +826,6 @@ input, select {
 .dark-theme .focusOnRow {
   filter: brightness(1.4);
   color: #ffffff60;
-/*  backdrop-filter: brightness(4);
-  -webkit-backdrop-filter: brightness(4);*/
 }
 
 
@@ -926,10 +906,6 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   animation: slide-out-edit 0.30s ease-in-out;
 }
 
-/*.slide-out-edit-right {
-  animation: slide-out-edit-right 0.30s ease-in-out;
-}
-*/
 @keyframes slide-in-blurred-top {
   0% {
       		transform: translateY(-150px) scaleY(0.9) scaleX(0.1);
@@ -990,44 +966,6 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   }
 }
 
-/*.slide-in-edit-right {
-  animation: slide-in-edit 0.30s;
-}
-
-@keyframes slide-in-edit-right {
-  0% {
-          transform: translateY(-15vw) translateX(-7vw);
-          transform-origin: 100% 0%;
-          width: 0vw;
-          height: 0vw;
-          -webkit-backdrop-filter: blur(0px);
-          backdrop-filter: blur(0px);
-  }
-  100% {
-          transform: translateY(0) translateX(0vw);
-          transform-origin: 70% 100%;
-          width: 90vw;
-          height: 18vw;
-          -webkit-backdrop-filter: blur(45px);
-          backdrop-filter: blur(45px);
-  }
-}
-
-@keyframes slide-out-edit-right {
-  0% {
-        transform: translateY(0) scaleY(1) scaleX(1);
-        transform-origin: 50% 0%;
-        -webkit-filter: blur(1px);
-        opacity: 1;
-  }
-  100% {
-          transform: translateY(-20px) scaleY(0.9) scaleX(0.1);
-          transform-origin: 100% 50%;
-          -webkit-filter: blur(40px);
-          opacity: 0;
-  }
-}*/
-
 @keyframes slide-in-blurred-bottom {
   0% {
     transform: translateY(250px) scaleY(0.9) scaleX(0.2);
@@ -1060,8 +998,8 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
 
 @keyframes blur-out {
   0% {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
   }
   100% {
     backdrop-filter: blur(0px);
@@ -1074,8 +1012,8 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
     -webkit-backdrop-filter: blur(0px)
   }
   100% {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px)
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px)
   }
 }
 
@@ -1128,7 +1066,6 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   </table>
 </div>
 
-<!-- <button id="toggleB1" onclick="toggleTable1();toggleSlice1()">&#x100068;</button> -->
 <button id="addBrew" onclick="openForm()">Add</button>
 
 <div class="grinders" id="grinder2Title">Grinder 2</div>
@@ -1153,8 +1090,6 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
     </tbody>
   </table>
 </div>
-
-<!-- <button id="toggleB2" onclick="toggleTable2();toggleSlice2()">&#x100068;</button> -->
 
 <div id="popupBackground">
   <div id="popup">
@@ -1441,9 +1376,6 @@ const addButtonIcon = document.querySelector('#addBrew')
   addButtonIcon.style.height = '18vw';
   addButtonIcon.style.width = '18vw';
   addButtonIcon.style.borderRadius = '50%';
-  
-// const resetButtonIcon = document.querySelector('#ratingCancelButton')
-//   cancelButtonIcon.textContent = '\u{100060}'
 
 const resetButtonIcon = document.querySelector('#resetButton')
   resetButtonIcon.value = '\u{100199}';
@@ -1688,6 +1620,7 @@ function closeFormEval() {
   var logCells = logInput.split(/\s/);
   //console.log(logCells)
   var selectList = document.getElementById("selectList").value;
+  var addedTable = null;
   
   var idTime = document.getElementById("idTime").value
   let tr;
@@ -1696,9 +1629,11 @@ function closeFormEval() {
     if (logInput.includes(".")){
       tr = tbody1.insertRow(0);
       rows = tbody1.rows;
+      addedTable = "first"
     } else {
       tr = tbody2.insertRow(0); 
       rows = tbody2.rows;
+      addedTable = "second"
     }
     const cells = [currentDate, currentTime, logCells[0], logCells[1], logCells[2], logCells[3], selectList, "3", idTime];
     cells.forEach((cell, cellIndex) => {
@@ -1733,8 +1668,11 @@ function closeFormEval() {
       selectListReset.selectedIndex = 4;
       idTimeReset.value = "";
       myFormCloseButton()
-      initializeTableSwipe("#grinder1 tbody tr", "#roundedCorners1", "#delete", "#details")
-      initializeTableSwipe("#grinder2 tbody tr", "#roundedCorners2", "#delete2", "#details2")
+      if (addedTable === "first") {
+        initializeTableSwipe("#grinder1 tbody tr:first-child", "#roundedCorners1", "#delete", "#details")
+      } else if (addedTable === "second") {
+        initializeTableSwipe("#grinder2 tbody tr:first-child", "#roundedCorners2", "#delete2", "#details2")
+      }
   }, 50);
 }
 // ====== END brew form
@@ -1769,7 +1707,6 @@ function closeRating() {
       ratingPopup.removeEventListener('click', closeRating)
     }, 250);
 }
-
 
 function brewRating() {
   if(swiped===true){} else {
@@ -1813,10 +1750,6 @@ function brewRating() {
     if (getComputedStyle(currentRow).backgroundColor === 'rgb(215, 194, 156)' || getComputedStyle(currentRow).backgroundColor === 'rgb(28, 28, 28)') {
         currentRow.classList.add('focusOnRow');
      };
-
-     // ratingContainer.style.backgroundColor = "#00000010";
-     // ratingContainer.style.height = "18vw";
-     // ratingContainer.style.width = "90vw";
 
   const selectedCell = this;
     selectedCell.classList.add('editingMode');
@@ -2016,13 +1949,6 @@ function closeEditCell() {
 function onSaveClick() {
   currentCell.textContent = editingInput.value;
   closeEditCell();
-//  editingContainer.classList.remove('slide-in-edit');
-//  editingContainer.classList.add('slide-out-edit');
-//  currentCell.classList.remove('editingMode');
-//  setTimeout(() => {
-//    editingBG.style.display = 'none';
-//    saveButton.removeEventListener('click', onSaveClick);
-//  }, 240); 
 }
 
 function vwToPx(vw) {
@@ -2097,8 +2023,6 @@ function editTableCell(cell) {
     saveButton.addEventListener('click', onSaveClick);
   }
 }
-
-
 
 // ===== export as csv every three days
 const lastBackupStr = localStorage.getItem('lastBackup');
@@ -2249,17 +2173,6 @@ function initializeTableSwipe(grinderTbodyTr, roundedCornersSelect, deleteButton
   //const rC2 = document.querySelector('#roundedCorners2');
   var cells = null;
 
-// const table = document.querySelector('#grinder1');
-// const tableTop = table.offsetTop;
-// const tableHeight = table.offsetHeight;
-
-// deleteB.style.top = `${tableTop}px`;
-// deleteB.style.height = `${tableHeight}px`;
-
-// details.style.top = `${tableTop}px`;
-// details.style.height = `${tableHeight}px`;
-
-
 tBodyRows.forEach(row => {
 row.addEventListener("touchstart", function(event) {
   touchStartX = event.touches[0].clientX;
@@ -2271,7 +2184,7 @@ row.addEventListener("touchmove", function(event) {
 if (swiped===false){
   deleteB.style.top = `${row.offsetTop}px`;
   deleteB.style.height = `${row.offsetHeight}px`;
-  console.log(row.offsetHeight);
+  //console.log(row.offsetHeight);
   details.style.top = `${row.offsetTop}px`;
   details.style.height = `${row.offsetHeight}px`;
   //row.style.border = "solid 1pt #D7C29C";
