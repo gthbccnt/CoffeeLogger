@@ -381,9 +381,13 @@ input, select {
   font-weight: bold;
   margin-left: 1vw;
 }
-	  
+    
 #popup {
-  padding: 2vw;	
+  padding: 3vw; 
+}
+
+#popup input, #popup button {
+  border-radius: 10px;
 }
 
 /* input fields()*/ 
@@ -667,7 +671,7 @@ input, select {
 }
 
 #detailsBG input, #detailsBG select, #coffeeRating {
-  height: 10vw;
+  height: 11vw;
   width: 100%;
   border-radius: 9px;
   background-color: #ffffff65;
@@ -675,7 +679,7 @@ input, select {
   backdrop-filter: blur(25px);
   outline: none;
   border: none;
-  margin-bottom: 3vw;
+  margin-bottom: 2.5vw;
   font-size: 5vw;
   padding-left: 4vw;
   color: black;
@@ -715,11 +719,15 @@ input, select {
 /*  margin-top: 2vw;*/
 }
 
+#detailsBts button {
+  width: 19vw;
+}
+
 #detailsContainer {
   background-color: #00000015;
   -webkit-backdrop-filter: blur(55px);
   backdrop-filter: blur(45px);
-  padding: 4vw;
+  padding: 3.5vw;
   position: fixed;
   border-radius: 20px;
   width: 90vw;
@@ -912,16 +920,16 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
 
 @keyframes slide-in-blurred-top {
   0% {
-      		transform: translateY(-150px) scaleY(0.9) scaleX(0.1);
-      		transform-origin: 50% 0%;
-      		-webkit-filter: blur(0px);
-   	 		opacity: 0;
+          transform: translateY(-150px) scaleY(0.9) scaleX(0.1);
+          transform-origin: 50% 0%;
+          -webkit-filter: blur(0px);
+        opacity: 0;
   }
   100% {
-					transform: translateY(0) scaleY(1) scaleX(1);
-        		transform-origin: 50% 50%;
-        		-webkit-filter: blur(0);
-  					opacity: 1;
+          transform: translateY(0) scaleY(1) scaleX(1);
+            transform-origin: 50% 50%;
+            -webkit-filter: blur(0);
+            opacity: 1;
   }
 }
 
@@ -930,28 +938,28 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
         transform: translateY(0) scaleY(1) scaleX(1);
         transform-origin: 50% 0%;
         -webkit-filter: blur(1px);
-    			opacity: 0.8;
+          opacity: 0.8;
   }
   100% {
           transform: translateY(-100px) scaleY(0.9) scaleX(0.2);
           transform-origin: 50% 50%;
           -webkit-filter: blur(100px);
-    				opacity: 0;
+            opacity: 0;
   }
 }
 
 @keyframes slide-in-edit {
   0% {
-      		transform: translateY(-20px) scaleY(0.9) scaleX(0.1);
-      		transform-origin: 50% 0%;
+          transform: translateY(-20px) scaleY(0.9) scaleX(0.1);
+          transform-origin: 50% 0%;
         -webkit-filter: blur(5px);
-   	 		opacity: 0;
+        opacity: 0;
   }
   100% {
-					transform: translateY(0) scaleY(1) scaleX(1);
-        		transform-origin: 50% 50%;
+          transform: translateY(0) scaleY(1) scaleX(1);
+            transform-origin: 50% 50%;
           -webkit-filter: blur(0px);
-  					opacity: 1;
+            opacity: 1;
   }
 }
 
@@ -960,13 +968,13 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
         transform: translateY(0) scaleY(1) scaleX(1);
         transform-origin: 50% 0%;
         -webkit-filter: blur(1px);
-    			opacity: 1;
+          opacity: 1;
   }
   100% {
           transform: translateY(-50px) scaleY(0.9) scaleX(0.1);
           transform-origin: 50% 50%;
           -webkit-filter: blur(40px);
-    				opacity: 0;
+            opacity: 0;
   }
 }
 
@@ -1034,7 +1042,7 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
     opacity: 0;
   }
   100% {
-		opacity: 1;
+    opacity: 1;
   }
 }
  
@@ -1049,8 +1057,8 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   
 <div id="grinder1Title" class="grinders">Grinder 1</div>
 <div id="roundedCorners1">
-	<div id="delete">Delete</div> 
-	<div id="details">Details</div> 
+  <div id="delete">Delete</div> 
+  <div id="details">Details</div> 
   <table id="grinder1">
     <thead id="tableHead1">
       <tr>
@@ -1074,8 +1082,8 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
 
 <div class="grinders" id="grinder2Title">Grinder 2</div>
 <div id="roundedCorners2">
-  	<div id="delete2">Delete</div> 
-	<div id="details2">Details</div> 
+    <div id="delete2">Delete</div> 
+  <div id="details2">Details</div> 
   <table id="grinder2">
     <thead id="tableHead2">
       <tr>
@@ -1229,19 +1237,19 @@ animation: slide-out-blurred-top 0.40s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
       <input id="coffeeRoastDate" placeholder="Roast date">
       <div id="coffeeRating">
         <div>
-        		&#x1002c2;
+            &#x1002c2;
         </div>
         <div>
-        		&#x1002c2;
+            &#x1002c2;
         </div>
         <div>
-        		&#x1002c2;
+            &#x1002c2;
         </div>
         <div>
-        		&#x1002c2;
+            &#x1002c2;
         </div>
         <div>
-        		&#x1002c2;
+            &#x1002c2;
         </div>
       </div>
       <div id="detailsBts">
@@ -1784,11 +1792,11 @@ function closePopup() {
     menuButtonTemp.classList.add("fade-in");
     appTitle.classList.add("fade-in");
     
-  		setTimeout(() => {
-  		menuButtonTemp.style.display = 'block';
-  		appTitle.style.display = "block";
-  		showExportButton();
-  		}, 50);
+      setTimeout(() => {
+      menuButtonTemp.style.display = 'block';
+      appTitle.style.display = "block";
+      showExportButton();
+      }, 50);
   
     setTimeout(() => {
       backgroundPopup.classList.remove('blur-out');
@@ -2046,7 +2054,7 @@ function showExportButton() {
   if (!tbody || !tbody.querySelectorAll('td').length) {
     return}
     exportButtontemp.classList.add('fade-in');
-  		exportButtontemp.style.display = "block";
+      exportButtontemp.style.display = "block";
   //sendTableData();
 }
 
@@ -2173,7 +2181,7 @@ function initializeTableSwipe(grinderTbodyTr, roundedCornersSelect, deleteButton
   // let swiped = false;
   const rC = document.querySelector(roundedCornersSelect);
   const deleteB = document.querySelector(deleteButton);
-	const details = document.querySelector(detailsButton);
+  const details = document.querySelector(detailsButton);
   //const rC2 = document.querySelector('#roundedCorners2');
   var cells = null;
 
@@ -2304,11 +2312,11 @@ function closeDetails() {
   detailsBG.classList.add('blur-out');
   detailsContainer.classList.add('slide-out-blurred-top');
   
-  		setTimeout(() => {
-  		menuButtonTemp.style.display = 'block';
-  		appTitle.style.display = "block";
-  		showExportButton();
-  		}, 50);
+      setTimeout(() => {
+      menuButtonTemp.style.display = 'block';
+      appTitle.style.display = "block";
+      showExportButton();
+      }, 50);
 
   details.style.transform = "translateX(0px)";
   currentRow.style.transform = "translateX(0px)";
@@ -2532,7 +2540,7 @@ function saveCoffee() {
   if (coffeeNameInput.value.trim() === '') {
   return; // Exit the function if coffeeName is empty
   }
-	
+  
   //alert(currentStars);
   inputs.forEach(input => {
     coffee[input.id] = input.value;
