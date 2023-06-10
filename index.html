@@ -161,9 +161,12 @@ tbody tr:nth-child(even) {
 tbody tr:nth-child(odd) {
   background-color: #D7C29C; /*#D7C29C;*/
 }
-/*tbody td:nth-child(-n+2) {
-  font-size: 3vw;
-}*/
+
+tbody td:nth-child(-n+2) {
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 3.3vw;
+}
 
 .dark-theme {
   background-color: #353935;
@@ -923,7 +926,7 @@ background-color: #ffffff70;
   background-color: #00000015;
   border-radius: 15px;
   margin: 0;
-  padding: 1vw;
+  padding: 2vw;
   padding-left: 2vw;
   padding-right: 2vw;
 }
@@ -943,7 +946,7 @@ background-color: #ffffff70;
   transition: box-shadow 0.4s ease, filter 0.5s ease, background-color 0.5s ease;
   position: absolute;
   left: 15%;
-  top: 11.1%;
+  top: 12.6%;
 
 }
 
@@ -993,14 +996,15 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .digit {
-  font-size: 14vw;
-  padding: 2vw;
+  font-size: 18vw;
+  padding: 1vw;
 }
 
 #timerButtons {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
+  margin-top: 2vw;
   width: 100%;
   padding: 0;
 }
@@ -1017,11 +1021,15 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 #timerButtons button:first-child {
-  border-radius: 5px 5px 5px 10px;
+  border-radius: 4px 4px 4px 8px;
 }
 
 #timerButtons button:last-child {
-  border-radius: 5px 5px 10px 5px;
+  border-radius: 4px 4px 8px 4px;
+}
+
+.btFocus {
+ 	filter: brightness(1.2);
 }
 
 #timerContainer {
@@ -1029,7 +1037,6 @@ input[type="range"]::-webkit-slider-runnable-track {
   flex-direction: column;
   justify-content: space-between;
   margin: 2vw auto;
-  height: 16.8vh;
   align-items: center;
   font-weight: 200;
   background-color: #00000015;
@@ -1039,21 +1046,21 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 #time {
   width: 100%;
-  height: 18vw;
-  padding: 1vw;
-  padding-left: 7vw;
-  padding-right: 3vw;
+  height: 22vw;
+  padding: 0vw;
+  padding-left: 3vw;
+  padding-right: 0vw;
   margin: 0 auto;
   justify-content: space-between;
   display: block;
-  border-radius: 10px 10px 5px 5px;
+  border-radius: 9px 9px 4px 4px;
   background-color: #ffffff75;
 }
 
 #recipeContainer {
   background-color: #00000015;
   width: 100%;
-  height: 46vh;
+  height: 42vh;
   border-radius: 15px;
   margin: 2vw auto;
   overflow: scroll;
@@ -1092,7 +1099,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 #brewPopup {
   position: fixed;
-  top: 2vh;
+  top: 1vh;
   left:2vw;
   background-color: #00000015;
   padding: 3vw;
@@ -1767,7 +1774,17 @@ const addButtonIcon = document.querySelector('#addBrew')
   addButtonIcon.style.fontSize = '14vw';
   addButtonIcon.style.height = '18vw';
   addButtonIcon.style.width = '18vw';
+  addButtonIcon.style.bottom = "2vh";
   addButtonIcon.style.borderRadius = '50%';
+  
+const openTimerIcon = document.querySelector('#openTimer');
+  openTimerIcon.textContent = "\u{10042f}"
+  openTimerIcon.style.height = "17vw";
+  openTimerIcon.style.bottom = "2vh";
+  openTimerIcon.style.left = "3vw";
+  openTimerIcon.style.width = "17vw";
+  openTimerIcon.style.fontSize = "10vw";
+  openTimerIcon.style.borderRadius = "50%";
 
 const resetButtonIcon = document.querySelector('#resetButton')
   resetButtonIcon.value = '\u{100199}';
@@ -3240,12 +3257,24 @@ let timer;
 startBtn.addEventListener('click', function () {
   timer = true;
   stopWatch();
+  startBtn.classList.add('btFocus');
+  setTimeout(() => {
+    startBtn.classList.remove('btFocus')
+  }, 200)
 });
 stopBtn.addEventListener('click', function () {
   timer = false;
+  stopBtn.classList.add('btFocus');
+  setTimeout(() => {
+    stopBtn.classList.remove('btFocus')
+  }, 200)
 });
 resetBtn.addEventListener('click', function () {
   timer = false;
+  resetBtn.classList.add('btFocus');
+  setTimeout(() => {
+    resetBtn.classList.remove('btFocus')
+  }, 200)
   minute = 0;
   second = 0;
   count = 0;
