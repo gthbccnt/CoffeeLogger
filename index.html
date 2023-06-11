@@ -10,6 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <style>
+ @media screen and (orientation: landscape) {
+  body {
+      transform: scale(0.6);
+      transform-origin: 50 0;
+      width: 100%;
+  }
+}
 
 * {
     box-sizing: border-box;
@@ -321,11 +328,11 @@ button {
   -webkit-backdrop-filter: blur(55px);
   backdrop-filter: blur(55px);
   border: none;
-  border-radius: 5px 5px 5px 12px;
+  border-radius: 9px 5px 5px 9px;
 }
 
 #saveButtonAdd {
-  margin-left: 15vw;
+  margin-left: 2vw;
   margin-right: 0vw;
   height: 13vw;
   width: 100%
@@ -346,6 +353,7 @@ button {
 
 #openTimer {
   bottom: 3vh;
+  left: 3vw;
 }
 
 input, select {
@@ -423,8 +431,12 @@ input, select {
   border-radius: 12px 12px 5px 5px;
 }
 
+#idTime {
+  border-radius: 5px 5px 5px 12px;
+}
+
 .form-container button {
-  border-radius: 5px 5px 12px 5px;
+  border-radius: 5px 5px 9px 5px;
 }
 
 #selectList {
@@ -498,8 +510,7 @@ input, select {
 }
 
 #buttonRow {
-  width: 85%;
-  align-items: right;
+  width: 55%;
   margin-left: auto;
 }
 
@@ -847,8 +858,9 @@ background-color: #ffffff70;
   background-color: #00000055;
   color: #ffffff67;
 }
-.dark-theme #keyboardContainer div div.pressed {
-  background-color: #00000095;
+.dark-theme .pressed {
+/*  background-color: #00000095;*/
+  filter: brightness(0.8);
 }
 
  #keyboardContainer div div {
@@ -866,8 +878,14 @@ background-color: #ffffff70;
   0px 1px 1px 0px #00000040;
 }
 
- #keyboardContainer div div.pressed {
-  background-color: #ffffff90;
+.pressed {
+  filter: brightness(0.25);
+  font-weight: bold;
+  box-shadow: none;
+}
+
+.pressedToggle {
+  filter: brightness(0.25);
   box-shadow: none;
 }
 
@@ -980,7 +998,19 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .txt {
-  font-size: 3vw;
+  display: inline-block;
+  width: 5vw;
+  font-size: 18vw;
+  height: 22vw;
+  padding: 0;
+  margin: 0;
+  border: solid 0pt red;
+  text-align: center;
+  line-height: 1;
+}
+
+.txt:nth-child(2) {
+  padding-bottom: 5vw;
 }
 
 .txtSlider {
@@ -996,8 +1026,19 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .digit {
+  display: inline-block;
+  text-align: left;
   font-size: 18vw;
-  padding: 1vw;
+  padding: 0;
+  margin: 0;
+  width: 27%;
+  letter-spacing: 2px;
+  border: solid 0pt green;
+}
+
+#time span:nth-child(3) {
+  width: 25%;
+  border-color: blue;
 }
 
 #timerButtons {
@@ -1030,6 +1071,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 .btFocus {
  	filter: brightness(1.2);
+  font-weight: bold;
 }
 
 #timerContainer {
@@ -1048,11 +1090,10 @@ input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 22vw;
   padding: 0vw;
-  padding-left: 3vw;
-  padding-right: 0vw;
   margin: 0 auto;
-  justify-content: space-between;
-  display: block;
+  justify-content: center;
+  display: flex;
+  align-items: center;
   border-radius: 9px 9px 4px 4px;
   background-color: #ffffff75;
 }
@@ -1086,6 +1127,10 @@ input[type="range"]::-webkit-slider-runnable-track {
   padding-left: 4vw;
   font-size: 12pt;
   background-color: #ffffff75;
+}
+
+#recipeContainer input:focus {
+  filter: brightness(0.9);
 }
 
 #recipeContainer input[name="recipe1"] {
@@ -1128,7 +1173,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 #brewButtonContainer button {
   height: 11vw;
-  width: 30vw;
+  width: 40%;
   border: none;
   background-color: #ffffff75;
   margin: 0;
@@ -1387,8 +1432,8 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   <div id="popup">
     <form id="menu-form">
       <div id="popInpContainer">
-        <input type="text" placeholder="Grinder 1: Rotations" name="firstGrinder" id="formInput1">
-          <input type="text" placeholder="Grinder 2: Clicks" name="secondGrinder" id="formInput2">
+        <input type="text" placeholder="Enter name: Grinder 1" name="firstGrinder" id="formInput1">
+          <input type="text" placeholder="Enter name: Grinder 2" name="secondGrinder" id="formInput2">
         <input type="text" placeholder="Enter IFTTT Key" name="iftttKey" id="formInput3">
       </div>
       <div id=popBtnContainer>
@@ -1571,10 +1616,10 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
       <div id="time">
         <span class="digit" id="min">
           00</span>
-        <span class="txt">m</span>
+        <span class="txt">:</span>
         <span class="digit" id="sec">
           00</span>
-        <span class="txt">s</span>
+        <span class="txt">,</span>
         <span class="digit" id="count">
           00</span>
       </div>
@@ -1781,7 +1826,7 @@ const openTimerIcon = document.querySelector('#openTimer');
   openTimerIcon.textContent = "\u{10042f}"
   openTimerIcon.style.height = "17vw";
   openTimerIcon.style.bottom = "2vh";
-  openTimerIcon.style.left = "3vw";
+  openTimerIcon.style.left = "5vw";
   openTimerIcon.style.width = "17vw";
   openTimerIcon.style.fontSize = "10vw";
   openTimerIcon.style.borderRadius = "50%";
@@ -2223,13 +2268,17 @@ function showPopup() {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const setGrinder1 = document.querySelector('[name="firstGrinder"]');
+    const grinderName1 = document.getElementById('grinder1Title');
     if (setGrinder1.value!==""){
-    localStorage.setItem('grinderName1',setGrinder1.value);
+      localStorage.setItem('grinderName1',setGrinder1.value);
+      grinderName1.textContent= setGrinder1.value;
     }
     
     const setGrinder2 = document.querySelector('[name="secondGrinder"]');
+    const grinderName2 = document.getElementById('grinder2Title');
     if (setGrinder2.value!==""){
-    localStorage.setItem('grinderName2',setGrinder2.value);
+      localStorage.setItem('grinderName2',setGrinder2.value);
+      grinderName2.textContent = setGrinder2.value;
     }
     const setIftttKey = document.querySelector('[name="iftttKey"]');
     if (setIftttKey.value!==""){
@@ -2328,32 +2377,6 @@ const editingInput = document.querySelector('#editingInput');
 const saveButton = document.querySelector('#editingSave');
 //const cancelButton = document.querySelector('#editingCancel');
 var currentCell;
-
-// function closeEditCell() {
-//   editingContainer.classList.remove('slide-in-edit');
-//     editingContainer.classList.add('slide-out-edit');
-//     currentCell.classList.remove('editingMode');
-
-//     const currentTable = currentCell.parentNode.parentNode.parentNode
-//     const allRows = Array.from(currentTable.querySelectorAll('tbody tr'));
-//     allRows.forEach((otherRow) => {
-//       otherRow.classList.remove('unfocusOther');
-//       otherRow.classList.remove('focusOnRow');
-//     });
-    
-//     if(currentTable.id === "grinder1") {} else {
-//     addBrewButtonTemp.classList.remove('fade-out');
-//     addBrewButtonTemp.classList.add('fade-in');
-//   }
-//     setTimeout(() => {
-//       //editingContainer.style.display = 'none'
-//       editingBG.style.display = 'none';
-//       editingContainer.classList.remove('slide-out-edit');
-//       saveButton.removeEventListener('click', onSaveClick);
-//       //cancelButton.removeEventListener('click', onCancelClick);
-//       editingBG.removeEventListener('click', closeEditCell)
-//     }, 240); 
-// }
 
 function closeEditCell() {
   editingContainer.classList.remove('slide-in-edit');
@@ -2468,75 +2491,6 @@ function editTableCell(cell) {
     saveButton.addEventListener('click', onSaveClick);
   }
 }
-
-// 25.05.23 - 19h
-// function editTableCell(cell) {
-//   const rC1Left = document.querySelector('#roundedCorners1').getBoundingClientRect().left;
-//   const rC1Right = document.querySelector('#roundedCorners1').getBoundingClientRect().right;
-
-//   if (swiped === true) {
-//     // Handle swiped case
-//   } else {
-//     editingBG.addEventListener("click", function (event) {
-//       if (event.target === editingBG) { // Check if the click happened on the background
-//         closeEditCell();
-//       }
-//     });
-
-//     currentCell = cell;
-//     // cell.classList.add('editingMode');
-//     editingContainer.classList.add('slide-in-edit');
-//     const cellRect = cell.getBoundingClientRect();
-//     const editingContainerWidth = vwToPx(54);
-//     const cellWidth = cellRect.width;
-    
-//     if (cellRect.left<= editingContainerWidth/2){
-//       editingContainer.style.left = `${rC1Left+50}px`;
-//       console.log("left boundary")
-//     } else if (cellRect.right >= rC1Right - editingContainerWidth/2) {
-//       editingContainer.style.left = `${vwToPx(97)-editingContainerWidth}px`;
-//       console.log("right boundary")
-//     } else {
-//       editingContainer.style.left = `${cellRect.left + cellRect.width/2 - editingContainerWidth/2}px`;
-//       console.log("no boundary")
-//     }
-
-//     const topOffset = cellRect.top + cellRect.height + 10;
-//     const isAboveMiddle = (cellRect.bottom < 4.5*window.innerHeight / 5);
-//     if (isAboveMiddle) {
-//       editingContainer.style.top = `${topOffset}px`;
-//     } else {
-//       editingContainer.style.top = `${cellRect.top - 72}px`;
-//     }
-//     editingBG.style.display = 'block';
-//     cell.classList.add('editingMode');
-
-//     const row = cell.parentNode;
-//     const currentTable = cell.parentNode.parentNode.parentNode
-//     const allRows = Array.from(currentTable.querySelectorAll('tbody tr'));
-//     const rowsToDarken = allRows.filter((otherRow) => {
-//       return otherRow !== row;
-//     });
-//     rowsToDarken.forEach((otherRow) => {
-//       otherRow.classList.add('unfocusOther')
-//     });
-
-//   const addBrewButtonTemp = document.querySelector('#addBrew');
-//     if (currentTable.id=== "grinder1") {
-//     } else {
-//       addBrewButtonTemp.classList.add('fade-out');
-//       //ratingContainer.style.top = `${cellRect.top - 10 - 63}px`;
-//     }
-    
-//     console.log("color: " + getComputedStyle(row).backgroundColor)
-//     if (getComputedStyle(row).backgroundColor === 'rgb(215, 194, 156)' || getComputedStyle(row).backgroundColor === 'rgb(28, 28, 28)') {
-//         row.classList.add('focusOnRow');
-//       };
-
-//     editingInput.value = cell.textContent;
-//     saveButton.addEventListener('click', onSaveClick);
-//   }
-// }
 
 // ===== export as csv every three days
 const lastBackupStr = localStorage.getItem('lastBackup');
@@ -3121,8 +3075,14 @@ menuForm.addEventListener('input', (event) => {
 });
 
 function myFormCloseButton() {
+  const resetBtn = document.getElementById('resetButton')
   addBrewSave.style.fontWeight = "normal"
   addBrewSave.textContent = "Close"
+  resetBtn.classList.add('pressed');
+  setTimeout(() => {
+    resetBtn.classList.remove('pressed');
+  }, 200)
+
 }
 
 function myFormSaveButton() {
@@ -3258,23 +3218,29 @@ startBtn.addEventListener('click', function () {
   timer = true;
   stopWatch();
   startBtn.classList.add('btFocus');
+  startBtn.style.fontWeight = "bold"
   setTimeout(() => {
     startBtn.classList.remove('btFocus')
+    startBtn.style.fontWeight = ""
   }, 200)
 });
 stopBtn.addEventListener('click', function () {
   timer = false;
   stopBtn.classList.add('btFocus');
+  stopBtn.style.fontWeight = "bold"
   setTimeout(() => {
     stopBtn.classList.remove('btFocus')
+    stopBtn.style.fontWeight = ""
   }, 200)
 });
 resetBtn.addEventListener('click', function () {
   timer = false;
   resetBtn.classList.add('btFocus');
+  resetBtn.style.fontWeight = "bold"
   setTimeout(() => {
     resetBtn.classList.remove('btFocus')
-  }, 200)
+    resetBtn.style.fontWeight = ""
+  }, 100)
   minute = 0;
   second = 0;
   count = 0;
@@ -3361,12 +3327,12 @@ button.addEventListener("click", toggleRatio);
 
 function toggleRatio() {
   if (ratioConnected === true && executedFromSelect === false) {
-    button.style.boxShadow = "";
-    button.style.filter = "brightness(1)"
+    // button.style.boxShadow = "";
+    button.classList.remove('pressedToggle');
     button.textContent = "\u{100bc7}"
   } else {
     //button.style.boxShadow = "0px 0px 1px 0px #00000090 inset";
-    button.style.filter = "brightness(0.9)"
+    button.classList.add('pressedToggle');
     button.textContent = "\u{100405}"
   }
   if (executedFromSelect === false) {
@@ -3384,11 +3350,21 @@ function formatNumber(value, decimals) {
 }
 
 function saveRecipe() {
+
   var brewSteps = document.getElementsByClassName("brewSteps");
   var recipeName = brewSteps[0].getElementsByTagName("input")[0].value
   var recipeType = "Aeropress"
+  const saveButton = document.getElementById('saveRecipeButton');
 
   if (recipeName !== "") {
+      saveButton.classList.add('btFocus');
+      saveButton.textContent = "Saved";
+      // saveButton.style.fontWeight = "bold";
+      setTimeout(() => {
+        saveButton.classList.remove('btFocus')
+        saveButton.textContent = "Save";
+        // saveButton.style.fontWeight = "";
+      }, 500)
     var builderGram = parseFloat(document.getElementById("builderGram").textContent);
     var builderMill = parseFloat(document.getElementById("builderMill").textContent);
     var stopwatchTime = null;
@@ -3421,6 +3397,15 @@ function saveRecipe() {
 
     // Save the recipe to localStorage
     localStorage.setItem(recipeKey, JSON.stringify(recipeData));
+  } else {
+      saveButton.classList.add('btFocus');
+      saveButton.textContent = "Enter recipe";
+      // saveButton.style.fontWeight = "bold";
+      setTimeout(() => {
+        saveButton.classList.remove('btFocus')
+        saveButton.textContent = "Save";
+        // saveButton.style.fontWeight = "";
+      }, 500)
   }
 }
 
