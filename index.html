@@ -712,10 +712,11 @@ background-color: #ffffff70;
 
 #coffeeExport {
   background-color: #ffffff35;
-  border-radius: 6px 10px 6px 6px;
+  border-radius: 5px 11px 5px 5px;
   height: 10vw;
-  padding: 1.5vw;
+  padding: 2vw;
   font-size: 5vw;
+  min-width: 15vw;
   display: flex;
   text-align: center;
   align-items: center;
@@ -773,11 +774,11 @@ background-color: #ffffff70;
 }
 
 #detailsBG button:first-child {
-  	border-radius: 5px 5px 5px 12px;
+    border-radius: 5px 5px 5px 12px;
   }
 
 #detailsBG button:last-child {
-  	border-radius: 5px 5px 12px 5px;
+    border-radius: 5px 5px 12px 5px;
   }
 
 #detailsBts {
@@ -804,7 +805,7 @@ background-color: #ffffff70;
 }
 
 #removeCoffeeFromBrew, #deleteCoffee {
-  opacity: 0.7;
+  opacity: 0.1;
 }
 
 #coffeeRating {
@@ -1054,7 +1055,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   font-size: 4.5vw;
   height: 9vw;
   width: 27vw;
-  border-radius: 5px;
+  border-radius: 4px;
   background-color: #ffffff75;
   color: black;
   border: none;
@@ -1070,7 +1071,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .btFocus {
- 	filter: brightness(1.2);
+  filter: brightness(1.2);
   font-weight: bold;
 }
 
@@ -1102,11 +1103,13 @@ input[type="range"]::-webkit-slider-runnable-track {
   background-color: #00000015;
   width: 100%;
   height: 42vh;
-  border-radius: 15px;
+  border-radius: 15px 15px 0px 0px;
   margin: 2vw auto;
+  margin-bottom: 0;
   overflow: scroll;
   padding: 2.5vw;
   padding-left: 3.5vw;
+  padding-bottom: 0;
 }
 
 .brewSteps {
@@ -1123,22 +1126,22 @@ input[type="range"]::-webkit-slider-runnable-track {
   height: 10vw;
   border-radius: 5px;
   border: none;
-  margin-bottom: 2vw;
-  padding-left: 4vw;
+  margin-bottom: 2.1vw;
+  padding-left: 3vw;
   font-size: 12pt;
   background-color: #ffffff75;
 }
 
 #recipeContainer input:focus {
-  filter: brightness(0.9);
+  filter: brightness(1.2);
 }
 
 #recipeContainer input[name="recipe1"] {
-  border-radius: 10px 10px 5px 5px;
+  border-radius: 9px 9px 5px 5px;
 }
 
 #recipeContainer input[name="recipe10"] {
-  border-radius: 5px 5px 10px 10px;
+  border-radius: 5px 5px 9px 9px;
   margin:0;
 }
 
@@ -1149,7 +1152,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   background-color: #00000015;
   padding: 3vw;
   width: 96vw;
-  height: 93vh;
+  height: 90.5vh;
   border-radius: 20px;
 }
 
@@ -1167,41 +1170,45 @@ input[type="range"]::-webkit-slider-runnable-track {
   display: flex;
   justify-content: space-between;
   background-color: #00000013;
-  border-radius: 15px;
+  border-radius: 0px 0px 15px 15px;
   padding: 2vw;
 }
 
 #brewButtonContainer button {
-  height: 11vw;
-  width: 40%;
+  height: 10vw;
+  width: 31.5%;
   border: none;
   background-color: #ffffff75;
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 5px;
 }
 
 #brewButtonContainer button:first-child {
-  border-radius: 10px 5px 5px 10px;
+  border-radius: 9px 5px 5px 9px;
 }
 
 #brewButtonContainer button:last-child {
-  border-radius: 5px 10px 10px 5px;
+  border-radius: 5px 9px 9px 5px;
 }
 
 #brewRecipeChooser {
-  border-radius: 15px;
+  border-radius: 12px;
   margin: 0 auto;
-/*  margin-top: 1vw;*/
+  font-size: 5vw;
   width: 100%;
   height: 10vw;
   margin-bottom: 2vw;
   background-color: #00000015;
   color: black;
-  padding-left: 3vw;
   outline: none;
   border: none;
+  padding-left: 4vw;
+  -webkit-padding-left: 4vw;
+  text-indent: 4vw;
+/*  appearance: none;*/
 }
 
 /* ======== ANIMATIONS ====== */
@@ -1687,7 +1694,8 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
     </div>
 
     <div id="brewButtonContainer">
-      <button>Close</button>
+      <button id="closeRecipeButton">Close</button>
+      <button id="deleteRecipeButton">Delete</button>
       <button id="saveRecipeButton">Save</button>
     </div>
 
@@ -2226,27 +2234,32 @@ const backgroundPopup = document.body.querySelector('#popupBackground')
 const popup = document.body.querySelector('#popup')
 
 function closePopup() {
-    backgroundPopup.classList.remove('blur-in');
-    popup.classList.remove('slide-in-blurred-top');
+  const allInputs = document.querySelectorAll('#menu-form input')
+  allInputs.forEach(input => {
+    input.value = "";
+  })
 
-    backgroundPopup.classList.add('blur-out');
-    popup.classList.add('slide-out-blurred-top');
-    menuButtonTemp.classList.add("fade-in");
-    appTitle.classList.add("fade-in");
-    
-      setTimeout(() => {
-      menuButtonTemp.style.display = 'block';
-      appTitle.style.display = "block";
-      showExportButton();
-      }, 350);
+  backgroundPopup.classList.remove('blur-in');
+  popup.classList.remove('slide-in-blurred-top');
+
+  backgroundPopup.classList.add('blur-out');
+  popup.classList.add('slide-out-blurred-top');
+  menuButtonTemp.classList.add("fade-in");
+  appTitle.classList.add("fade-in");
   
-    setTimeout(() => {
-      backgroundPopup.classList.remove('blur-out');
-      popup.classList.remove('slide-out-blurred-top');
-      backgroundPopup.style.display= 'none';
-      popup.style.display= 'none';
-      backgroundPopup.removeEventListener('click', closePopup)
-    }, 950);
+  setTimeout(() => {
+    menuButtonTemp.style.display = 'block';
+    appTitle.style.display = "block";
+    showExportButton();
+  }, 350);
+
+  setTimeout(() => {
+    backgroundPopup.classList.remove('blur-out');
+    popup.classList.remove('slide-out-blurred-top');
+    backgroundPopup.style.display= 'none';
+    popup.style.display= 'none';
+    backgroundPopup.removeEventListener('click', closePopup)
+  }, 950);
 }
 
 function showPopup() {
@@ -2734,9 +2747,9 @@ function clickOnDeleteB() {
   // }
   deleteB.style.boxShadow = "none";
   const cells = rowDelete.cells;
-	for (let i = 0; i < cells.length; i++) {
-		cells[i].textContent = "";
-	}
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].textContent = "";
+  }
   rowDelete.transform = "none";
   rowDelete.classList.add('tr-removed');
   rowDelete.style.backgroundColor = "#A32D36";
@@ -2839,7 +2852,7 @@ function unlinkCoffee(inputLog) {
   coffeeSelect.selectedIndex = 0;
   fillStars(0,false);
   unlinkButton.removeEventListener("click", unlinkCoffee);
-  unlinkButton.style.opacity = "0.7";
+  unlinkButton.style.opacity = "0.3";
 }
 
 function deleteCoffee(inputCoffee) {
@@ -2873,7 +2886,7 @@ function deleteCoffee(inputCoffee) {
   closeDetails();
   setTimeout(()=> {
   deleteCoffeeButton.removeEventListener("click", deleteCoffee);
-  deleteCoffeeButton.style.opacity = "0.7";
+  deleteCoffeeButton.style.opacity = "0.1";
 }, 400);
 }
 
@@ -2956,18 +2969,22 @@ function showDetails() {
     fillStars(coffeeRatingJSON[0], coffeeRatingJSON[1])
     
     unlinkButton.style.opacity = "1";
+    unlinkButton.style.touchAction = ""
     unlinkButton.addEventListener('click', () => {
       event.preventDefault()
       unlinkCoffee(selectedLog);
     });
     deleteCoffeeButton.style.opacity = "1";
+    deleteCoffeeButton.style.touchAction = ""
     deleteCoffeeButton.addEventListener('click', () => {
       event.preventDefault()
       deleteCoffee("coffee." + document.getElementById('coffeeName').value);
     });
   } else {
-    unlinkButton.style.opacity = "0.7";
-    deleteCoffeeButton.style.opacity = "0.7";
+    unlinkButton.style.opacity = "0.5";
+    unlinkButton.style.touchAction = "none"
+    deleteCoffeeButton.style.opacity = "0.5";
+    deleteCoffeeButton.style.touchAction = "none"
   }
 }
 
@@ -3018,7 +3035,7 @@ function saveCoffee() {
   coffeeSelect.selectedIndex = 0;
   populateSelect();
   const exportCoffeeIcon = document.querySelector("coffeeExport");
-  exportCoffeeIcon.style.display = "block";
+  //exportCoffeeIcon.style.display = "block";
 }
 
 
@@ -3171,9 +3188,9 @@ const brewPopup = document.getElementById("brewPopup");
 const brewBG = document.getElementById("brewBG");
 
 function showRecipeBuilder() {
-  console.log("click")
-  console.log(brewPopup)
-  console.log(brewBG)
+  // console.log("click")
+  // console.log(brewPopup)
+  // console.log(brewBG)
   brewBG.classList.add('blur-in');
   brewPopup.classList.add('slide-in-blurred-top');
   brewBG.style.display = "block";
@@ -3184,7 +3201,7 @@ function showRecipeBuilder() {
     tempExportButton.style.display = 'none'
     //showExportButton();
   }, 50)
-  const closeButton = document.querySelector('#brewButtonContainer button');
+  const closeButton = document.querySelector('#closeRecipeButton');
   closeButton.addEventListener('click', closeRecipeBuilder)
 }
 
