@@ -386,12 +386,16 @@ input, select {
  left: 5vw;
  top: 25vw;
  position: fixed;
- background-color: #00000018;
+/* background-color: #00000018;
  -webkit-backdrop-filter: blur(45px);
  backdrop-filter: blur(45px);
- border-radius: 20px;
+ border-radius: 20px;*/
  padding: 4vw;
- /*transition: opacity 0.3s forwards;*/
+background: linear-gradient(0deg, #0D0D0D15, #0D0D0D15), rgba(191, 191, 191, 0.14);
+background-blend-mode: color-dodge, normal;
+backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+border-radius: 20px;
 }
 
 #title {
@@ -1183,6 +1187,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 5vw;
   border-radius: 5px;
 }
 
@@ -1339,6 +1344,17 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   }
 }
 
+@keyframes blur-in {
+  0% {
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px)
+  }
+  100% {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px)/* 20px */
+  }
+}
+
 @keyframes blur-out {
   0% {
     backdrop-filter: blur(20px);
@@ -1347,16 +1363,6 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   100% {
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px)
-  }
-}
-@keyframes blur-in {
-  0% {
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px)
-  }
-  100% {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px)
   }
 }
 
@@ -3416,7 +3422,8 @@ function saveRecipe() {
     localStorage.setItem(recipeKey, JSON.stringify(recipeData));
   } else {
       saveButton.classList.add('btFocus');
-      saveButton.textContent = "Enter recipe";
+      saveButton.style.fontSize = "5vw"
+      saveButton.textContent = "No recipe";
       // saveButton.style.fontWeight = "bold";
       setTimeout(() => {
         saveButton.classList.remove('btFocus')
