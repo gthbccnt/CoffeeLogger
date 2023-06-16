@@ -67,7 +67,7 @@ body {
   max-width: 20vw;
   min-width: 13vw;
   padding: 0;
-  font-size: 3vw; /* 7vw */
+  font-size: 4vw; /* 7vw */
   top: 0vw;
   box-shadow: 0px 0px 10px -2px #00000020;
 }
@@ -75,7 +75,7 @@ body {
 #menuButton {
   z-index: 0;
   padding: 0vw;
-  font-size: 3vw;
+  font-size: 4vw;
   height: 13vw;
   max-width:18vw;
   min-width: 13vw;
@@ -245,14 +245,12 @@ tbody td:nth-child(-n+2) {
 .dark-theme #formInput1:focus,
 .dark-theme #formInput2:focus,
 .dark-theme #formInput3:focus {
-  -webkit-backdrop-filter: blur(35px);
-  backdrop-filter: blur(35px);
-  background-color: #00000075;
+  background-color: #151515cc;
   outline: none;
 }
 .dark-theme #title {
-  font-weight: bold;
-  color: #000000;
+  font-weight: semibold;
+  color: #ffffff57;
 }
 
 .dark-theme .form-container button, .dark-theme #resetButton {
@@ -345,7 +343,7 @@ button {
 
 #openTimer {
   bottom: 3vh;
-  left: 3vw;
+  right: 3vw;
 }
 
 input, select {
@@ -433,10 +431,6 @@ input, select {
 
 .form-container button {
   border-radius: 5px 5px 9px 5px;
-}
-
-#selectList {
-  appearance: none;
 }
 
 #logDetails:focus,
@@ -550,7 +544,7 @@ input, select {
   width: 12vw;
   height: 12vw;
   border-radius:8px;
-  background-color: #ffffff50;
+  background-color: #ffffff60;
   color: black;
   font-family: system-ui;
   font-size: 9vw;
@@ -591,6 +585,10 @@ input, select {
   background-color: #ffffff70;
 }
 
+.dark-theme #editingContainer button {
+  background-color: #15151570;
+}
+
 #editingContainer input {
   height: 11vw;
   border-radius: 8px 5px 5px 8px;
@@ -602,6 +600,10 @@ input, select {
 
 #editingContainer input:focus{
 background-color: #ffffff70;
+}
+
+.dark-theme #editingContainer input:focus{
+background-color: #151515cc;
 }
 
 #editingButtonContainer {
@@ -719,7 +721,7 @@ background-color: #ffffff70;
 }
 
 .dark-theme #detailsContainer input:focus {
-  background-color: #111111aa
+  background-color: #111111cc
 }
 
 #detailsContainer input:focus {
@@ -822,7 +824,7 @@ background-color: #ffffff70;
 }
 
  #keyboardContainer div div {
-  background-color: #ffffff75;
+  background-color: #ffffff85;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -837,10 +839,20 @@ background-color: #ffffff70;
 }
 
 .pressed {
-  backdrop-filter: brightness(0.6);
-  -webkit-backdrop-filter: brightness(0.6);
+  backdrop-filter: brightness(1.2);
+  -webkit-backdrop-filter: brightness(1.2);
   font-weight: bold;
   box-shadow: none;
+}
+
+.pressedKeyboard {
+  backdrop-filter: brightness(1.2);
+  -webkit-backdrop-filter: brightness(1.2);
+}
+
+.dark-theme .pressedKeyboard {
+  backdrop-filter: brightness(0.1);
+  -webkit-backdrop-filter: brightness(0.1);
 }
 
 .dark-theme .pressed {
@@ -851,10 +863,9 @@ background-color: #ffffff70;
 }
 
 .pressedToggle {
-  backdrop-filter: brightness(0.1);
-  -webkit-backdrop-filter: brightness(0.1);
+  backdrop-filter: brightness(0.5);
+  -webkit-backdrop-filter: brightness(0.5);
   box-shadow: none;
-  font-weight: bold;
 }
 
 #kbFirstRow, #kbSecondRow, #kbThirdRow {
@@ -917,18 +928,18 @@ background-color: #ffffff70;
 }
 
 #keepRatio {
-  background-color: #ffffff30;
-  border-radius: 5px;
+  background-color: #ffffff40;
+  border-radius: 50%;
   padding: 3px;
   z-index: 1;
-  max-width: 10.5vw;
-  max-height: 9.5vw;
+  width: 8vw;
+  height: 8vw;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   margin: 0 auto;
-  font-size: 4vw;
-  transition: box-shadow 0.4s ease, filter 0.5s ease, backdrop-filter 0.5s ease, background-color 0.5s ease;
+  font-size: 3.5vw;
+  transition: filter 0.5s ease, backdrop-filter 0.5s ease, background-color 0.5s ease;
   position: absolute;
   left: 15%;
   top: 12.6%;
@@ -1006,7 +1017,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   font-size: 18vw;
   padding: 0;
   margin: 0;
-  width: 27%;
+  width: 26%;
   letter-spacing: 2px;
   border: solid 0pt green;
 }
@@ -1028,7 +1039,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 #timerButtons button {
   font-size: 4.5vw;
   height: 9vw;
-  width: 27vw;
+  width: 27.2vw;
   border-radius: 4px;
   background-color: #ffffff75;
   color: black;
@@ -1037,20 +1048,15 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .dark-theme #brewBG button, .dark-theme #brewBG input, .dark-theme #brewBG select {
-  background-color: #15151575;
-  color: #ffffff67;
-}
-
-.dark-theme #brewBG input:focus {
-  background-color: #151515ab;
-  color: #ffffff67;
+  background-color: #151515aa;
+  color: #ffffff77;
 }
 
 .dark-theme #time {
   background-color: #15151550;
 }
 
-.dark-theme #timerContainer, .dark-theme #settingContainer, .dark-theme #recipeContainer {
+.dark-theme #timerContainer, .dark-theme #settingContainer, .dark-theme #recipeContainer, .dark-theme #brewButtonContainer {
   background-color: #15151550;
 }
 
@@ -1064,7 +1070,13 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 .btFocus {
   backdrop-filter: brightness(1.2);
+  -webkit-backdrop-filter: brightness(1.2);
   font-weight: bold;
+}
+
+.dark-theme .btFocus {
+  backdrop-filter: brightness(0.5);
+  -webkit-backdrop-filter: brightness(0.5);
 }
 
 #timerContainer {
@@ -1125,7 +1137,13 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 #recipeContainer input:focus {
-  filter: brightness(1.2);
+  -webkit-backdrop-filter: brightness(1.2);
+  backdrop-filter: brightness(1.2);
+}
+
+.dark-theme #recipeContainer input:focus {
+  -webkit-backdrop-filter: brightness(0.5);
+  backdrop-filter: brightness(0.5);
 }
 
 #recipeContainer input[name="recipe1"] {
@@ -1133,7 +1151,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 #recipeContainer input[name="recipe10"] {
-  border-radius: 5px 5px 9px 9px;
+  border-radius: 5px 5px 5px 5px;
   margin:0;
 }
 
@@ -1141,7 +1159,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   position: fixed;
   top: 1vh;
   left:2vw;
-  padding: 3vw;
+  padding: 2.5vw;
   width: 96vw;
   height: 90.5vh;
   border-radius: 20px;
@@ -1150,14 +1168,14 @@ input[type="range"]::-webkit-slider-runnable-track {
 #brewButtonContainer {
   display: flex;
   justify-content: space-between;
-  background-color: #00000013;
+  background-color: #00000015;
   border-radius: 0px 0px 15px 15px;
   padding: 2vw;
 }
 
 #brewButtonContainer button {
   height: 10vw;
-  width: 31.5%;
+  width: 23.5%;
   border: none;
   background-color: #ffffff75;
   margin: 0;
@@ -1173,7 +1191,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 #brewButtonContainer button:last-child {
-  border-radius: 5px 9px 9px 5px;
+  border-radius: 5px 5px 9px 5px;
 }
 
 #brewRecipeChooser {
@@ -1422,8 +1440,8 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
   <div id="popup">
     <form id="menu-form">
       <div id="popInpContainer">
-        <input type="text" placeholder="Enter name: Grinder 1" name="firstGrinder" id="formInput1">
-          <input type="text" placeholder="Enter name: Grinder 2" name="secondGrinder" id="formInput2">
+        <input type="text" placeholder="Name for Grinder (rotation)" name="firstGrinder" id="formInput1">
+          <input type="text" placeholder="Name for Grinder (clicks)" name="secondGrinder" id="formInput2">
         <input type="text" placeholder="Enter IFTTT Key" name="iftttKey" id="formInput3">
       </div>
       <div id=popBtnContainer>
@@ -1442,7 +1460,7 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
     </div>
     <div id="firstRow" style="position: relative;">
       <div id="inputIcon">S.</div>
-      <input type="text" placeholder="Enter recipe details" name="log" id="logDetails" readonly autofocus>
+      <input type="text" placeholder="Setting gr. ml. °C" name="log" id="logDetails" readonly autofocus>
       <div class="cursor"></div>
     </div>
     <div id="secondRow">
@@ -1471,7 +1489,7 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
     </div>
     <div id="thirdRow">
       <div id="inputIcon">T.</div>
-      <input type="text" placeholder="Enter draw down" name="time" id="idTime" readonly>
+      <input type="text" placeholder="Draw down m:ss" name="time" id="idTime" readonly>
     </div>
     <div id=buttonRow>
       <input type=reset onclick="myFormCloseButton()" value="Reset" id="resetButton">
@@ -1668,6 +1686,7 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
     <div id="brewButtonContainer">
       <button id="closeRecipeButton">Close</button>
       <button id="deleteRecipeButton">Delete</button>
+      <button id="exportRecipes">Export</button>
       <button id="saveRecipeButton">Save</button>
     </div>
 
@@ -3017,34 +3036,34 @@ function linkLogWithCoffee(input) {
   localStorage.setItem(keyLog, "coffee."+valueCoffee)
 }
 
- function populateSelect() {
-   const coffeeSelect = document.getElementById('coffeeChoose');
-   const coffeeData = Object.keys(localStorage)
-     .filter(key => key.startsWith('coffee.'))
-     .map(key => JSON.parse(localStorage.getItem(key)));
+function populateSelect() {
+ const coffeeSelect = document.getElementById('coffeeChoose');
+ const coffeeData = Object.keys(localStorage)
+   .filter(key => key.startsWith('coffee.'))
+   .map(key => JSON.parse(localStorage.getItem(key)));
 
-   const roasterLookup = {};
-   coffeeData.forEach(coffee => {
-     if (!roasterLookup[coffee.coffeeRoaster]) {
-       roasterLookup[coffee.coffeeRoaster] = [];
-     }
-     roasterLookup[coffee.coffeeRoaster].push(coffee);
-   });
-
-   coffeeSelect.innerHTML = "<option selected>Choose Coffee</option>"; // disabled
-
-   for (const [roaster, coffees] of Object.entries(roasterLookup)) {
-     const optgroup = document.createElement('optgroup');
-     optgroup.label = roaster;
-     coffees.forEach(coffee => {
-       const option = document.createElement('option');
-       option.value = coffee.coffeeName;
-       option.text = coffee.coffeeName;
-       optgroup.appendChild(option);
-     });
-     coffeeSelect.appendChild(optgroup);
+ const roasterLookup = {};
+ coffeeData.forEach(coffee => {
+   if (!roasterLookup[coffee.coffeeRoaster]) {
+     roasterLookup[coffee.coffeeRoaster] = [];
    }
+   roasterLookup[coffee.coffeeRoaster].push(coffee);
+ });
+
+ coffeeSelect.innerHTML = "<option selected>Choose Coffee</option>"; // disabled
+
+ for (const [roaster, coffees] of Object.entries(roasterLookup)) {
+   const optgroup = document.createElement('optgroup');
+   optgroup.label = roaster;
+   coffees.forEach(coffee => {
+     const option = document.createElement('option');
+     option.value = coffee.coffeeName;
+     option.text = coffee.coffeeName;
+     optgroup.appendChild(option);
+   });
+   coffeeSelect.appendChild(optgroup);
  }
+}
 
 populateSelect()
 
@@ -3067,9 +3086,9 @@ function myFormCloseButton() {
   const resetBtn = document.getElementById('resetButton')
   addBrewSave.style.fontWeight = "normal"
   addBrewSave.textContent = "Close"
-  resetBtn.classList.add('pressed');
+  resetBtn.classList.add('pressedKeyboard');
   setTimeout(() => {
-    resetBtn.classList.remove('pressed');
+    resetBtn.classList.remove('pressedKeyboard');
   }, 200)
 
 }
@@ -3088,9 +3107,9 @@ function setInputValueOnClick() {
   const keyboardButtons = document.querySelectorAll('#keyboardContainer div div');
   keyboardButtons.forEach(keyboardButton => {
     keyboardButton.addEventListener('touchstart', (event) => {
-      keyboardButton.classList.add('pressed');
+      keyboardButton.classList.add('pressedKeyboard');
       setTimeout(() => {
-        keyboardButton.classList.remove('pressed');
+        keyboardButton.classList.remove('pressedKeyboard');
       }, 200);
       event.preventDefault();
 
@@ -3177,6 +3196,31 @@ function showRecipeBuilder() {
   closeButton.addEventListener('click', closeRecipeBuilder)
 }
 
+function resetRecipeBuilder() {
+  const recipeInputs = document.querySelectorAll('#recipeContainer input')
+  const mlSlider = document.querySelector('#setMill');
+  const grSlider = document.querySelector('#setGram');
+  const mlText=document.querySelector('#builderMill');
+  const grText=document.querySelector('#builderGram');
+  const recipeList = document.querySelector('#brewRecipeChooser');
+    recipeInputs.forEach(input =>{
+    input.value = "";
+    //console.log('recipe input removed')
+  })
+  timer = false;
+  minute = 0;
+  second = 0;
+  count = 0;
+  document.getElementById('min').innerHTML = "00";
+  document.getElementById('sec').innerHTML = "00";
+  document.getElementById('count').innerHTML = "00";
+  mlSlider.value = "200";
+  mlText.textContent = "200";
+  grSlider.value = "14";
+  grText.textContent = "14";
+  recipeList.selectedIndex = -1;
+}
+
 function closeRecipeBuilder() {
   brewBG.classList.replace('blur-in','blur-out')
   brewPopup.classList.replace('slide-in-blurred-top','slide-out-blurred-top')
@@ -3185,6 +3229,7 @@ function closeRecipeBuilder() {
     menuButtonTemp.style.display = 'block';
     appTitle.style.display = "block";
     showExportButton();
+    resetRecipeBuilder();
   }, 350)
   setTimeout(() => {
     brewBG.style.display = "none";
@@ -3193,6 +3238,7 @@ function closeRecipeBuilder() {
     const closeButton = document.querySelector('#brewButtonContainer button');
     closeButton.removeEventListener('click', closeRecipeBuilder)
   },950)
+
 }
 
 let startBtn = document.getElementById('timerStart');
@@ -3387,14 +3433,19 @@ function saveRecipe() {
 
     // Save the recipe to localStorage
     localStorage.setItem(recipeKey, JSON.stringify(recipeData));
-    populateRecipeSelect()
+    setTimeout(() => {
+      populateRecipeSelect()
+      resetRecipeBuilder();
+    }, 300);
+
   } else {
       saveButton.classList.add('btFocus');
-      saveButton.style.fontSize = "5vw"
+      saveButton.style.fontSize = "4vw"
       saveButton.textContent = "No recipe";
       // saveButton.style.fontWeight = "bold";
       setTimeout(() => {
         saveButton.classList.remove('btFocus')
+        saveButton.style.fontSize = "5vw"
         saveButton.textContent = "Save";
         // saveButton.style.fontWeight = "";
       }, 500)
@@ -3403,6 +3454,35 @@ function saveRecipe() {
 
 var saveButtonRecipeBuilder = document.getElementById("saveRecipeButton")
 saveButtonRecipeBuilder.addEventListener("click", saveRecipe);
+
+// function populateSelect() {
+//  const coffeeSelect = document.getElementById('coffeeChoose');
+//  const coffeeData = Object.keys(localStorage)
+//    .filter(key => key.startsWith('coffee.'))
+//    .map(key => JSON.parse(localStorage.getItem(key)));
+
+//  const roasterLookup = {};
+//  coffeeData.forEach(coffee => {
+//    if (!roasterLookup[coffee.coffeeRoaster]) {
+//      roasterLookup[coffee.coffeeRoaster] = [];
+//    }
+//    roasterLookup[coffee.coffeeRoaster].push(coffee);
+//  });
+
+//  coffeeSelect.innerHTML = "<option selected>Choose Coffee</option>"; // disabled
+
+//  for (const [roaster, coffees] of Object.entries(roasterLookup)) {
+//    const optgroup = document.createElement('optgroup');
+//    optgroup.label = roaster;
+//    coffees.forEach(coffee => {
+//      const option = document.createElement('option');
+//      option.value = coffee.coffeeName;
+//      option.text = coffee.coffeeName;
+//      optgroup.appendChild(option);
+//    });
+//    coffeeSelect.appendChild(optgroup);
+//  }
+// }
 
 function populateRecipeSelect() {
   const keys = Object.keys(localStorage);
