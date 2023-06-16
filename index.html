@@ -250,7 +250,7 @@ tbody td:nth-child(-n+2) {
 }
 .dark-theme #title {
   font-weight: semibold;
-  color: #ffffff57;
+  color: black;
 }
 
 .dark-theme .form-container button, .dark-theme #resetButton {
@@ -676,7 +676,7 @@ background-color: #151515cc;
 }
 
 #coffeeExport {
-  background-color: #ffffff35;
+  background-color: #ffffff55;
   border-radius: 5px 11px 5px 5px;
   height: 10vw;
   padding: 2vw;
@@ -711,7 +711,7 @@ background-color: #151515cc;
   color: black;
 }
 
-.dark-theme #detailsContainer input, .dark-theme #detailsContainer button, .dark-theme #detailsContainer select, .dark-theme #coffeeRating {
+.dark-theme #detailsContainer input, .dark-theme #detailsContainer button, .dark-theme #detailsContainer select, .dark-theme #coffeeRating, .dark-theme #coffeeExport {
   background-color: #11111180;
   color: #ffffff87;
 }
@@ -749,7 +749,6 @@ background-color: #151515cc;
 #detailsBts {
   display: flex;
   justify-content: space-between;
-/*  margin-top: 2vw;*/
 }
 
 #detailsBts button {
@@ -767,7 +766,7 @@ background-color: #151515cc;
 }
 
 #removeCoffeeFromBrew, #deleteCoffee {
-  opacity: 0.1;
+  opacity: 0.7;
 }
 
 #coffeeRating {
@@ -1103,17 +1102,28 @@ input[type="range"]::-webkit-slider-runnable-track {
   background-color: #ffffff75;
 }
 
-#recipeContainer {
+#recipeTopScrollBorder {
+  height: 100%;
+  width: 100%;
+  padding-top: 2.5vw;
+  padding-right: 2.5vw;
+  border: solid 0pt;
+  border-radius: 15px 15px 0px 0px;
   background-color: #00000015;
+}
+
+#recipeContainer {
   width: 100%;
   height: 42vh;
-  border-radius: 15px 15px 0px 0px;
+  border-radius: 9px 9px 0px 0px;
   margin: 2vw auto;
   margin-bottom: 0;
   overflow: scroll;
-  padding: 2.5vw;
+  padding-top: 0;
+  margin-top: 0;
   padding-left: 3.5vw;
   padding-bottom: 0;
+  border: solid 0pt;
 }
 
 .brewSteps {
@@ -1161,7 +1171,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   left:2vw;
   padding: 2.5vw;
   width: 96vw;
-  height: 90.5vh;
+/*  height: 90.5vh;*/
   border-radius: 20px;
 }
 
@@ -1205,10 +1215,9 @@ input[type="range"]::-webkit-slider-runnable-track {
   color: black;
   outline: none;
   border: none;
-  padding-left: 4vw;
-  -webkit-padding-left: 4vw;
+/*  padding-left: 4vw;
+  -webkit-padding-left: 4vw;*/
   text-indent: 4vw;
-/*  appearance: none;*/
 }
 
 /* ======== ANIMATIONS ====== */
@@ -1587,7 +1596,9 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
 <div id="brewBG">
   <div id="brewPopup">
 
-    <select title="recipeChooser" id="brewRecipeChooser"></select>
+    <select title="recipeChooser" id="brewRecipeChooser">
+      <option value="" disabled selected>Choose Recipe</option>
+    </select>
 
     <div id="settingContainer">
       <div id="sliderContainer">
@@ -1630,6 +1641,7 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
       </div>
     </div>
 
+<div id="recipeTopScrollBorder">
     <div id="recipeContainer">
 
         <div class="brewSteps">
@@ -1681,6 +1693,9 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
           <div>9.</div>
           <input type="text" name="recipe10">
         </div>
+
+      </div>
+
     </div>
 
     <div id="brewButtonContainer">
@@ -2848,7 +2863,7 @@ function unlinkCoffee(inputLog) {
   coffeeSelect.selectedIndex = 0;
   fillStars(0,false);
   unlinkButton.removeEventListener("click", unlinkCoffee);
-  unlinkButton.style.opacity = "0.3";
+  unlinkButton.style.opacity = "0.7";
 }
 
 function deleteCoffee(inputCoffee) {
@@ -2882,7 +2897,7 @@ function deleteCoffee(inputCoffee) {
   closeDetails();
   setTimeout(()=> {
   deleteCoffeeButton.removeEventListener("click", deleteCoffee);
-  deleteCoffeeButton.style.opacity = "0.1";
+  deleteCoffeeButton.style.opacity = "0.7";
 }, 400);
 }
 
@@ -2977,9 +2992,9 @@ function showDetails() {
       deleteCoffee("coffee." + document.getElementById('coffeeName').value);
     });
   } else {
-    unlinkButton.style.opacity = "0.5";
+    unlinkButton.style.opacity = "0.7";
     unlinkButton.style.touchAction = "none"
-    deleteCoffeeButton.style.opacity = "0.5";
+    deleteCoffeeButton.style.opacity = "0.7";
     deleteCoffeeButton.style.touchAction = "none"
   }
 }
@@ -3199,6 +3214,9 @@ function showRecipeBuilder() {
   }, 50)
   const closeButton = document.querySelector('#closeRecipeButton');
   closeButton.addEventListener('click', closeRecipeBuilder)
+
+  const recipeList = document.querySelector('#brewRecipeChooser');
+  recipeList.selectedIndex = 0;
 }
 
 function resetRecipeBuilder() {
@@ -3208,6 +3226,7 @@ function resetRecipeBuilder() {
   const mlText=document.querySelector('#builderMill');
   const grText=document.querySelector('#builderGram');
   const recipeList = document.querySelector('#brewRecipeChooser');
+
     recipeInputs.forEach(input =>{
     input.value = "";
     //console.log('recipe input removed')
@@ -3223,7 +3242,7 @@ function resetRecipeBuilder() {
   mlText.textContent = "200";
   grSlider.value = "14";
   grText.textContent = "14";
-  recipeList.selectedIndex = -1;
+  recipeList.selectedIndex = 0;
 }
 
 function closeRecipeBuilder() {
@@ -3235,6 +3254,10 @@ function closeRecipeBuilder() {
     appTitle.style.display = "block";
     showExportButton();
     resetRecipeBuilder();
+    if (wakeLock) {
+    wakeLock.release();
+    console.log('Screen Wake Lock has been released');
+  }
   }, 350)
   setTimeout(() => {
     brewBG.style.display = "none";
@@ -3347,80 +3370,6 @@ function stopWatch() {
   }
 }
 
-
-// let startBtn = document.getElementById('timerStart');
-// let stopBtn = document.getElementById('timerStop');
-// let resetBtn = document.getElementById('timerReset');
-// let minute = 00;
-// let second = 00;
-// let count = 00;
-// let timer;
-
-// startBtn.addEventListener('click', function () {
-//   timer = true;
-//   stopWatch();
-//   startBtn.classList.add('btFocus');
-//   startBtn.style.fontWeight = "bold"
-//   setTimeout(() => {
-//     startBtn.classList.remove('btFocus')
-//     startBtn.style.fontWeight = ""
-//   }, 300)
-// });
-// stopBtn.addEventListener('click', function () {
-//   timer = false;
-//   stopBtn.classList.add('btFocus');
-//   stopBtn.style.fontWeight = "bold"
-//   setTimeout(() => {
-//     stopBtn.classList.remove('btFocus')
-//     stopBtn.style.fontWeight = ""
-//   }, 300)
-// });
-// resetBtn.addEventListener('click', function () {
-//   timer = false;
-//   resetBtn.classList.add('btFocus');
-//   resetBtn.style.fontWeight = "bold"
-//   setTimeout(() => {
-//     resetBtn.classList.remove('btFocus')
-//     resetBtn.style.fontWeight = ""
-//   }, 300)
-//   minute = 0;
-//   second = 0;
-//   count = 0;
-//   document.getElementById('min').innerHTML = "00";
-//   document.getElementById('sec').innerHTML = "00";
-//   document.getElementById('count').innerHTML = "00";
-// });
-
-// function stopWatch() {
-//   if (timer) {
-//     count++;
-//     if (count == 100) {
-//       second++;
-//       count = 0;
-//     }
-//     if (second == 60) {
-//       minute++;
-//       second = 0;
-//     }
-//     let minString = minute;
-//     let secString = second;
-//     let countString = count;
-//     if (minute < 10) {
-//       minString = "0" + minString;
-//     }
-//     if (second < 10) {
-//       secString = "0" + secString;
-//     }
-//     if (count < 10) {
-//       countString = "0" + countString;
-//     }
-//     document.getElementById('min').innerHTML = minString;
-//     document.getElementById('sec').innerHTML = secString;
-//     document.getElementById('count').innerHTML = countString;
-//     setTimeout(stopWatch, 10);
-//   }
-// }
-
 // ===== Slider gram ====
 var sliderGram = document.getElementById("setGram");
 var gramValue = parseFloat(sliderGram.value);
@@ -3490,7 +3439,6 @@ function formatNumber(value, decimals) {
     return value.toFixed(decimals);
   }
 }
-
 
 function saveRecipe() {
 
@@ -3562,35 +3510,6 @@ function saveRecipe() {
 var saveButtonRecipeBuilder = document.getElementById("saveRecipeButton")
 saveButtonRecipeBuilder.addEventListener("click", saveRecipe);
 
-// function populateSelect() {
-//  const coffeeSelect = document.getElementById('coffeeChoose');
-//  const coffeeData = Object.keys(localStorage)
-//    .filter(key => key.startsWith('coffee.'))
-//    .map(key => JSON.parse(localStorage.getItem(key)));
-
-//  const roasterLookup = {};
-//  coffeeData.forEach(coffee => {
-//    if (!roasterLookup[coffee.coffeeRoaster]) {
-//      roasterLookup[coffee.coffeeRoaster] = [];
-//    }
-//    roasterLookup[coffee.coffeeRoaster].push(coffee);
-//  });
-
-//  coffeeSelect.innerHTML = "<option selected>Choose Coffee</option>"; // disabled
-
-//  for (const [roaster, coffees] of Object.entries(roasterLookup)) {
-//    const optgroup = document.createElement('optgroup');
-//    optgroup.label = roaster;
-//    coffees.forEach(coffee => {
-//      const option = document.createElement('option');
-//      option.value = coffee.coffeeName;
-//      option.text = coffee.coffeeName;
-//      optgroup.appendChild(option);
-//    });
-//    coffeeSelect.appendChild(optgroup);
-//  }
-// }
-
 function populateRecipeSelect() {
   const keys = Object.keys(localStorage);
   const recipeKeys = keys.filter(key => key.startsWith("recipe."));
@@ -3608,6 +3527,9 @@ function populateRecipeSelect() {
     }
   });
   const brewRecipeChooser = document.getElementById("brewRecipeChooser");
+
+  brewRecipeChooser.innerHTML = '<option selected>Choose Recipe</option>';
+
   for (const type in recipeData) {
     if (recipeData.hasOwnProperty(type)) {
       const optgroup = document.createElement("optgroup");
