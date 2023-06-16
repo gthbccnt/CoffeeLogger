@@ -2136,6 +2136,7 @@ const ratingContainer = document.getElementById('rating-container');
 const ratingItems = document.querySelectorAll('#rating-container li');
 const addBrewButtonTemp = document.querySelector('#addBrew');
 var currentRating;
+var editCellOpen = false
 
 function closeRating() {
   const selectedCell = document.querySelector('.selected-cell');
@@ -2168,7 +2169,9 @@ function brewRating() {
         closeRating();
     }
   });
-
+  if (editCellOpen === true) {
+  closeEditCell();
+  }
   ratingContainer.classList.add('slide-in-edit'); 
   const row = this.getAttribute('data-row');
   const col = this.getAttribute('data-col');
@@ -2383,6 +2386,7 @@ const saveButton = document.querySelector('#editingSave');
 var currentCell;
 
 function closeEditCell() {
+	editCellOpen = false;
   editingContainer.classList.remove('slide-in-edit');
     editingContainer.classList.add('slide-out-edit');
     currentCell.classList.remove('editingMode');
@@ -2420,6 +2424,7 @@ function vwToPx(vw) {
 }
 
 function editTableCell(cell) {
+	editCellOpen = true;
   const rC1Left = document.querySelector('#roundedCorners1').getBoundingClientRect().left;
   const rC1Right = document.querySelector('#roundedCorners1').getBoundingClientRect().right;
     let row = cell.parentNode;
@@ -3248,40 +3253,68 @@ let minute = 00;
 let second = 00;
 let count = 00;
 let timer;
+let wakeLock;
 
 startBtn.addEventListener('click', function () {
   timer = true;
   stopWatch();
   startBtn.classList.add('btFocus');
-  startBtn.style.fontWeight = "bold"
+  startBtn.style.fontWeight = "bold";
   setTimeout(() => {
-    startBtn.classList.remove('btFocus')
-    startBtn.style.fontWeight = ""
-  }, 300)
+    startBtn.classList.remove('btFocus');
+    startBtn.style.fontWeight = "";
+  }, 200);
+
+  // Request a wake lock
+  if ('wakeLock' in navigator) {
+    navigator.wakeLock
+      .request('screen')
+      .then((lock) => {
+        wakeLock = lock;
+        console.log('Screen Wake Lock is active');
+      })
+      .catch((error) => {
+        console.error('Failed to activate Screen Wake Lock:', error);
+      });
+  }
 });
+
 stopBtn.addEventListener('click', function () {
   timer = false;
   stopBtn.classList.add('btFocus');
-  stopBtn.style.fontWeight = "bold"
+  stopBtn.style.fontWeight = "bold";
   setTimeout(() => {
-    stopBtn.classList.remove('btFocus')
-    stopBtn.style.fontWeight = ""
-  }, 300)
+    stopBtn.classList.remove('btFocus');
+    stopBtn.style.fontWeight = "";
+  }, 200);
+
+  // Release the wake lock
+  if (wakeLock) {
+    wakeLock.release();
+    console.log('Screen Wake Lock has been released');
+  }
 });
+
 resetBtn.addEventListener('click', function () {
   timer = false;
   resetBtn.classList.add('btFocus');
-  resetBtn.style.fontWeight = "bold"
+  resetBtn.style.fontWeight = "bold";
   setTimeout(() => {
-    resetBtn.classList.remove('btFocus')
-    resetBtn.style.fontWeight = ""
-  }, 300)
+    resetBtn.classList.remove('btFocus');
+    resetBtn.style.fontWeight = "";
+  }, 100);
   minute = 0;
   second = 0;
   count = 0;
   document.getElementById('min').innerHTML = "00";
   document.getElementById('sec').innerHTML = "00";
   document.getElementById('count').innerHTML = "00";
+
+  // Release the wake lock
+  if (wakeLock) {
+    wakeLock.release();
+    console.log('Screen Wake Lock has been released');
+  }
 });
 
 function stopWatch() {
@@ -3310,9 +3343,83 @@ function stopWatch() {
     document.getElementById('min').innerHTML = minString;
     document.getElementById('sec').innerHTML = secString;
     document.getElementById('count').innerHTML = countString;
-    setTimeout(stopWatch, 10);
+    window.requestAnimationFrame(stopWatch);
   }
 }
+
+
+// let startBtn = document.getElementById('timerStart');
+// let stopBtn = document.getElementById('timerStop');
+// let resetBtn = document.getElementById('timerReset');
+// let minute = 00;
+// let second = 00;
+// let count = 00;
+// let timer;
+
+// startBtn.addEventListener('click', function () {
+//   timer = true;
+//   stopWatch();
+//   startBtn.classList.add('btFocus');
+//   startBtn.style.fontWeight = "bold"
+//   setTimeout(() => {
+//     startBtn.classList.remove('btFocus')
+//     startBtn.style.fontWeight = ""
+//   }, 300)
+// });
+// stopBtn.addEventListener('click', function () {
+//   timer = false;
+//   stopBtn.classList.add('btFocus');
+//   stopBtn.style.fontWeight = "bold"
+//   setTimeout(() => {
+//     stopBtn.classList.remove('btFocus')
+//     stopBtn.style.fontWeight = ""
+//   }, 300)
+// });
+// resetBtn.addEventListener('click', function () {
+//   timer = false;
+//   resetBtn.classList.add('btFocus');
+//   resetBtn.style.fontWeight = "bold"
+//   setTimeout(() => {
+//     resetBtn.classList.remove('btFocus')
+//     resetBtn.style.fontWeight = ""
+//   }, 300)
+//   minute = 0;
+//   second = 0;
+//   count = 0;
+//   document.getElementById('min').innerHTML = "00";
+//   document.getElementById('sec').innerHTML = "00";
+//   document.getElementById('count').innerHTML = "00";
+// });
+
+// function stopWatch() {
+//   if (timer) {
+//     count++;
+//     if (count == 100) {
+//       second++;
+//       count = 0;
+//     }
+//     if (second == 60) {
+//       minute++;
+//       second = 0;
+//     }
+//     let minString = minute;
+//     let secString = second;
+//     let countString = count;
+//     if (minute < 10) {
+//       minString = "0" + minString;
+//     }
+//     if (second < 10) {
+//       secString = "0" + secString;
+//     }
+//     if (count < 10) {
+//       countString = "0" + countString;
+//     }
+//     document.getElementById('min').innerHTML = minString;
+//     document.getElementById('sec').innerHTML = secString;
+//     document.getElementById('count').innerHTML = countString;
+//     setTimeout(stopWatch, 10);
+//   }
+// }
 
 // ===== Slider gram ====
 var sliderGram = document.getElementById("setGram");
