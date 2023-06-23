@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="apple-mobile-web-app-title" content="CoffeeLogger">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#D1B888">
+    <meta name="theme-color" content="#ceb990">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <style>
 @media screen and (orientation: landscape) {
@@ -26,8 +26,8 @@
 
 body {
   margin:0;
-  background-color: #D1B888;
-  /*  background: linear-gradient(0deg, rgba(222,179,103,.8) 0%, rgba(209,184,136,1) 90%);*/
+  background-color: oklch(79.25% 0.07 83.42);
+  background: linear-gradient(in oklch to top, oklch(76% 0.058 71.6), oklch(79.25% 0.06 83.42));
   touch-action: none;
   background-attachment: fixed;
   height: 100vh;
@@ -135,7 +135,7 @@ thead {
 thead tr {
   position: sticky;
   top: -0.2px;
-  background-color: #E5D9BE;
+  background-color: oklch(89% 0.04 87);
   font-size: 3vw;
   border: none;
   height: 12.5vw;
@@ -160,10 +160,10 @@ td {
 }
 
 tbody tr:nth-child(even) {
-  background-color: #E2D0AD/*#E2D0AD;*/
+  background-color: oklch(86% 0.05 82.5) /*#E2D0AD;*/ 
 }
 tbody tr:nth-child(odd) {
-  background-color: #D7C29C; /*#D7C29C;*/
+  background-color: oklch(82% 0.06 81); /*#D7C29C;*/
 }
 
 tbody td:nth-child(-n+2) {
@@ -174,9 +174,8 @@ tbody td:nth-child(-n+2) {
 
 .dark-theme {
   background-color: #353935;
-  background: linear-gradient(0deg, #151515 0%, #151515 100%);
-/*   background: linear-gradient(0deg, #192124 0%, #2b2e30 100%)282C34
-;*/
+/*  background: linear-gradient(0deg, #151515 0%, #151515 100%);*/
+  background: linear-gradient(in oklch to top, oklch(19.7% 0.005 256.4), oklch(21% 0.010 240));
   color: #ffffff99;/*#b5b4b2ee;*/
 }
 
@@ -557,9 +556,9 @@ input, select {
 }
 
 .editingMode {
-  background-color: #A32D36 !important;
-  border-radius: 5px;
-  color: #e8dbc4;
+  background-color: oklch(44% 0.14 22/ 95%) !important;
+  border-radius: 4px;
+  color: #ceb990;/*#e8dbc4;*/
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -617,7 +616,7 @@ background-color: #151515cc;
   width: 21vw;
   height: 10.5vw;
   top: 10.25vw;
-  background-color: #A32D36; /*#AF2F3C; 8b0000;*/
+  background-color: oklch(45% 0.14 24); /*#AF2F3C; 8b0000;*/
   color: white;
   justify-content: left;
   align-items: center;
@@ -876,7 +875,7 @@ background-color: #151515cc;
 }
 
 .unfocusOther {
-  filter: blur(2px) opacity(0.3);
+  filter: blur(3px) opacity(0.3) brightness(0.9);
 }
 
 .dark-theme .unfocusOther {
@@ -884,11 +883,12 @@ background-color: #151515cc;
 }
 
 .focusOnRow {
-  filter: brightness(1.06) saturate(0.80);
+  backdrop-filter: brightness(1.05) saturate(0.75);
+  -webkit-filter: brightness(1.05) saturate(0.75);
 }
 
 .dark-theme .focusOnRow {
-  filter: brightness(1.4);
+  filter: brightness(1.1);
   color: #ffffff60;
 }
 
@@ -918,7 +918,7 @@ background-color: #151515cc;
 #settingContainer {
   display: flex;
   align-items: center;
-  background-color: #00000015;
+  background-color: #00000010;
   border-radius: 15px;
   margin: 0;
   padding: 2vw;
@@ -1085,7 +1085,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   margin: 2vw auto;
   align-items: center;
   font-weight: 200;
-  background-color: #00000015;
+  background-color: #00000010;
   border-radius: 15px;
   padding: 2.5vw;
 }
@@ -1109,12 +1109,12 @@ input[type="range"]::-webkit-slider-runnable-track {
   padding-right: 2.5vw;
   border: solid 0pt;
   border-radius: 15px 15px 0px 0px;
-  background-color: #00000015;
+  background-color: #00000010;
 }
 
 #recipeContainer {
   width: 100%;
-  height: 42vh;
+  height: 40.5vh;
   border-radius: 9px 9px 0px 0px;
   margin: 2vw auto;
   margin-bottom: 0;
@@ -1178,7 +1178,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 #brewButtonContainer {
   display: flex;
   justify-content: space-between;
-  background-color: #00000015;
+  background-color: #00000010;
   border-radius: 0px 0px 15px 15px;
   padding: 2vw;
 }
@@ -2218,7 +2218,7 @@ function brewRating() {
     });
     
     console.log("color: " + getComputedStyle(currentRow).backgroundColor)
-    if (getComputedStyle(currentRow).backgroundColor === 'rgb(215, 194, 156)' || getComputedStyle(currentRow).backgroundColor === 'rgb(28, 28, 28)') {
+    if (getComputedStyle(currentRow).backgroundColor === 'oklch(0.82 0.06 81)' || getComputedStyle(currentRow).backgroundColor === 'rgb(28, 28, 28)') {
         currentRow.classList.add('focusOnRow');
      };
 
@@ -2351,21 +2351,48 @@ function openCsvOrFont() {
 }
 
 function addCsvToTable(csvData) {
-  const checkImportGrinder = csvData.split("\n")[0];
+  const checkContent = csvData.split("\n")[0];
   //console.log(checkImportGrinder)
-  let tbodyTemp = document.querySelector('#grinder2 tbody');
-  if (checkImportGrinder.includes(".",8)===true) {
-    tbodyTemp = document.querySelector('#grinder1 tbody');
-  }
-  //console.log(tbodyTemp)
-  const rows = csvData.split('\n').map(row => row.split(';'));
-  rows.slice(0).forEach((row, rowIndex) => {
-    const tr = tbodyTemp.insertRow();
-    row.forEach((cell, cellIndex) => {
-      const td = tr.insertCell();
-      td.textContent = cell;
+  if (checkContent.includes("coffeeName")=== true) {
+    alert('csv content: coffees')
+    importCoffee(csvData);
+  } else {
+    let tbodyTemp = document.querySelector('#grinder2 tbody');
+    if (checkContent.includes(".",8)===true) {
+      tbodyTemp = document.querySelector('#grinder1 tbody');
+    }
+    //console.log(tbodyTemp)
+    const rows = csvData.split('\n').map(row => row.split(';'));
+    rows.slice(0).forEach((row, rowIndex) => {
+      const tr = tbodyTemp.insertRow();
+      row.forEach((cell, cellIndex) => {
+        const td = tr.insertCell();
+        td.textContent = cell;
+      });
     });
-  });
+  }
+}
+
+function importCoffee(csvData) {
+  const rows = csvData.split('\n');
+  // Skip the first row (header row)
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const values = row.split(';').map(value => value.replace(/"/g, ''));
+    let coffee = {
+      'coffeeRoaster': values[0],
+      'coffeeName': values[1],
+      'coffeeOrigin': values[2],
+      'coffeeProcess': values[3],
+      'coffeeVarietal': values[4],
+      'coffeeNotes': values[5],
+      'coffeeAltitude': values[6],
+      'coffeeRoastDate': values[7],
+      'coffeeRating': values[8]
+    };
+    localStorage.setItem('coffee.' + coffee.coffeeName, JSON.stringify(coffee));
+  }
+  alert('Coffees imported')
 }
 
 // === tools
@@ -2507,7 +2534,7 @@ function editTableCell(cell) {
     }
     
     console.log("color: " + getComputedStyle(row).backgroundColor)
-    if (getComputedStyle(row).backgroundColor === 'rgb(215, 194, 156)' || getComputedStyle(row).backgroundColor === 'rgb(28, 28, 28)') {
+    if (getComputedStyle(row).backgroundColor === 'oklch(0.82 0.06 81)' || getComputedStyle(row).backgroundColor === 'rgb(28, 28, 28)') {
         row.classList.add('focusOnRow');
       };
 
@@ -3029,24 +3056,18 @@ function saveCoffee() {
   const coffeeSelect = document.querySelector('#coffeeForm select');
   const coffee = {};
 
-  // Check if coffeeName is empty
   const coffeeNameInput = document.querySelector('#coffeeName');
   if (coffeeNameInput.value.trim() === '') {
   return; // Exit the function if coffeeName is empty
   }
-  
-  //alert(currentStars);
   inputs.forEach(input => {
     coffee[input.id] = input.value;
   });
-  // =============
   coffee['coffeeRating'] = currentStars;
   // ===================================
   localStorage.setItem('coffee.'+coffeeName.value, JSON.stringify(coffee));
   coffeeSelect.selectedIndex = 0;
   populateSelect();
-  const exportCoffeeIcon = document.querySelector("coffeeExport");
-  //exportCoffeeIcon.style.display = "block";
 }
 
 
@@ -3243,6 +3264,7 @@ function resetRecipeBuilder() {
   grSlider.value = "14";
   grText.textContent = "14";
   recipeList.selectedIndex = 0;
+  ratioConnected === false;
 }
 
 function closeRecipeBuilder() {
@@ -3551,29 +3573,35 @@ populateRecipeSelect();
 
 const brewRecipeChooser = document.getElementById("brewRecipeChooser");
 brewRecipeChooser.addEventListener("change", function() {
-  const selectedElement = brewRecipeChooser.value;
-  const recipeKey = "recipe." + selectedElement;
-  const recipeData = JSON.parse(localStorage.getItem(recipeKey));
-  executedFromSelect = true;
-  
-  // Check if the recipe data exists
-  if (recipeData === "recipe.") {} else {
-    toggleRatio()
-    document.getElementById("setGram").value = recipeData.gr;
-    document.getElementById("setMill").value = recipeData.ml; 
-    document.getElementById("builderGram").textContent = recipeData.gr;
-    document.getElementById("builderMill").textContent = recipeData.ml;
-    // Populate the brew steps
-    const brewSteps = document.getElementsByClassName("brewSteps");
-    for (let i = 0; i < brewSteps.length; i++) {
-      brewSteps[i].getElementsByTagName("input")[0].value = recipeData.steps[i];
+  if(brewRecipeChooser.selectedIndex === 0) {
+    resetRecipeBuilder();
+    console.log("reset sucessful")
+    executedFromSelect === false;
+    toggleRatio();
+  } else {
+    const selectedElement = brewRecipeChooser.value;
+    const recipeKey = "recipe." + selectedElement;
+    const recipeData = JSON.parse(localStorage.getItem(recipeKey));
+    
+    // Check if the recipe data exists
+    if (recipeData === "recipe.") {} else {
+      document.getElementById("setGram").value = recipeData.gr;
+      document.getElementById("setMill").value = recipeData.ml; 
+      document.getElementById("builderGram").textContent = recipeData.gr;
+      document.getElementById("builderMill").textContent = recipeData.ml;
+      // Populate the brew steps
+      const brewSteps = document.getElementsByClassName("brewSteps");
+      for (let i = 0; i < brewSteps.length; i++) {
+        brewSteps[i].getElementsByTagName("input")[0].value = recipeData.steps[i];
+      }
+      toggleRatio()
+      setTimeout(() => {
+        ratioConnected === true;
+        executedFromSelect = true;
+      }, 100);
     }
   }
-  setTimeout(() => {
-  ratioConnected === true;
-}, 100);
 });
-
 // ================
 </script>
 </body>
