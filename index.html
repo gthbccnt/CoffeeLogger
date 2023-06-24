@@ -1390,7 +1390,7 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
    </style>
 </head>
 <body>
-<h1 id="appTitle">Coffee Log</h1> <!--AENDERN!!!!!!! -->
+<h1 id="appTitle">Log</h1> <!--AENDERN!!!!!!! -->
 <div id="headerButtonContainer">
   <button id="exportButton" onclick="shareCSV()">Export</button>
   <button id="menuButton" onclick="showPopup()">Menu</button>
@@ -2656,8 +2656,7 @@ function getCoffeeDataAsCSV() {
     
     navigator.share({
       files: [file],
-      title: 'Coffee Data',
-      text: 'Here is the CSV data for coffee',
+      title: 'Saved Coffees',
     }).then(() => {
       console.log('Thanks for sharing!');
     })
@@ -3520,7 +3519,7 @@ function saveRecipe() {
     var builderGram = parseFloat(document.getElementById("builderGram").textContent);
     var builderMill = parseFloat(document.getElementById("builderMill").textContent);
     var stopwatchTime = null;
-    if (builderMill > 250) {
+    if (builderMill > 250 || recipeName.includes('V60')) {
       console.log("V60")
       recipeType = "Filter"
 
