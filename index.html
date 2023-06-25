@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="apple-mobile-web-app-title" content="CoffeeLogger">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#ceb990">
+    <meta name="theme-color" content="oklch(79.25% 0.06 83.42)">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <style>
 @media screen and (orientation: landscape) {
@@ -1390,7 +1390,7 @@ animation: slide-out-blurred-top 0.70s cubic-bezier(0.230, 1.000, 0.320, 1.000) 
    </style>
 </head>
 <body>
-<h1 id="appTitle">Log</h1> <!--AENDERN!!!!!!! -->
+<h1 id="appTitle">Coffee Log</h1>
 <div id="headerButtonContainer">
   <button id="exportButton" onclick="shareCSV()">Export</button>
   <button id="menuButton" onclick="showPopup()">Menu</button>
@@ -2010,7 +2010,7 @@ const bodyDarkMode = document.querySelector('body');
     bodyDarkMode.classList.add('dark-theme');
     metaTag.setAttribute('content', '#151515');// add value for popup
   } else {
-    metaTag.setAttribute('content', '#D1B888')
+    metaTag.setAttribute('content', '#ceb990')
     bodyDarkMode.classList.remove('dark-theme');
   }
 
@@ -2020,7 +2020,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addListener((event) => {
     bodyDarkMode.classList.add('dark-theme');
     metaTag.setAttribute('content', '#151515');// add value for popup
   } else {
-    metaTag.setAttribute('content', '#D1B888')
+    metaTag.setAttribute('content', '#ceb990')
     bodyDarkMode.classList.remove('dark-theme');
   }
 })
@@ -2356,6 +2356,9 @@ function addCsvToTable(csvData) {
   if (checkContent.includes("coffeeName")=== true) {
     alert('csv content: coffees')
     importCoffee(csvData);
+  } else if (checkContent.includes("steps")=== true){
+    alert('csv content: recipes')
+    importRecipes(csvData);
   } else {
     let tbodyTemp = document.querySelector('#grinder2 tbody');
     if (checkContent.includes(".",8)===true) {
@@ -2699,6 +2702,34 @@ function exportRecipes() {
     alert('sharing not supported')
   }
 }
+
+function importRecipes(csvData) {
+  const rows = csvData.split('\n');
+  const headers = rows[0].split(';');
+  
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i].split(';');
+    const recipe = {};
+    
+    for (let j = 0; j < headers.length; j++) {
+      const header = headers[j];
+      const value = JSON.parse(row[j]);
+      recipe[header] = value;
+    }
+    
+    const recipeName = recipe.name;
+    
+    // Generate the key for the recipe
+    const key = 'recipe.' + recipeName;
+    
+    // Store the recipe in localStorage
+    localStorage.setItem(key, JSON.stringify(recipe));
+  }
+  
+  console.log('Recipes imported successfully!');
+  alert("recipes imported")
+}
+
 
 
 // ==== details // delete ====
@@ -3359,6 +3390,8 @@ startBtn.addEventListener('click', function () {
       .catch((error) => {
         console.error('Failed to activate Screen Wake Lock:', error);
       });
+  } else {
+    alert('wakeLock not in scope')
   }
 });
 
